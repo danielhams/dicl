@@ -1,0 +1,5 @@
+NULL=
+
+SUBDIRS=						\
+	dicl					\
+	$(NULL)
