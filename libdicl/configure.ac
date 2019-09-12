@@ -1,5 +1,5 @@
 AC_PREREQ(2.65)
-AC_INIT([dicl],
+AC_INIT([libdicl],
         [0.1.0],
         [daniel.hams@gmail.com])
 
@@ -27,4 +27,4 @@ AC_LANG([C])
 AC_OUTPUT([libdicl.pc
 Makefile
 src/Makefile
-src/dicl/Makefile])
+src/libdicl/Makefile])

@@ -5,16 +5,16 @@ dicldir=$(libdir)
 dicl_LTLIBRARIES = libdicl@PACKAGE_SUFFIX@.la
 
 libdicl@PACKAGE_SUFFIX@_la_SOURCES=							\
-	dicl.c												\
+	libdicl.c												\
 	$(NULL)
 
 libdicl@PACKAGE_SUFFIX@_la_LIBADD=				\
 	$(NULL)
 
-diclincludedir=$(includedir)/dicl@PACKAGE_SUFFIX@/dicl
+diclincludedir=$(includedir)/libdicl@PACKAGE_SUFFIX@/libdicl
 
 diclinclude_HEADERS=												\
-	dicl.h													\
+	libdicl.h													\
 	$(NULL)
 
 CLEANFILES=																\

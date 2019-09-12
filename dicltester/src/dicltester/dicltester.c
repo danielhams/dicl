@@ -1,4 +1,4 @@
-#include <dicl/dicl.h>
+#include <libdicl/libdicl.h>
 
 #include <string.h>
 #include <stdio.h>
@@ -8,8 +8,8 @@ int main(int argc, char**argv)
 {
     printf("Dicltester called.\n");
 
-    printf("libdicl version is ->%s\n",
-           dicl_getversion());
+    printf("libdicl version is -> %s\n",
+           libdicl_getversion());
 
     return 0;
 }

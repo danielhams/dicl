@@ -8,4 +8,4 @@ Description: Dans Irix Compatibility Library
 Version: @VERSION@
 Requires:
 Libs: -L${libdir} -ldicl@PACKAGE_SUFFIX@
-Cflags: -I${includedir}/dicl@PACKAGE_SUFFIX@
+Cflags: -I${includedir}/libdicl@PACKAGE_SUFFIX@

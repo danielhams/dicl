@@ -1,5 +1,5 @@
 NULL=
 
 SUBDIRS=						\
-	dicl					\
+	libdicl					\
 	$(NULL)
