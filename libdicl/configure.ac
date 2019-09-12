@@ -19,12 +19,16 @@ AC_DEFINE_UNQUOTED(PACKAGE_SUFFIX, "$PACKAGE_SUFFIX", [Suffix of the package])
 
 AC_STDC_HEADERS
 AC_PROG_CC
+gl_EARLY
+gl_INIT
 AC_PROG_LIBTOOL
 PKG_PROG_PKG_CONFIG
 
 AC_LANG([C])
+AC_LANG([C++])
 
 AC_OUTPUT([libdicl.pc
 Makefile
 src/Makefile
-src/libdicl/Makefile])
+src/libdicl/Makefile
+gl/Makefile])

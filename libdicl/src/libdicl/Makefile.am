@@ -11,6 +11,10 @@ libdicl@PACKAGE_SUFFIX@_la_SOURCES=							\
 libdicl@PACKAGE_SUFFIX@_la_LIBADD=				\
 	$(NULL)
 
+libdicl@PACKAGE_SUFFIX@_la_LDFLAGS=				\
+	-Wl,--export-dynamic,--whole-archive,$(top_srcdir)/gl/libgnu.a,--no-whole-archive \
+	$(NULL)
+
 diclincludedir=$(includedir)/libdicl@PACKAGE_SUFFIX@/libdicl
 
 diclinclude_HEADERS=												\

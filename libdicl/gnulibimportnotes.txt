@@ -1,0 +1,8 @@
+$GNULIB_HOME/gnulib-tool --list
+
+$GNULIB_HOME/gnulib-tool --no-vc-files --source-base=gl --m4-base=gl/m4 --with-tests --import printf-posix vfprintf-posix vsprintf-posix wait-process
+
+(order is important above!)
+
+After the import, must set AM_CFLAGS= -fPIC -DPIC to create relocatable code
+

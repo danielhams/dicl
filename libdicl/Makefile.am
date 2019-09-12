@@ -2,10 +2,11 @@ NULL=
 
 SUBDIRS=							\
 	.								\
+	gl								\
 	src								\
 	$(NULL)
 
-ACLOCAL_AMFLAGS=-I macros
+ACLOCAL_AMFLAGS=-I macros -I gl/m4
 
 pkgconfigdir=$(libdir)/pkgconfig
 
@@ -20,6 +21,7 @@ libdiclinclude_HEADERS=						\
 
 EXTRA_DIST=											\
 	libdicl.pc.in								\
+	gl/m4/gnulib-cache.m4						\
 	$(NULL)
 
 CLEANFILES=											\
