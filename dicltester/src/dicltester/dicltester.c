@@ -9,7 +9,7 @@ int main(int argc, char**argv)
     printf("Dicltester called.\n");
 
     printf("libdicl version is ->%s\n",
-           libdicl_getversion());
+           dicl_getversion());
 
     return 0;
 }
