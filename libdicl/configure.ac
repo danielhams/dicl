@@ -31,4 +31,5 @@ AC_OUTPUT([libdicl.pc
 Makefile
 src/Makefile
 src/libdicl/Makefile
-gl/Makefile])
+gl/Makefile
+tests/Makefile])

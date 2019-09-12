@@ -4,6 +4,7 @@ SUBDIRS=							\
 	.								\
 	gl								\
 	src								\
+	tests							\
 	$(NULL)
 
 ACLOCAL_AMFLAGS=-I macros -I gl/m4
