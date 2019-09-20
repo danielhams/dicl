@@ -19,6 +19,11 @@ AC_DEFINE_UNQUOTED(PACKAGE_SUFFIX, "$PACKAGE_SUFFIX", [Suffix of the package])
 
 AC_STDC_HEADERS
 AC_PROG_CC
+
+gl_cv_func_select_supports0=no
+gl_cv_func_select_detects_ebadf=no
+gl_cv_func_strtod_works=no
+
 gl_EARLY
 gl_INIT
 AC_PROG_LIBTOOL
