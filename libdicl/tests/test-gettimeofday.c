@@ -17,6 +17,7 @@
 
 #include <config.h>
 
+#include <time.h>
 #include <sys/time.h>
 
 #include "signature.h"

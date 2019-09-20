@@ -29,6 +29,14 @@ gl_INIT
 AC_PROG_LIBTOOL
 PKG_PROG_PKG_CONFIG
 
+#if test yes = '$(lt_cv_prog_gnu_ld)'; then \
+#  LIBDICL_USING_GNULD=1; \
+#else \
+#  LIBDICL_USING_GNULD=0; \
+#fi
+#AC_SUBST(LIBDICL_USING_GNULD)
+AM_CONDITIONAL([LIBDICL_USING_GNULD], [test xyes = x$lt_cv_prog_gnu_ld])
+
 AC_LANG([C])
 AC_LANG([C++])
 

@@ -18,6 +18,7 @@
 
 #include <config.h>
 
+#include <time.h>
 #include <sys/time.h>
 
 /* Check that the 'struct timeval' type is defined.  */

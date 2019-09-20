@@ -1433,9 +1433,9 @@ EXTRA_DIST += test-stddef.c
 
 ## begin gnulib module stdint-tests
 
-TESTS += test-stdint
-check_PROGRAMS += test-stdint
-EXTRA_DIST += test-stdint.c
+#TESTS += test-stdint
+#check_PROGRAMS += test-stdint
+#EXTRA_DIST += test-stdint.c
 
 ## end   gnulib module stdint-tests
 

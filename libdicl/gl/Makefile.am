@@ -65,7 +65,7 @@ MAINTAINERCLEANFILES =
 # No GNU Make output.
 
 AM_CPPFLAGS =
-AM_CFLAGS =
+AM_CFLAGS = -fPIC -DPIC
 
 noinst_LIBRARIES += libgnu.a
 

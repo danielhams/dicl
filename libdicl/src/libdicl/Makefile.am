@@ -11,8 +11,14 @@ libdicl@PACKAGE_SUFFIX@_la_SOURCES=							\
 libdicl@PACKAGE_SUFFIX@_la_LIBADD=				\
 	$(NULL)
 
+if LIBDICL_USING_GNULD
+LIBDICL_LDFLAGS=-Wl,--export-dynamic,--whole-archive,$(top_srcdir)/gl/libgnu.a,--no-whole-archive
+else
+LIBDICL_LDFLAGS=-Wl,-all,$(top_srcdir)/gl/libgnu.a
+endif
+
 libdicl@PACKAGE_SUFFIX@_la_LDFLAGS=				\
-	-Wl,--export-dynamic,--whole-archive,$(top_srcdir)/gl/libgnu.a,--no-whole-archive \
+	$(LIBDICL_LDFLAGS) \
 	$(NULL)
 
 diclincludedir=$(includedir)/libdicl@PACKAGE_SUFFIX@/libdicl
