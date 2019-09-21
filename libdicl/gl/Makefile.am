@@ -35,13 +35,14 @@
 #  --macro-prefix=gl \
 #  --no-vc-files \
 #  getopt-posix \
+#  mktime \
+#  nanosleep \
 #  printf-posix \
 #  select \
 #  setenv \
 #  sprintf-posix \
 #  strtod \
 #  strtoll \
-#  strtoul \
 #  strtoull \
 #  unsetenv \
 #  vfprintf-posix \
@@ -358,6 +359,13 @@ EXTRA_DIST += float+.h isnan.c isnanl-nolibm.h isnanl.c
 EXTRA_libgnu_a_SOURCES += isnan.c isnanl.c
 
 ## end   gnulib module isnanl-nolibm
+
+## begin gnulib module libc-config
+
+
+EXTRA_DIST += cdefs.h libc-config.h
+
+## end   gnulib module libc-config
 
 ## begin gnulib module limits-h
 
@@ -713,6 +721,15 @@ EXTRA_libgnu_a_SOURCES += memchr.c
 
 ## end   gnulib module memchr
 
+## begin gnulib module mktime
+
+
+EXTRA_DIST += mktime-internal.h mktime.c
+
+EXTRA_libgnu_a_SOURCES += mktime.c
+
+## end   gnulib module mktime
+
 ## begin gnulib module msvc-inval
 
 
@@ -730,6 +747,15 @@ EXTRA_DIST += msvc-nothrow.c msvc-nothrow.h
 EXTRA_libgnu_a_SOURCES += msvc-nothrow.c
 
 ## end   gnulib module msvc-nothrow
+
+## begin gnulib module nanosleep
+
+
+EXTRA_DIST += nanosleep.c
+
+EXTRA_libgnu_a_SOURCES += nanosleep.c
+
+## end   gnulib module nanosleep
 
 ## begin gnulib module printf-frexp
 
@@ -1440,15 +1466,6 @@ EXTRA_libgnu_a_SOURCES += strtol.c strtoll.c
 
 ## end   gnulib module strtoll
 
-## begin gnulib module strtoul
-
-
-EXTRA_DIST += strtol.c strtoul.c
-
-EXTRA_libgnu_a_SOURCES += strtol.c strtoul.c
-
-## end   gnulib module strtoul
-
 ## begin gnulib module strtoull
 
 
@@ -1657,6 +1674,70 @@ MOSTLYCLEANDIRS += sys
 EXTRA_DIST += sys_wait.in.h
 
 ## end   gnulib module sys_wait
+
+## begin gnulib module time
+
+BUILT_SOURCES += time.h
+
+# We need the following in order to create <time.h> when the system
+# doesn't have one that works with the given compiler.
+time.h: time.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
+	$(AM_V_GEN)rm -f $@-t $@ && \
+	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
+	  sed -e 's|@''GUARD_PREFIX''@|GL|g' \
+	      -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
+	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
+	      -e 's|@''PRAGMA_COLUMNS''@|@PRAGMA_COLUMNS@|g' \
+	      -e 's|@''NEXT_TIME_H''@|$(NEXT_TIME_H)|g' \
+	      -e 's/@''GNULIB_CTIME''@/$(GNULIB_CTIME)/g' \
+	      -e 's/@''GNULIB_LOCALTIME''@/$(GNULIB_LOCALTIME)/g' \
+	      -e 's/@''GNULIB_MKTIME''@/$(GNULIB_MKTIME)/g' \
+	      -e 's/@''GNULIB_NANOSLEEP''@/$(GNULIB_NANOSLEEP)/g' \
+	      -e 's/@''GNULIB_STRFTIME''@/$(GNULIB_STRFTIME)/g' \
+	      -e 's/@''GNULIB_STRPTIME''@/$(GNULIB_STRPTIME)/g' \
+	      -e 's/@''GNULIB_TIMEGM''@/$(GNULIB_TIMEGM)/g' \
+	      -e 's/@''GNULIB_TIME_R''@/$(GNULIB_TIME_R)/g' \
+	      -e 's/@''GNULIB_TIME_RZ''@/$(GNULIB_TIME_RZ)/g' \
+	      -e 's/@''GNULIB_TZSET''@/$(GNULIB_TZSET)/g' \
+	      -e 's|@''HAVE_DECL_LOCALTIME_R''@|$(HAVE_DECL_LOCALTIME_R)|g' \
+	      -e 's|@''HAVE_NANOSLEEP''@|$(HAVE_NANOSLEEP)|g' \
+	      -e 's|@''HAVE_STRPTIME''@|$(HAVE_STRPTIME)|g' \
+	      -e 's|@''HAVE_TIMEGM''@|$(HAVE_TIMEGM)|g' \
+	      -e 's|@''HAVE_TIMEZONE_T''@|$(HAVE_TIMEZONE_T)|g' \
+	      -e 's|@''HAVE_TZSET''@|$(HAVE_TZSET)|g' \
+	      -e 's|@''REPLACE_CTIME''@|$(REPLACE_CTIME)|g' \
+	      -e 's|@''REPLACE_GMTIME''@|$(REPLACE_GMTIME)|g' \
+	      -e 's|@''REPLACE_LOCALTIME''@|$(REPLACE_LOCALTIME)|g' \
+	      -e 's|@''REPLACE_LOCALTIME_R''@|$(REPLACE_LOCALTIME_R)|g' \
+	      -e 's|@''REPLACE_MKTIME''@|$(REPLACE_MKTIME)|g' \
+	      -e 's|@''REPLACE_NANOSLEEP''@|$(REPLACE_NANOSLEEP)|g' \
+	      -e 's|@''REPLACE_STRFTIME''@|$(REPLACE_STRFTIME)|g' \
+	      -e 's|@''REPLACE_TIMEGM''@|$(REPLACE_TIMEGM)|g' \
+	      -e 's|@''REPLACE_TZSET''@|$(REPLACE_TZSET)|g' \
+	      -e 's|@''PTHREAD_H_DEFINES_STRUCT_TIMESPEC''@|$(PTHREAD_H_DEFINES_STRUCT_TIMESPEC)|g' \
+	      -e 's|@''SYS_TIME_H_DEFINES_STRUCT_TIMESPEC''@|$(SYS_TIME_H_DEFINES_STRUCT_TIMESPEC)|g' \
+	      -e 's|@''TIME_H_DEFINES_STRUCT_TIMESPEC''@|$(TIME_H_DEFINES_STRUCT_TIMESPEC)|g' \
+	      -e 's|@''UNISTD_H_DEFINES_STRUCT_TIMESPEC''@|$(UNISTD_H_DEFINES_STRUCT_TIMESPEC)|g' \
+	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \
+	      -e '/definition of _GL_ARG_NONNULL/r $(ARG_NONNULL_H)' \
+	      -e '/definition of _GL_WARN_ON_USE/r $(WARN_ON_USE_H)' \
+	      < $(srcdir)/time.in.h; \
+	} > $@-t && \
+	mv $@-t $@
+MOSTLYCLEANFILES += time.h time.h-t
+
+EXTRA_DIST += time.in.h
+
+## end   gnulib module time
+
+## begin gnulib module time_r
+
+
+EXTRA_DIST += time_r.c
+
+EXTRA_libgnu_a_SOURCES += time_r.c
+
+## end   gnulib module time_r
 
 ## begin gnulib module unistd
 

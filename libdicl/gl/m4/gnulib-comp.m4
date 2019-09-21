@@ -140,6 +140,7 @@ AC_DEFUN([gl_EARLY],
   # Code from module isnanl-nolibm-tests:
   # Code from module largefile:
   AC_REQUIRE([AC_SYS_LARGEFILE])
+  # Code from module libc-config:
   # Code from module limits-h:
   # Code from module limits-h-tests:
   # Code from module listen:
@@ -156,6 +157,7 @@ AC_DEFUN([gl_EARLY],
   # Code from module math-tests:
   # Code from module memchr:
   # Code from module memchr-tests:
+  # Code from module mktime:
   # Code from module msvc-inval:
   # Code from module msvc-nothrow:
   # Code from module multiarch:
@@ -249,8 +251,6 @@ AC_DEFUN([gl_EARLY],
   # Code from module strtod-tests:
   # Code from module strtoll:
   # Code from module strtoll-tests:
-  # Code from module strtoul:
-  # Code from module strtoul-tests:
   # Code from module strtoull:
   # Code from module strtoull-tests:
   # Code from module symlink:
@@ -279,6 +279,7 @@ AC_DEFUN([gl_EARLY],
   gl_THREADLIB_EARLY
   # Code from module time:
   # Code from module time-tests:
+  # Code from module time_r:
   # Code from module unistd:
   # Code from module unistd-tests:
   # Code from module unsetenv:
@@ -396,6 +397,7 @@ AC_DEFUN([gl_INIT],
     AC_LIBOBJ([isnanl])
     gl_PREREQ_ISNANL
   fi
+  gl___INLINE
   gl_LIMITS_H
   gl_FUNC_MALLOC_POSIX
   if test $REPLACE_MALLOC = 1; then
@@ -410,6 +412,12 @@ AC_DEFUN([gl_INIT],
     gl_PREREQ_MEMCHR
   fi
   gl_STRING_MODULE_INDICATOR([memchr])
+  gl_FUNC_MKTIME
+  if test $REPLACE_MKTIME = 1; then
+    AC_LIBOBJ([mktime])
+    gl_PREREQ_MKTIME
+  fi
+  gl_TIME_MODULE_INDICATOR([mktime])
   AC_REQUIRE([gl_MSVC_INVAL])
   if test $HAVE_MSVC_INVALID_PARAMETER_HANDLER = 1; then
     AC_LIBOBJ([msvc-inval])
@@ -420,6 +428,12 @@ AC_DEFUN([gl_INIT],
   fi
   gl_MODULE_INDICATOR([msvc-nothrow])
   gl_MULTIARCH
+  gl_FUNC_NANOSLEEP
+  if test $HAVE_NANOSLEEP = 0 || test $REPLACE_NANOSLEEP = 1; then
+    AC_LIBOBJ([nanosleep])
+    gl_PREREQ_NANOSLEEP
+  fi
+  gl_TIME_MODULE_INDICATOR([nanosleep])
   gl_FUNC_PRINTF_FREXP
   gl_FUNC_PRINTF_FREXPL
   gl_FUNC_PRINTF_POSIX
@@ -499,10 +513,6 @@ AC_DEFUN([gl_INIT],
     gl_PREREQ_STRTOLL
   fi
   gl_STDLIB_MODULE_INDICATOR([strtoll])
-  gl_FUNC_STRTOUL
-  if test $ac_cv_func_strtoul = no; then
-    AC_LIBOBJ([strtoul])
-  fi
   gl_FUNC_STRTOULL
   if test $HAVE_STRTOULL = 0; then
     AC_LIBOBJ([strtoull])
@@ -521,6 +531,13 @@ AC_DEFUN([gl_INIT],
   AC_PROG_MKDIR_P
   gl_SYS_WAIT_H
   AC_PROG_MKDIR_P
+  gl_HEADER_TIME_H
+  gl_TIME_R
+  if test $HAVE_LOCALTIME_R = 0 || test $REPLACE_LOCALTIME_R = 1; then
+    AC_LIBOBJ([time_r])
+    gl_PREREQ_TIME_R
+  fi
+  gl_TIME_MODULE_INDICATOR([time_r])
   gl_UNISTD_H
   gl_FUNC_UNSETENV
   if test $HAVE_UNSETENV = 0 || test $REPLACE_UNSETENV = 1; then
@@ -708,12 +725,6 @@ changequote([, ])dnl
   gl_FUNC_MMAP_ANON
   AC_CHECK_HEADERS_ONCE([sys/mman.h])
   AC_CHECK_FUNCS_ONCE([mprotect])
-  gl_FUNC_NANOSLEEP
-  if test $HAVE_NANOSLEEP = 0 || test $REPLACE_NANOSLEEP = 1; then
-    AC_LIBOBJ([nanosleep])
-    gl_PREREQ_NANOSLEEP
-  fi
-  gl_TIME_MODULE_INDICATOR([nanosleep])
   AC_CHECK_DECLS_ONCE([alarm])
   gl_HEADER_NETINET_IN
   AC_PROG_MKDIR_P
@@ -821,7 +832,6 @@ changequote([, ])dnl
   AC_PROG_MKDIR_P
   gl_THREAD
   AC_REQUIRE([gl_THREADLIB])
-  gl_HEADER_TIME_H
   gl_FUNC_USLEEP
   if test $HAVE_USLEEP = 0 || test $REPLACE_USLEEP = 1; then
     AC_LIBOBJ([usleep])
@@ -971,6 +981,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/c++defs.h
   lib/c-ctype.c
   lib/c-ctype.h
+  lib/cdefs.h
   lib/dirname-lgpl.c
   lib/dirname.h
   lib/dosname.h
@@ -1013,6 +1024,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/isnanl-nolibm.h
   lib/isnanl.c
   lib/itold.c
+  lib/libc-config.h
   lib/limits.in.h
   lib/malloc.c
   lib/malloca.c
@@ -1021,10 +1033,13 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/math.in.h
   lib/memchr.c
   lib/memchr.valgrind
+  lib/mktime-internal.h
+  lib/mktime.c
   lib/msvc-inval.c
   lib/msvc-inval.h
   lib/msvc-nothrow.c
   lib/msvc-nothrow.h
+  lib/nanosleep.c
   lib/printf-args.c
   lib/printf-args.h
   lib/printf-frexp.c
@@ -1073,6 +1088,8 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/sys_types.in.h
   lib/sys_uio.in.h
   lib/sys_wait.in.h
+  lib/time.in.h
+  lib/time_r.c
   lib/unistd.c
   lib/unistd.in.h
   lib/unsetenv.c
@@ -1094,6 +1111,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/xsize.c
   lib/xsize.h
   m4/00gnulib.m4
+  m4/__inline.m4
   m4/absolute-header.m4
   m4/alloca.m4
   m4/arpa_inet_h.m4
@@ -1160,6 +1178,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/malloca.m4
   m4/math_h.m4
   m4/memchr.m4
+  m4/mktime.m4
   m4/mmap-anon.m4
   m4/mode_t.m4
   m4/msvc-inval.m4
@@ -1214,7 +1233,6 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/string_h.m4
   m4/strtod.m4
   m4/strtoll.m4
-  m4/strtoul.m4
   m4/strtoull.m4
   m4/symlink.m4
   m4/sys_ioctl_h.m4
@@ -1228,6 +1246,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/thread.m4
   m4/threadlib.m4
   m4/time_h.m4
+  m4/time_r.m4
   m4/unistd_h.m4
   m4/usleep.m4
   m4/vasnprintf.m4
@@ -1366,7 +1385,6 @@ AC_DEFUN([gl_FILE_LIST], [
   tests/test-strtod1.c
   tests/test-strtod1.sh
   tests/test-strtoll.c
-  tests/test-strtoul.c
   tests/test-strtoull.c
   tests/test-symlink.c
   tests/test-symlink.h
@@ -1434,7 +1452,6 @@ AC_DEFUN([gl_FILE_LIST], [
   tests=lib/localtime-buffer.c
   tests=lib/localtime-buffer.h
   tests=lib/lstat.c
-  tests=lib/nanosleep.c
   tests=lib/netinet_in.in.h
   tests=lib/open.c
   tests=lib/pathmax.h
@@ -1458,7 +1475,6 @@ AC_DEFUN([gl_FILE_LIST], [
   tests=lib/symlink.c
   tests=lib/sys_ioctl.in.h
   tests=lib/sys_stat.in.h
-  tests=lib/time.in.h
   tests=lib/usleep.c
   tests=lib/w32sock.h
   tests=lib/warn-on-use.h

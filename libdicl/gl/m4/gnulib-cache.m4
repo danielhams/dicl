@@ -40,13 +40,14 @@
 #  --macro-prefix=gl \
 #  --no-vc-files \
 #  getopt-posix \
+#  mktime \
+#  nanosleep \
 #  printf-posix \
 #  select \
 #  setenv \
 #  sprintf-posix \
 #  strtod \
 #  strtoll \
-#  strtoul \
 #  strtoull \
 #  unsetenv \
 #  vfprintf-posix \
@@ -57,13 +58,14 @@
 gl_LOCAL_DIR([])
 gl_MODULES([
   getopt-posix
+  mktime
+  nanosleep
   printf-posix
   select
   setenv
   sprintf-posix
   strtod
   strtoll
-  strtoul
   strtoull
   unsetenv
   vfprintf-posix

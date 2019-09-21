@@ -6,4 +6,4 @@ $GNULIB_HOME/gnulib-tool --no-vc-files --source-base=gl --m4-base=gl/m4 --with-t
 
 After the import, must set AM_CFLAGS= -fPIC -DPIC to create relocatable code
 
-#/usr/people/dan/Sources/GitClones/gnulib/gnulib-tool --no-vc-files --source-base=gl --m4-base=/gl/m4 --with-tests --import printf-posix vfprintf-posix vsprintf-posix wait-process sprintf-posix getopt-posix select setenv strtod strtoll strtoul strtoull unsetenv 
+$GNULIB_HOME/gnulib-tool --import --lib=libgnu --source-base=gl --m4-base=/gl/m4 --doc-base=doc --tests-base=tests --aux-dir=. --with-tests --no-conditional-dependencies --no-libtool --macro-prefix=gl --no-vc-files getopt-posix mktime nanosleep printf-posix select setenv sprintf-posix strtod strtoll strtoull unsetenv vfprintf-posix vsprintf-posix wait-process
