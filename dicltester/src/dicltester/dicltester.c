@@ -1,9 +1,11 @@
-#include <libdicl/libdicl.h>
-
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <stddef.h>
+
+#include <libdicl/libdicl.h>
+
+#include "dicl_select.h"
 
 int main(int argc, char**argv)
 {
@@ -23,6 +25,8 @@ int main(int argc, char**argv)
 
     printf("The ptrdiff_t with %%ld is %ld\n", ptrd);
     printf("The ptrdiff_t with %%td is %td\n", ptrd);
+
+    dicl_selecttest();
 
     return 0;
 }

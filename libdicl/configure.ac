@@ -43,6 +43,8 @@ AC_LANG([C++])
 AC_OUTPUT([libdicl.pc
 Makefile
 src/Makefile
+src/repl_headers/Makefile
+src/repl_headers/sys/Makefile
 src/libdicl/Makefile
 gl/Makefile
 tests/Makefile])
