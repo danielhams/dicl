@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <errno.h>
+
 #include <unistd.h>
 #include <sys/types.h>
 #include <bstring.h>
@@ -22,8 +24,13 @@ void dicl_selecttest()
   FD_ZERO(&exceptionfds);
   memset(&timeout,0,sizeof(struct timeval));
 
-  int s_rv = select(0, &readfds, &writefds, &exceptionfds, &timeout);
+  FD_SET(999, &readfds);
+  timeout.tv_sec=1;
+
+  int s_rv = select(1, &readfds, &writefds, &exceptionfds, &timeout);
   printf("Select rv=%d\n", s_rv);
+  int lerrno = errno;
+  printf("Errno=%d\n",lerrno);
 
   return;
 }

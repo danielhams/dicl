@@ -24,13 +24,24 @@ PKG_PROG_PKG_CONFIG
 
 AC_LANG([C])
 
+AC_MSG_CHECKING([whether libdicl should be used])
+AC_ARG_ENABLE([libdicl-replacements],
+	[AS_HELP_STRING([--enable-libdicl-replacements],[use libdicl replacements])],
+	[],
+	[enable_libdicl_replacements=yes])
+AC_MSG_RESULT([$enable_libdicl_replacements])
+
 LIBDICL_VERSION=0.1
 AC_SUBST(LIBDICL_VERSION)
 
 PACKAGE_DEPENDENCY_LIST="libdicl-$LIBDICL_VERSION >= $LIBDICL_VERSION"
 AC_DEFINE_UNQUOTED(PACKAGE_DEPENDENCY_LIST, "$PACKAGE_DEPENDENCY_LIST", [Package dependency list])
 
-PKG_CHECK_MODULES([DICLTESTER_DEPS], [$PACKAGE_DEPENDENCY_LIST])
+if test "x$enable_libdicl_replacements" = xyes; then
+   PKG_CHECK_MODULES([DICLTESTER_DEPS], [$PACKAGE_DEPENDENCY_LIST])
+   USE_LIBDICL=yes
+   AC_DEFINE_UNQUOTED(USE_LIBDICL,[1], [Whether to use replacements])
+fi
 
 AC_OUTPUT([Makefile
 src/Makefile

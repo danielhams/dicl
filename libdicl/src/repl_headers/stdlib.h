@@ -13,4 +13,8 @@ extern double rpl_strtod(const char *, char **);
 #define strtold rpl_strtold
 extern long double rpl_strtold(const char *, char **);
 
+/* Extra things not in Irix libc */
+int setenv(const char *name, const char*value, int overwrite);
+int unsetenv(const char *name);
+
 #endif
