@@ -47,6 +47,7 @@
 #  setenv \
 #  sprintf-posix \
 #  strtod \
+#  strtold \
 #  strtoll \
 #  strtoull \
 #  unsetenv \
@@ -65,6 +66,7 @@ gl_MODULES([
   setenv
   sprintf-posix
   strtod
+  strtold
   strtoll
   strtoull
   unsetenv

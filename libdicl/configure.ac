@@ -9,6 +9,7 @@ AC_CONFIG_SRCDIR(src)
 AC_CONFIG_MACRO_DIR(macros)
 AC_CONFIG_HEADERS(config.h)
 AM_INIT_AUTOMAKE([1.9 dist-bzip2 no-dist-gzip foreign subdir-objects])
+AC_USE_SYSTEM_EXTENSIONS
 
 ABI_VERSION=0.1
 AC_SUBST(ABI_VERSION)
@@ -23,6 +24,7 @@ AC_PROG_CC
 gl_cv_func_select_supports0=no
 gl_cv_func_select_detects_ebadf=no
 gl_cv_func_strtod_works=no
+gl_cv_func_strtold_works=no
 
 gl_EARLY
 gl_INIT

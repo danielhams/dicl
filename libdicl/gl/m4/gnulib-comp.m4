@@ -249,6 +249,8 @@ AC_DEFUN([gl_EARLY],
   # Code from module string-tests:
   # Code from module strtod:
   # Code from module strtod-tests:
+  # Code from module strtold:
+  # Code from module strtold-tests:
   # Code from module strtoll:
   # Code from module strtoll-tests:
   # Code from module strtoull:
@@ -507,6 +509,12 @@ AC_DEFUN([gl_INIT],
     gl_PREREQ_STRTOD
   fi
   gl_STDLIB_MODULE_INDICATOR([strtod])
+  gl_FUNC_STRTOLD
+  if test $HAVE_STRTOLD = 0 || test $REPLACE_STRTOLD = 1; then
+    AC_LIBOBJ([strtold])
+    gl_PREREQ_STRTOLD
+  fi
+  gl_STDLIB_MODULE_INDICATOR([strtold])
   gl_FUNC_STRTOLL
   if test $HAVE_STRTOLL = 0; then
     AC_LIBOBJ([strtoll])
@@ -820,6 +828,8 @@ changequote([, ])dnl
   gl_MODULE_INDICATOR([strerror_r-posix])
   gt_LOCALE_FR
   gt_LOCALE_FR_UTF8
+  gt_LOCALE_FR
+  gt_LOCALE_FR_UTF8
   gl_FUNC_SYMLINK
   if test $HAVE_SYMLINK = 0 || test $REPLACE_SYMLINK = 1; then
     AC_LIBOBJ([symlink])
@@ -1078,6 +1088,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/stripslash.c
   lib/strtod.c
   lib/strtol.c
+  lib/strtold.c
   lib/strtoll.c
   lib/strtoul.c
   lib/strtoull.c
@@ -1232,6 +1243,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/strerror_r.m4
   m4/string_h.m4
   m4/strtod.m4
+  m4/strtold.m4
   m4/strtoll.m4
   m4/strtoull.m4
   m4/symlink.m4
@@ -1384,6 +1396,9 @@ AC_DEFUN([gl_FILE_LIST], [
   tests/test-strtod.c
   tests/test-strtod1.c
   tests/test-strtod1.sh
+  tests/test-strtold.c
+  tests/test-strtold1.c
+  tests/test-strtold1.sh
   tests/test-strtoll.c
   tests/test-strtoull.c
   tests/test-symlink.c

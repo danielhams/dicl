@@ -42,6 +42,7 @@
 #  setenv \
 #  sprintf-posix \
 #  strtod \
+#  strtold \
 #  strtoll \
 #  strtoull \
 #  unsetenv \
@@ -1456,6 +1457,15 @@ EXTRA_DIST += strtod.c
 EXTRA_libgnu_a_SOURCES += strtod.c
 
 ## end   gnulib module strtod
+
+## begin gnulib module strtold
+
+
+EXTRA_DIST += strtod.c strtold.c
+
+EXTRA_libgnu_a_SOURCES += strtod.c strtold.c
+
+## end   gnulib module strtold
 
 ## begin gnulib module strtoll
 

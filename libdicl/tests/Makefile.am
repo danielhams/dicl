@@ -1493,6 +1493,20 @@ EXTRA_DIST += test-strtod.c test-strtod1.sh test-strtod1.c signature.h minus-zer
 
 ## end   gnulib module strtod-tests
 
+## begin gnulib module strtold-tests
+
+TESTS += test-strtold
+check_PROGRAMS += test-strtold
+
+TESTS += test-strtold1.sh
+TESTS_ENVIRONMENT += \
+  LOCALE_FR='@LOCALE_FR@' \
+  LOCALE_FR_UTF8='@LOCALE_FR_UTF8@'
+check_PROGRAMS += test-strtold1
+EXTRA_DIST += test-strtold.c test-strtold1.sh test-strtold1.c signature.h minus-zero.h macros.h
+
+## end   gnulib module strtold-tests
+
 ## begin gnulib module strtoll-tests
 
 TESTS += test-strtoll

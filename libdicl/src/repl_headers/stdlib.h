@@ -8,6 +8,9 @@
 #endif
 #undef strtod
 #define strtod rpl_strtod
-extern double strtod(const char *, char **);
+extern double rpl_strtod(const char *, char **);
+#undef strtold
+#define strtold rpl_strtold
+extern long double rpl_strtold(const char *, char **);
 
 #endif
