@@ -8,4 +8,4 @@
 
 #After the import, must set AM_CFLAGS= -fPIC -DPIC to create relocatable code
 
-$GNULIB_HOME/gnulib-tool --import --lib=libgnu --source-base=gl --m4-base=/gl/m4 --doc-base=doc --tests-base=tests --aux-dir=. --with-tests --no-conditional-dependencies --no-libtool --macro-prefix=gl --no-vc-files getline getopt-posix getprogname mktime nanosleep printf-posix select setenv sprintf-posix strtod strtold strtoll strtoull unsetenv vfprintf-posix vsprintf-posix wait-process
+$GNULIB_HOME/gnulib-tool --import --lib=libgnu --source-base=gl --m4-base=/gl/m4 --doc-base=doc --tests-base=tests --aux-dir=. --with-tests --no-conditional-dependencies --no-libtool --macro-prefix=gl --no-vc-files getline getopt-posix getprogname mkdtemp mktime nanosleep printf-posix select setenv sprintf-posix strtod strtold strtoll strtoull unsetenv vfprintf-posix vsprintf-posix wait-process

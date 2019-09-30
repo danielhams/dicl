@@ -42,6 +42,7 @@
 #  getline \
 #  getopt-posix \
 #  getprogname \
+#  mkdtemp \
 #  mktime \
 #  nanosleep \
 #  printf-posix \
@@ -63,6 +64,7 @@ gl_MODULES([
   getline
   getopt-posix
   getprogname
+  mkdtemp
   mktime
   nanosleep
   printf-posix

@@ -20,7 +20,6 @@
 #include <config.h>
 
 /* Specification.  */
-#include <time.h>
 #include <sys/time.h>
 
 #include <time.h>

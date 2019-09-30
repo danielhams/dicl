@@ -161,6 +161,9 @@ AC_DEFUN([gl_EARLY],
   # Code from module math-tests:
   # Code from module memchr:
   # Code from module memchr-tests:
+  # Code from module mkdir:
+  # Code from module mkdir-tests:
+  # Code from module mkdtemp:
   # Code from module mktime:
   # Code from module msvc-inval:
   # Code from module msvc-nothrow:
@@ -277,6 +280,7 @@ AC_DEFUN([gl_EARLY],
   # Code from module sys_uio-tests:
   # Code from module sys_wait:
   # Code from module sys_wait-tests:
+  # Code from module tempname:
   # Code from module test-framework-sh:
   # Code from module test-framework-sh-tests:
   # Code from module thread:
@@ -356,6 +360,7 @@ AC_DEFUN([gl_INIT],
      AM_][XGETTEXT_OPTION([--flag=error_at_line:5:c-format])])
   AC_REQUIRE([gl_EXTERN_INLINE])
   gl_FATAL_SIGNAL
+  gl_FCNTL_H
   gl_FLOAT_H
   if test $REPLACE_FLOAT_LDBL = 1; then
     AC_LIBOBJ([float])
@@ -400,6 +405,12 @@ AC_DEFUN([gl_INIT],
   gl_FUNC_GETPROGNAME
   AC_SUBST([LIBINTL])
   AC_SUBST([LTLIBINTL])
+  gl_FUNC_GETTIMEOFDAY
+  if test $HAVE_GETTIMEOFDAY = 0 || test $REPLACE_GETTIMEOFDAY = 1; then
+    AC_LIBOBJ([gettimeofday])
+    gl_PREREQ_GETTIMEOFDAY
+  fi
+  gl_SYS_TIME_MODULE_INDICATOR([gettimeofday])
   gl_FUNC_ISNAND_NO_LIBM
   if test $gl_func_isnand_no_libm != yes; then
     AC_LIBOBJ([isnand])
@@ -415,8 +426,17 @@ AC_DEFUN([gl_INIT],
     AC_LIBOBJ([isnanl])
     gl_PREREQ_ISNANL
   fi
+  AC_REQUIRE([gl_LARGEFILE])
   gl___INLINE
   gl_LIMITS_H
+  AC_REQUIRE([gl_LOCALTIME_BUFFER_DEFAULTS])
+  AC_LIBOBJ([localtime-buffer])
+  gl_FUNC_LSTAT
+  if test $REPLACE_LSTAT = 1; then
+    AC_LIBOBJ([lstat])
+    gl_PREREQ_LSTAT
+  fi
+  gl_SYS_STAT_MODULE_INDICATOR([lstat])
   gl_FUNC_MALLOC_POSIX
   if test $REPLACE_MALLOC = 1; then
     AC_LIBOBJ([malloc])
@@ -430,6 +450,16 @@ AC_DEFUN([gl_INIT],
     gl_PREREQ_MEMCHR
   fi
   gl_STRING_MODULE_INDICATOR([memchr])
+  gl_FUNC_MKDIR
+  if test $REPLACE_MKDIR = 1; then
+    AC_LIBOBJ([mkdir])
+  fi
+  gl_FUNC_MKDTEMP
+  if test $HAVE_MKDTEMP = 0; then
+    AC_LIBOBJ([mkdtemp])
+    gl_PREREQ_MKDTEMP
+  fi
+  gl_STDLIB_MODULE_INDICATOR([mkdtemp])
   gl_FUNC_MKTIME
   if test $REPLACE_MKTIME = 1; then
     AC_LIBOBJ([mktime])
@@ -452,6 +482,7 @@ AC_DEFUN([gl_INIT],
     gl_PREREQ_NANOSLEEP
   fi
   gl_TIME_MODULE_INDICATOR([nanosleep])
+  gl_PATHMAX
   gl_FUNC_PRINTF_FREXP
   gl_FUNC_PRINTF_FREXPL
   gl_FUNC_PRINTF_POSIX
@@ -500,6 +531,19 @@ AC_DEFUN([gl_INIT],
   gl_FUNC_SPRINTF_POSIX
   gl_STDIO_MODULE_INDICATOR([sprintf-posix])
   gt_TYPE_SSIZE_T
+  gl_FUNC_STAT
+  if test $REPLACE_STAT = 1; then
+    AC_LIBOBJ([stat])
+    case "$host_os" in
+      mingw*)
+        AC_LIBOBJ([stat-w32])
+        ;;
+    esac
+    gl_PREREQ_STAT
+  fi
+  gl_SYS_STAT_MODULE_INDICATOR([stat])
+  gl_STAT_TIME
+  gl_STAT_BIRTHTIME
   gl_STDALIGN_H
   AM_STDBOOL_H
   gl_STDDEF_H
@@ -547,6 +591,8 @@ AC_DEFUN([gl_INIT],
   AC_PROG_MKDIR_P
   AC_REQUIRE([gl_HEADER_SYS_SOCKET])
   AC_PROG_MKDIR_P
+  gl_HEADER_SYS_STAT_H
+  AC_PROG_MKDIR_P
   gl_HEADER_SYS_TIME_H
   AC_PROG_MKDIR_P
   gl_SYS_TYPES_H
@@ -555,6 +601,7 @@ AC_DEFUN([gl_INIT],
   AC_PROG_MKDIR_P
   gl_SYS_WAIT_H
   AC_PROG_MKDIR_P
+  gl_FUNC_GEN_TEMPNAME
   gl_HEADER_TIME_H
   gl_TIME_R
   if test $HAVE_LOCALTIME_R = 0 || test $REPLACE_LOCALTIME_R = 1; then
@@ -658,7 +705,6 @@ changequote([, ])dnl
     AC_LIBOBJ([fcntl])
   fi
   gl_FCNTL_MODULE_INDICATOR([fcntl])
-  gl_FCNTL_H
   gl_FUNC_FDOPEN
   if test $REPLACE_FDOPEN = 1; then
     AC_LIBOBJ([fdopen])
@@ -698,12 +744,6 @@ changequote([, ])dnl
     AC_LIBOBJ([getpagesize])
   fi
   gl_UNISTD_MODULE_INDICATOR([getpagesize])
-  gl_FUNC_GETTIMEOFDAY
-  if test $HAVE_GETTIMEOFDAY = 0 || test $REPLACE_GETTIMEOFDAY = 1; then
-    AC_LIBOBJ([gettimeofday])
-    gl_PREREQ_GETTIMEOFDAY
-  fi
-  gl_SYS_TIME_MODULE_INDICATOR([gettimeofday])
   gl_FUNC_INET_PTON
   if test $HAVE_INET_PTON = 0 || test $REPLACE_INET_PTON = 1; then
     AC_LIBOBJ([inet_pton])
@@ -727,24 +767,15 @@ changequote([, ])dnl
   gl_FLOAT_EXPONENT_LOCATION
   gl_LONG_DOUBLE_EXPONENT_LOCATION
   AC_REQUIRE([gl_LONG_DOUBLE_VS_DOUBLE])
-  AC_REQUIRE([gl_LARGEFILE])
   AC_REQUIRE([gl_HEADER_SYS_SOCKET])
   if test "$ac_cv_header_winsock2_h" = yes; then
     AC_LIBOBJ([listen])
   fi
   gl_SYS_SOCKET_MODULE_INDICATOR([listen])
-  AC_REQUIRE([gl_LOCALTIME_BUFFER_DEFAULTS])
-  AC_LIBOBJ([localtime-buffer])
   gl_LOCK
   gl_MODULE_INDICATOR([lock])
   AC_CHECK_HEADERS_ONCE([semaphore.h])
   AC_CHECK_DECLS_ONCE([alarm])
-  gl_FUNC_LSTAT
-  if test $REPLACE_LSTAT = 1; then
-    AC_LIBOBJ([lstat])
-    gl_PREREQ_LSTAT
-  fi
-  gl_SYS_STAT_MODULE_INDICATOR([lstat])
   dnl Check for prerequisites for memory fence checks.
   gl_FUNC_MMAP_ANON
   AC_CHECK_HEADERS_ONCE([sys/mman.h])
@@ -758,7 +789,6 @@ changequote([, ])dnl
     gl_PREREQ_OPEN
   fi
   gl_FCNTL_MODULE_INDICATOR([open])
-  gl_PATHMAX
   gl_FUNC_PERROR
   if test $REPLACE_PERROR = 1; then
     AC_LIBOBJ([perror])
@@ -819,19 +849,6 @@ changequote([, ])dnl
   fi
   gl_SYS_SOCKET_MODULE_INDICATOR([socket])
   AC_REQUIRE([gl_LONG_DOUBLE_VS_DOUBLE])
-  gl_FUNC_STAT
-  if test $REPLACE_STAT = 1; then
-    AC_LIBOBJ([stat])
-    case "$host_os" in
-      mingw*)
-        AC_LIBOBJ([stat-w32])
-        ;;
-    esac
-    gl_PREREQ_STAT
-  fi
-  gl_SYS_STAT_MODULE_INDICATOR([stat])
-  gl_STAT_TIME
-  gl_STAT_BIRTHTIME
   AC_REQUIRE([gt_TYPE_WCHAR_T])
   AC_REQUIRE([gt_TYPE_WINT_T])
   gl_FUNC_STRERROR_R
@@ -854,8 +871,6 @@ changequote([, ])dnl
   gl_SYS_IOCTL_H
   AC_PROG_MKDIR_P
   AC_CHECK_FUNCS_ONCE([shutdown])
-  gl_HEADER_SYS_STAT_H
-  AC_PROG_MKDIR_P
   gl_THREAD
   AC_REQUIRE([gl_THREADLIB])
   gl_FUNC_USLEEP
@@ -1019,8 +1034,10 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/exitfail.h
   lib/fatal-signal.c
   lib/fatal-signal.h
+  lib/fcntl.in.h
   lib/fd-hook.c
   lib/fd-hook.h
+  lib/filename.h
   lib/float+.h
   lib/float.c
   lib/float.in.h
@@ -1043,6 +1060,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/getprogname.c
   lib/getprogname.h
   lib/gettext.h
+  lib/gettimeofday.c
   lib/intprops.h
   lib/isnan.c
   lib/isnand-nolibm.h
@@ -1054,6 +1072,9 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/itold.c
   lib/libc-config.h
   lib/limits.in.h
+  lib/localtime-buffer.c
+  lib/localtime-buffer.h
+  lib/lstat.c
   lib/malloc.c
   lib/malloca.c
   lib/malloca.h
@@ -1061,6 +1082,8 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/math.in.h
   lib/memchr.c
   lib/memchr.valgrind
+  lib/mkdir.c
+  lib/mkdtemp.c
   lib/mktime-internal.h
   lib/mktime.c
   lib/msvc-inval.c
@@ -1068,6 +1091,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/msvc-nothrow.c
   lib/msvc-nothrow.h
   lib/nanosleep.c
+  lib/pathmax.h
   lib/printf-args.c
   lib/printf-args.h
   lib/printf-frexp.c
@@ -1092,6 +1116,11 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/sockets.c
   lib/sockets.h
   lib/sprintf.c
+  lib/stat-time.c
+  lib/stat-time.h
+  lib/stat-w32.c
+  lib/stat-w32.h
+  lib/stat.c
   lib/stdalign.in.h
   lib/stdbool.in.h
   lib/stddef.in.h
@@ -1113,10 +1142,13 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/sys_select.in.h
   lib/sys_socket.c
   lib/sys_socket.in.h
+  lib/sys_stat.in.h
   lib/sys_time.in.h
   lib/sys_types.in.h
   lib/sys_uio.in.h
   lib/sys_wait.in.h
+  lib/tempname.c
+  lib/tempname.h
   lib/time.in.h
   lib/time_r.c
   lib/unistd.c
@@ -1209,6 +1241,8 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/malloca.m4
   m4/math_h.m4
   m4/memchr.m4
+  m4/mkdir.m4
+  m4/mkdtemp.m4
   m4/mktime.m4
   m4/mmap-anon.m4
   m4/mode_t.m4
@@ -1275,6 +1309,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/sys_types_h.m4
   m4/sys_uio_h.m4
   m4/sys_wait_h.m4
+  m4/tempname.m4
   m4/thread.m4
   m4/threadlib.m4
   m4/time_h.m4
@@ -1362,6 +1397,8 @@ AC_DEFUN([gl_FILE_LIST], [
   tests/test-malloca.c
   tests/test-math.c
   tests/test-memchr.c
+  tests/test-mkdir.c
+  tests/test-mkdir.h
   tests/test-nanosleep.c
   tests/test-netinet_in.c
   tests/test-once.c
@@ -1465,15 +1502,12 @@ AC_DEFUN([gl_FILE_LIST], [
   tests=lib/connect.c
   tests=lib/ctype.in.h
   tests=lib/fcntl.c
-  tests=lib/fcntl.in.h
   tests=lib/fdopen.c
-  tests=lib/filename.h
   tests=lib/fstat.c
   tests=lib/ftruncate.c
   tests=lib/getcwd-lgpl.c
   tests=lib/getdtablesize.c
   tests=lib/getpagesize.c
-  tests=lib/gettimeofday.c
   tests=lib/glthread/lock.c
   tests=lib/glthread/lock.h
   tests=lib/glthread/thread.c
@@ -1486,12 +1520,8 @@ AC_DEFUN([gl_FILE_LIST], [
   tests=lib/ioctl.c
   tests=lib/isblank.c
   tests=lib/listen.c
-  tests=lib/localtime-buffer.c
-  tests=lib/localtime-buffer.h
-  tests=lib/lstat.c
   tests=lib/netinet_in.in.h
   tests=lib/open.c
-  tests=lib/pathmax.h
   tests=lib/perror.c
   tests=lib/pipe.c
   tests=lib/pthread-thread.c
@@ -1503,15 +1533,11 @@ AC_DEFUN([gl_FILE_LIST], [
   tests=lib/setsockopt.c
   tests=lib/sleep.c
   tests=lib/socket.c
-  tests=lib/stat-time.c
-  tests=lib/stat-time.h
   tests=lib/stat-w32.c
   tests=lib/stat-w32.h
-  tests=lib/stat.c
   tests=lib/strerror_r.c
   tests=lib/symlink.c
   tests=lib/sys_ioctl.in.h
-  tests=lib/sys_stat.in.h
   tests=lib/usleep.c
   tests=lib/w32sock.h
   tests=lib/warn-on-use.h

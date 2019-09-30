@@ -20,4 +20,6 @@ int unsetenv(const char *name);
 const char *getprogname(void);
 void setprogname(const char *progname);
 
+char *mkdtemp(char *template);
+
 #endif
