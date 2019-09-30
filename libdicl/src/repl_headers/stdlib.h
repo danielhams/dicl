@@ -17,7 +17,7 @@ extern long double rpl_strtold(const char *, char **);
 int setenv(const char *name, const char*value, int overwrite);
 int unsetenv(const char *name);
 
-const char *getprogname();
+const char *getprogname(void);
 void setprogname(const char *progname);
 
 #endif
