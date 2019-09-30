@@ -39,6 +39,7 @@
 #  --no-libtool \
 #  --macro-prefix=gl \
 #  --no-vc-files \
+#  getline \
 #  getopt-posix \
 #  getprogname \
 #  mktime \
@@ -59,6 +60,7 @@
 # Specification in the form of a few gnulib-tool.m4 macro invocations:
 gl_LOCAL_DIR([])
 gl_MODULES([
+  getline
   getopt-posix
   getprogname
   mktime

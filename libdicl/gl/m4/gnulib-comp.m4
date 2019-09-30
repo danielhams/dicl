@@ -107,8 +107,12 @@ AC_DEFUN([gl_EARLY],
   # Code from module fwrite-tests:
   # Code from module getcwd-lgpl:
   # Code from module getcwd-lgpl-tests:
+  # Code from module getdelim:
+  # Code from module getdelim-tests:
   # Code from module getdtablesize:
   # Code from module getdtablesize-tests:
+  # Code from module getline:
+  # Code from module getline-tests:
   # Code from module getopt-posix:
   # Code from module getopt-posix-tests:
   # Code from module getpagesize:
@@ -373,6 +377,18 @@ AC_DEFUN([gl_INIT],
   if test $ac_cv_func___fseterr = no; then
     AC_LIBOBJ([fseterr])
   fi
+  gl_FUNC_GETDELIM
+  if test $HAVE_GETDELIM = 0 || test $REPLACE_GETDELIM = 1; then
+    AC_LIBOBJ([getdelim])
+    gl_PREREQ_GETDELIM
+  fi
+  gl_STDIO_MODULE_INDICATOR([getdelim])
+  gl_FUNC_GETLINE
+  if test $REPLACE_GETLINE = 1; then
+    AC_LIBOBJ([getline])
+    gl_PREREQ_GETLINE
+  fi
+  gl_STDIO_MODULE_INDICATOR([getline])
   gl_FUNC_GETOPT_POSIX
   if test $REPLACE_GETOPT = 1; then
     AC_LIBOBJ([getopt])
@@ -1013,6 +1029,8 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/frexpl.c
   lib/fseterr.c
   lib/fseterr.h
+  lib/getdelim.c
+  lib/getline.c
   lib/getopt-cdefs.in.h
   lib/getopt-core.h
   lib/getopt-ext.h
@@ -1155,7 +1173,9 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/fstat.m4
   m4/ftruncate.m4
   m4/getcwd.m4
+  m4/getdelim.m4
   m4/getdtablesize.m4
+  m4/getline.m4
   m4/getopt.m4
   m4/getpagesize.m4
   m4/getprogname.m4
@@ -1313,7 +1333,9 @@ AC_DEFUN([gl_FILE_LIST], [
   tests/test-ftruncate.sh
   tests/test-fwrite.c
   tests/test-getcwd-lgpl.c
+  tests/test-getdelim.c
   tests/test-getdtablesize.c
+  tests/test-getline.c
   tests/test-getopt-main.h
   tests/test-getopt-posix.c
   tests/test-getopt.h

@@ -487,6 +487,15 @@ EXTRA_DIST += test-getcwd-lgpl.c signature.h macros.h
 
 ## end   gnulib module getcwd-lgpl-tests
 
+## begin gnulib module getdelim-tests
+
+TESTS += test-getdelim
+check_PROGRAMS += test-getdelim
+MOSTLYCLEANFILES += test-getdelim.txt
+EXTRA_DIST += test-getdelim.c signature.h macros.h
+
+## end   gnulib module getdelim-tests
+
 ## begin gnulib module getdtablesize
 
 
@@ -503,6 +512,15 @@ check_PROGRAMS += test-getdtablesize
 EXTRA_DIST += test-getdtablesize.c signature.h macros.h
 
 ## end   gnulib module getdtablesize-tests
+
+## begin gnulib module getline-tests
+
+TESTS += test-getline
+check_PROGRAMS += test-getline
+MOSTLYCLEANFILES += test-getline.txt
+EXTRA_DIST += test-getline.c signature.h macros.h
+
+## end   gnulib module getline-tests
 
 ## begin gnulib module getopt-posix-tests
 

@@ -34,6 +34,7 @@
 #  --no-libtool \
 #  --macro-prefix=gl \
 #  --no-vc-files \
+#  getline \
 #  getopt-posix \
 #  getprogname \
 #  mktime \
@@ -279,6 +280,24 @@ EXTRA_DIST += fseterr.c fseterr.h stdio-impl.h
 EXTRA_libgnu_a_SOURCES += fseterr.c
 
 ## end   gnulib module fseterr
+
+## begin gnulib module getdelim
+
+
+EXTRA_DIST += getdelim.c
+
+EXTRA_libgnu_a_SOURCES += getdelim.c
+
+## end   gnulib module getdelim
+
+## begin gnulib module getline
+
+
+EXTRA_DIST += getline.c
+
+EXTRA_libgnu_a_SOURCES += getline.c
+
+## end   gnulib module getline
 
 ## begin gnulib module getopt-posix
 
