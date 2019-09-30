@@ -40,6 +40,7 @@
 #  --macro-prefix=gl \
 #  --no-vc-files \
 #  getopt-posix \
+#  getprogname \
 #  mktime \
 #  nanosleep \
 #  printf-posix \
@@ -59,6 +60,7 @@
 gl_LOCAL_DIR([])
 gl_MODULES([
   getopt-posix
+  getprogname
   mktime
   nanosleep
   printf-posix

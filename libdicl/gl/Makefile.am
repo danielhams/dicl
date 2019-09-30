@@ -35,6 +35,7 @@
 #  --macro-prefix=gl \
 #  --no-vc-files \
 #  getopt-posix \
+#  getprogname \
 #  mktime \
 #  nanosleep \
 #  printf-posix \
