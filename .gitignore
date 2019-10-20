@@ -29,7 +29,7 @@
 **/*.pc
 **/*.trs
 **/*.log
-**/tests/test-*
+**/tests/test-*.trs
 .libs
 .deps
 .dirstamp
