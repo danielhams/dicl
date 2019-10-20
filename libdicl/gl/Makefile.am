@@ -34,6 +34,7 @@
 #  --no-libtool \
 #  --macro-prefix=gl \
 #  --no-vc-files \
+#  fprintf-posix \
 #  getline \
 #  getopt-posix \
 #  getprogname \
@@ -290,6 +291,15 @@ EXTRA_DIST += float.c float.in.h itold.c
 EXTRA_libgnu_a_SOURCES += float.c itold.c
 
 ## end   gnulib module float
+
+## begin gnulib module fprintf-posix
+
+
+EXTRA_DIST += fprintf.c
+
+EXTRA_libgnu_a_SOURCES += fprintf.c
+
+## end   gnulib module fprintf-posix
 
 ## begin gnulib module fpucw
 

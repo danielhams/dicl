@@ -91,6 +91,8 @@ AC_DEFUN([gl_EARLY],
   # Code from module float-tests:
   # Code from module fpieee:
   AC_REQUIRE([gl_FP_IEEE])
+  # Code from module fprintf-posix:
+  # Code from module fprintf-posix-tests:
   # Code from module fpucw:
   # Code from module fputc-tests:
   # Code from module fread-tests:
@@ -105,6 +107,8 @@ AC_DEFUN([gl_EARLY],
   # Code from module ftruncate:
   # Code from module ftruncate-tests:
   # Code from module fwrite-tests:
+  # Code from module get-rusage-as:
+  # Code from module get-rusage-as-tests:
   # Code from module getcwd-lgpl:
   # Code from module getcwd-lgpl-tests:
   # Code from module getdelim:
@@ -306,6 +310,7 @@ AC_DEFUN([gl_EARLY],
   # Code from module verify-tests:
   # Code from module vfprintf-posix:
   # Code from module vfprintf-posix-tests:
+  # Code from module vma-iter:
   # Code from module vsprintf-posix:
   # Code from module vsprintf-posix-tests:
   # Code from module wait-process:
@@ -372,6 +377,8 @@ AC_DEFUN([gl_INIT],
   if test $REPLACE_ITOLD = 1; then
     AC_LIBOBJ([itold])
   fi
+  gl_FUNC_FPRINTF_POSIX
+  gl_STDIO_MODULE_INDICATOR([fprintf-posix])
   gl_FUNC_FREXP_NO_LIBM
   if test $gl_func_frexp_no_libm != yes; then
     AC_LIBOBJ([frexp])
@@ -721,6 +728,7 @@ changequote([, ])dnl
     gl_PREREQ_FDOPEN
   fi
   gl_STDIO_MODULE_INDICATOR([fdopen])
+  AC_CHECK_FUNCS_ONCE([getrlimit setrlimit])
   gl_FUNC_FSTAT
   if test $REPLACE_FSTAT = 1; then
     AC_LIBOBJ([fstat])
@@ -738,6 +746,10 @@ changequote([, ])dnl
     gl_PREREQ_FTRUNCATE
   fi
   gl_UNISTD_MODULE_INDICATOR([ftruncate])
+  AC_CHECK_FUNCS_ONCE([setrlimit])
+  gl_FUNC_MMAP_ANON
+  AC_CHECK_HEADERS_ONCE([sys/mman.h])
+  AC_CHECK_FUNCS_ONCE([mprotect])
   gl_FUNC_GETCWD_LGPL
   if test $REPLACE_GETCWD = 1; then
     AC_LIBOBJ([getcwd-lgpl])
@@ -889,6 +901,9 @@ changequote([, ])dnl
   fi
   gl_UNISTD_MODULE_INDICATOR([usleep])
   AC_REQUIRE([gl_LONG_DOUBLE_VS_DOUBLE])
+  gl_FUNC_MMAP_ANON
+  AC_REQUIRE([AC_C_INLINE])
+  AC_CHECK_FUNCS_ONCE([mquery pstat_getprocvm])
   AC_REQUIRE([gl_LONG_DOUBLE_VS_DOUBLE])
   AC_REQUIRE([AC_CANONICAL_HOST])
   case "$host_os" in
@@ -1053,6 +1068,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/float+.h
   lib/float.c
   lib/float.in.h
+  lib/fprintf.c
   lib/fpucw.h
   lib/frexp.c
   lib/frexpl.c
@@ -1212,6 +1228,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/fdopen.m4
   m4/float_h.m4
   m4/fpieee.m4
+  m4/fprintf-posix.m4
   m4/frexp.m4
   m4/frexpl.m4
   m4/fseterr.m4
@@ -1371,7 +1388,13 @@ AC_DEFUN([gl_FILE_LIST], [
   tests/test-fdopen.c
   tests/test-fgetc.c
   tests/test-float.c
+  tests/test-fprintf-posix.c
   tests/test-fprintf-posix.h
+  tests/test-fprintf-posix.sh
+  tests/test-fprintf-posix2.c
+  tests/test-fprintf-posix2.sh
+  tests/test-fprintf-posix3.c
+  tests/test-fprintf-posix3.sh
   tests/test-fputc.c
   tests/test-fread.c
   tests/test-frexp.c
@@ -1382,6 +1405,7 @@ AC_DEFUN([gl_FILE_LIST], [
   tests/test-ftruncate.c
   tests/test-ftruncate.sh
   tests/test-fwrite.c
+  tests/test-get-rusage-as.c
   tests/test-getcwd-lgpl.c
   tests/test-getdelim.c
   tests/test-getdtablesize.c
@@ -1522,6 +1546,7 @@ AC_DEFUN([gl_FILE_LIST], [
   tests=lib/fdopen.c
   tests=lib/fstat.c
   tests=lib/ftruncate.c
+  tests=lib/get-rusage-as.c
   tests=lib/getcwd-lgpl.c
   tests=lib/getdtablesize.c
   tests=lib/getpagesize.c
@@ -1545,6 +1570,7 @@ AC_DEFUN([gl_FILE_LIST], [
   tests=lib/pthread.in.h
   tests=lib/pthread_sigmask.c
   tests=lib/putenv.c
+  tests=lib/resource-ext.h
   tests=lib/same-inode.h
   tests=lib/sched.in.h
   tests=lib/setsockopt.c
@@ -1556,6 +1582,8 @@ AC_DEFUN([gl_FILE_LIST], [
   tests=lib/symlink.c
   tests=lib/sys_ioctl.in.h
   tests=lib/usleep.c
+  tests=lib/vma-iter.c
+  tests=lib/vma-iter.h
   tests=lib/w32sock.h
   tests=lib/warn-on-use.h
   tests=lib/windows-initguard.h

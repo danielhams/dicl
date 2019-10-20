@@ -342,6 +342,14 @@ EXTRA_DIST += test-float.c macros.h
 
 ## end   gnulib module float-tests
 
+## begin gnulib module fprintf-posix-tests
+
+TESTS += test-fprintf-posix.sh test-fprintf-posix2.sh test-fprintf-posix3.sh
+check_PROGRAMS += test-fprintf-posix test-fprintf-posix2 test-fprintf-posix3
+EXTRA_DIST += test-fprintf-posix.sh test-fprintf-posix.c test-fprintf-posix.h test-printf-posix.output test-fprintf-posix2.sh test-fprintf-posix2.c test-fprintf-posix3.sh test-fprintf-posix3.c infinity.h signature.h macros.h
+
+## end   gnulib module fprintf-posix-tests
+
 ## begin gnulib module fputc-tests
 
 TESTS += test-fputc
@@ -426,6 +434,22 @@ check_PROGRAMS += test-fwrite
 EXTRA_DIST += test-fwrite.c signature.h macros.h
 
 ## end   gnulib module fwrite-tests
+
+## begin gnulib module get-rusage-as
+
+libtests_a_SOURCES += get-rusage-as.c
+
+EXTRA_DIST += resource-ext.h
+
+## end   gnulib module get-rusage-as
+
+## begin gnulib module get-rusage-as-tests
+
+TESTS += test-get-rusage-as
+check_PROGRAMS += test-get-rusage-as
+EXTRA_DIST += test-get-rusage-as.c macros.h
+
+## end   gnulib module get-rusage-as-tests
 
 ## begin gnulib module getcwd-lgpl
 
@@ -1693,6 +1717,14 @@ check_PROGRAMS += test-vfprintf-posix
 EXTRA_DIST += test-vfprintf-posix.sh test-vfprintf-posix.c test-fprintf-posix.h test-printf-posix.output infinity.h signature.h macros.h
 
 ## end   gnulib module vfprintf-posix-tests
+
+## begin gnulib module vma-iter
+
+libtests_a_SOURCES += vma-iter.c
+
+EXTRA_DIST += vma-iter.h
+
+## end   gnulib module vma-iter
 
 ## begin gnulib module vsprintf-posix-tests
 
