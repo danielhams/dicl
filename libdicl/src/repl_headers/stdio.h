@@ -19,6 +19,8 @@ extern int rpl_vfprintf(FILE *, const char *, va_list);
 #define vsprintf rpl_vsprintf
 extern int rpl_vsprintf(char *,const char *, va_list);
 
+extern int vasprintf(char**, const char*, va_list);
+
 /* Missing pieces */
 #undef getline
 #define getline rpl_getline
