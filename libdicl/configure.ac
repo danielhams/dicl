@@ -1,6 +1,6 @@
 AC_PREREQ(2.65)
 AC_INIT([libdicl],
-        [0.1.0],
+        [0.1.2],
         [daniel.hams@gmail.com])
 
 AC_SUBST(ACLOCAL_AMFLAGS, "-I macros")
@@ -8,7 +8,7 @@ AC_SUBST(ACLOCAL_AMFLAGS, "-I macros")
 AC_CONFIG_SRCDIR(src)
 AC_CONFIG_MACRO_DIR(macros)
 AC_CONFIG_HEADERS(config.h)
-AM_INIT_AUTOMAKE([1.9 dist-bzip2 no-dist-gzip foreign subdir-objects])
+AM_INIT_AUTOMAKE([1.9 foreign subdir-objects])
 AC_USE_SYSTEM_EXTENSIONS
 
 ABI_VERSION=0.1
