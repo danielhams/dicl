@@ -54,6 +54,7 @@
 #  strtoll \
 #  strtoull \
 #  unsetenv \
+#  vasprintf-posix \
 #  vfprintf-posix \
 #  vsprintf-posix \
 #  wait-process
@@ -76,6 +77,7 @@ gl_MODULES([
   strtoll
   strtoull
   unsetenv
+  vasprintf-posix
   vfprintf-posix
   vsprintf-posix
   wait-process

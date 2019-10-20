@@ -49,6 +49,7 @@
 #  strtoll \
 #  strtoull \
 #  unsetenv \
+#  vasprintf-posix \
 #  vfprintf-posix \
 #  vsprintf-posix \
 #  wait-process
@@ -2133,6 +2134,15 @@ EXTRA_DIST += asnprintf.c float+.h printf-args.c printf-args.h printf-parse.c pr
 EXTRA_libgnu_a_SOURCES += asnprintf.c printf-args.c printf-parse.c vasnprintf.c
 
 ## end   gnulib module vasnprintf
+
+## begin gnulib module vasprintf
+
+
+EXTRA_DIST += asprintf.c vasprintf.c
+
+EXTRA_libgnu_a_SOURCES += asprintf.c vasprintf.c
+
+## end   gnulib module vasprintf
 
 ## begin gnulib module verify
 

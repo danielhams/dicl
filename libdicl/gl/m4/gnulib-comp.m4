@@ -298,6 +298,10 @@ AC_DEFUN([gl_EARLY],
   # Code from module usleep-tests:
   # Code from module vasnprintf:
   # Code from module vasnprintf-tests:
+  # Code from module vasprintf:
+  # Code from module vasprintf-posix:
+  # Code from module vasprintf-posix-tests:
+  # Code from module vasprintf-tests:
   # Code from module verify:
   # Code from module verify-tests:
   # Code from module vfprintf-posix:
@@ -617,6 +621,12 @@ AC_DEFUN([gl_INIT],
   fi
   gl_STDLIB_MODULE_INDICATOR([unsetenv])
   gl_FUNC_VASNPRINTF
+  gl_FUNC_VASPRINTF
+  gl_STDIO_MODULE_INDICATOR([vasprintf])
+  m4_ifdef([AM_XGETTEXT_OPTION],
+    [AM_][XGETTEXT_OPTION([--flag=asprintf:2:c-format])
+     AM_][XGETTEXT_OPTION([--flag=vasprintf:2:c-format])])
+  gl_FUNC_VASPRINTF_POSIX
   gl_FUNC_VFPRINTF_POSIX
   gl_STDIO_MODULE_INDICATOR([vfprintf-posix])
   gl_FUNC_VSPRINTF_POSIX
@@ -879,6 +889,7 @@ changequote([, ])dnl
   fi
   gl_UNISTD_MODULE_INDICATOR([usleep])
   AC_REQUIRE([gl_LONG_DOUBLE_VS_DOUBLE])
+  AC_REQUIRE([gl_LONG_DOUBLE_VS_DOUBLE])
   AC_REQUIRE([AC_CANONICAL_HOST])
   case "$host_os" in
     mingw*)
@@ -1018,6 +1029,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/alloca.in.h
   lib/arg-nonnull.h
   lib/asnprintf.c
+  lib/asprintf.c
   lib/basename-lgpl.c
   lib/c++defs.h
   lib/c-ctype.c
@@ -1156,6 +1168,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/unsetenv.c
   lib/vasnprintf.c
   lib/vasnprintf.h
+  lib/vasprintf.c
   lib/verify.h
   lib/vfprintf.c
   lib/vsprintf.c
@@ -1317,6 +1330,8 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/unistd_h.m4
   m4/usleep.m4
   m4/vasnprintf.m4
+  m4/vasprintf-posix.m4
+  m4/vasprintf.m4
   m4/vfprintf-posix.m4
   m4/vsprintf-posix.m4
   m4/wait-process.m4
@@ -1478,6 +1493,8 @@ AC_DEFUN([gl_FILE_LIST], [
   tests/test-unsetenv.c
   tests/test-usleep.c
   tests/test-vasnprintf.c
+  tests/test-vasprintf-posix.c
+  tests/test-vasprintf.c
   tests/test-verify-try.c
   tests/test-verify.c
   tests/test-verify.sh
