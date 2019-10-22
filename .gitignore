@@ -37,3 +37,4 @@
 *.o
 *~
 **/*.Tpo
+dicltester/src/dicltester/dicltester

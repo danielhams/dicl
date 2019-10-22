@@ -172,14 +172,6 @@ EXTRA_DIST += test-c-ctype.c macros.h
 
 ## end   gnulib module c-ctype-tests
 
-## begin gnulib module cloexec
-
-libtests_a_SOURCES += cloexec.c
-
-EXTRA_DIST += cloexec.h
-
-## end   gnulib module cloexec
-
 ## begin gnulib module cloexec-tests
 
 TESTS += test-cloexec
@@ -187,15 +179,6 @@ check_PROGRAMS += test-cloexec
 EXTRA_DIST += test-cloexec.c macros.h
 
 ## end   gnulib module cloexec-tests
-
-## begin gnulib module close
-
-
-EXTRA_DIST += close.c
-
-EXTRA_libtests_a_SOURCES += close.c
-
-## end   gnulib module close
 
 ## begin gnulib module close-tests
 
@@ -258,6 +241,23 @@ EXTRA_DIST += test-ctype.c
 
 ## end   gnulib module ctype-tests
 
+## begin gnulib module dup
+
+
+EXTRA_DIST += dup.c
+
+EXTRA_libtests_a_SOURCES += dup.c
+
+## end   gnulib module dup
+
+## begin gnulib module dup-tests
+
+TESTS += test-dup
+check_PROGRAMS += test-dup
+EXTRA_DIST += test-dup.c signature.h macros.h
+
+## end   gnulib module dup-tests
+
 ## begin gnulib module dup2-tests
 
 TESTS += test-dup2
@@ -283,15 +283,6 @@ check_PROGRAMS += test-errno
 EXTRA_DIST += test-errno.c
 
 ## end   gnulib module errno-tests
-
-## begin gnulib module fcntl
-
-
-EXTRA_DIST += fcntl.c
-
-EXTRA_libtests_a_SOURCES += fcntl.c
-
-## end   gnulib module fcntl
 
 ## begin gnulib module fcntl-h-tests
 
@@ -393,15 +384,6 @@ EXTRA_DIST += test-fseterr.c
 
 ## end   gnulib module fseterr-tests
 
-## begin gnulib module fstat
-
-
-EXTRA_DIST += fstat.c stat-w32.c stat-w32.h
-
-EXTRA_libtests_a_SOURCES += fstat.c stat-w32.c
-
-## end   gnulib module fstat
-
 ## begin gnulib module fstat-tests
 
 TESTS += test-fstat
@@ -477,15 +459,6 @@ MOSTLYCLEANFILES += test-getdelim.txt
 EXTRA_DIST += test-getdelim.c signature.h macros.h
 
 ## end   gnulib module getdelim-tests
-
-## begin gnulib module getdtablesize
-
-
-EXTRA_DIST += getdtablesize.c
-
-EXTRA_libtests_a_SOURCES += getdtablesize.c
-
-## end   gnulib module getdtablesize
 
 ## begin gnulib module getdtablesize-tests
 
@@ -839,15 +812,6 @@ EXTRA_DIST += test-netinet_in.c
 
 ## end   gnulib module netinet_in-tests
 
-## begin gnulib module open
-
-
-EXTRA_DIST += open.c
-
-EXTRA_libtests_a_SOURCES += open.c
-
-## end   gnulib module open
-
 ## begin gnulib module open-tests
 
 TESTS += test-open
@@ -897,6 +861,145 @@ check_PROGRAMS += test-pipe
 EXTRA_DIST += test-pipe.c signature.h macros.h
 
 ## end   gnulib module pipe-posix-tests
+
+## begin gnulib module posix_spawn-tests
+
+if POSIX_SPAWN_PORTED
+TESTS += test-posix_spawn3
+check_PROGRAMS += test-posix_spawn3
+endif
+EXTRA_DIST += test-posix_spawn3.c signature.h
+
+## end   gnulib module posix_spawn-tests
+
+## begin gnulib module posix_spawn_file_actions_addclose
+
+
+EXTRA_DIST += spawn_faction_addclose.c spawn_int.h
+
+EXTRA_libtests_a_SOURCES += spawn_faction_addclose.c
+
+## end   gnulib module posix_spawn_file_actions_addclose
+
+## begin gnulib module posix_spawn_file_actions_addclose-tests
+
+TESTS += test-posix_spawn_file_actions_addclose
+check_PROGRAMS += test-posix_spawn_file_actions_addclose
+EXTRA_DIST += test-posix_spawn_file_actions_addclose.c signature.h macros.h
+
+## end   gnulib module posix_spawn_file_actions_addclose-tests
+
+## begin gnulib module posix_spawn_file_actions_adddup2
+
+
+EXTRA_DIST += spawn_faction_adddup2.c spawn_int.h
+
+EXTRA_libtests_a_SOURCES += spawn_faction_adddup2.c
+
+## end   gnulib module posix_spawn_file_actions_adddup2
+
+## begin gnulib module posix_spawn_file_actions_adddup2-tests
+
+TESTS += test-posix_spawn_file_actions_adddup2
+check_PROGRAMS += test-posix_spawn_file_actions_adddup2
+EXTRA_DIST += test-posix_spawn_file_actions_adddup2.c signature.h macros.h
+
+## end   gnulib module posix_spawn_file_actions_adddup2-tests
+
+## begin gnulib module posix_spawn_file_actions_addopen
+
+
+EXTRA_DIST += spawn_faction_addopen.c spawn_int.h
+
+EXTRA_libtests_a_SOURCES += spawn_faction_addopen.c
+
+## end   gnulib module posix_spawn_file_actions_addopen
+
+## begin gnulib module posix_spawn_file_actions_addopen-tests
+
+TESTS += test-posix_spawn_file_actions_addopen
+check_PROGRAMS += test-posix_spawn_file_actions_addopen
+EXTRA_DIST += test-posix_spawn_file_actions_addopen.c signature.h macros.h
+
+## end   gnulib module posix_spawn_file_actions_addopen-tests
+
+## begin gnulib module posix_spawn_file_actions_destroy
+
+
+EXTRA_DIST += spawn_faction_destroy.c
+
+EXTRA_libtests_a_SOURCES += spawn_faction_destroy.c
+
+## end   gnulib module posix_spawn_file_actions_destroy
+
+## begin gnulib module posix_spawn_file_actions_init
+
+
+EXTRA_DIST += spawn_faction_init.c spawn_int.h
+
+EXTRA_libtests_a_SOURCES += spawn_faction_init.c
+
+## end   gnulib module posix_spawn_file_actions_init
+
+## begin gnulib module posix_spawnattr_destroy
+
+
+EXTRA_DIST += spawnattr_destroy.c
+
+EXTRA_libtests_a_SOURCES += spawnattr_destroy.c
+
+## end   gnulib module posix_spawnattr_destroy
+
+## begin gnulib module posix_spawnattr_init
+
+
+EXTRA_DIST += spawnattr_init.c
+
+EXTRA_libtests_a_SOURCES += spawnattr_init.c
+
+## end   gnulib module posix_spawnattr_init
+
+## begin gnulib module posix_spawnattr_setflags
+
+
+EXTRA_DIST += spawnattr_setflags.c
+
+EXTRA_libtests_a_SOURCES += spawnattr_setflags.c
+
+## end   gnulib module posix_spawnattr_setflags
+
+## begin gnulib module posix_spawnattr_setsigmask
+
+
+EXTRA_DIST += spawnattr_setsigmask.c
+
+EXTRA_libtests_a_SOURCES += spawnattr_setsigmask.c
+
+## end   gnulib module posix_spawnattr_setsigmask
+
+## begin gnulib module posix_spawnp-tests
+
+if POSIX_SPAWN_PORTED
+TESTS += test-posix_spawn1 test-posix_spawn2
+check_PROGRAMS += test-posix_spawn1 test-posix_spawn2
+
+BUILT_SOURCES += test-posix_spawn1.sh
+test-posix_spawn1.sh: test-posix_spawn1.in.sh
+	$(AM_V_GEN)rm -f $@-t $@ && \
+	cp $(srcdir)/test-posix_spawn1.in.sh $@-t && \
+	mv $@-t $@
+MOSTLYCLEANFILES += test-posix_spawn1.sh test-posix_spawn1.sh-t
+
+BUILT_SOURCES += test-posix_spawn2.sh
+test-posix_spawn2.sh: test-posix_spawn2.in.sh
+	$(AM_V_GEN)rm -f $@-t $@ && \
+	cp $(srcdir)/test-posix_spawn2.in.sh $@-t && \
+	mv $@-t $@
+MOSTLYCLEANFILES += test-posix_spawn2.sh test-posix_spawn2.sh-t
+endif
+EXTRA_DIST += test-posix_spawn1.c test-posix_spawn1.in.sh test-posix_spawn2.c test-posix_spawn2.in.sh signature.h
+
+## end   gnulib module posix_spawnp-tests
 
 ## begin gnulib module printf-frexp-tests
 
@@ -1128,43 +1231,20 @@ EXTRA_DIST += test-raise.c signature.h macros.h
 
 ## end   gnulib module raise-tests
 
+## begin gnulib module rawmemchr-tests
+
+TESTS += test-rawmemchr
+check_PROGRAMS += test-rawmemchr
+EXTRA_DIST += test-rawmemchr.c zerosize-ptr.h signature.h macros.h
+
+## end   gnulib module rawmemchr-tests
+
 ## begin gnulib module same-inode
 
 
 EXTRA_DIST += same-inode.h
 
 ## end   gnulib module same-inode
-
-## begin gnulib module sched
-
-BUILT_SOURCES += sched.h
-
-# We need the following in order to create a replacement for <sched.h> when
-# the system doesn't have one.
-sched.h: sched.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(WARN_ON_USE_H)
-	$(AM_V_GEN)rm -f $@-t $@ && \
-	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
-	  sed -e 's|@''GUARD_PREFIX''@|GL|g' \
-	      -e 's|@''HAVE_SCHED_H''@|$(HAVE_SCHED_H)|g' \
-	      -e 's|@''HAVE_SYS_CDEFS_H''@|$(HAVE_SYS_CDEFS_H)|g' \
-	      -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
-	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
-	      -e 's|@''PRAGMA_COLUMNS''@|@PRAGMA_COLUMNS@|g' \
-	      -e 's|@''NEXT_SCHED_H''@|$(NEXT_SCHED_H)|g' \
-	      -e 's|@''HAVE_STRUCT_SCHED_PARAM''@|$(HAVE_STRUCT_SCHED_PARAM)|g' \
-	      -e 's/@''GNULIB_SCHED_YIELD''@/$(GNULIB_SCHED_YIELD)/g' \
-	      -e 's|@''HAVE_SCHED_YIELD''@|$(HAVE_SCHED_YIELD)|g' \
-	      -e 's|@''REPLACE_SCHED_YIELD''@|$(REPLACE_SCHED_YIELD)|g' \
-	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \
-	      -e '/definition of _GL_WARN_ON_USE/r $(WARN_ON_USE_H)' \
-	      < $(srcdir)/sched.in.h; \
-	} > $@-t && \
-	mv $@-t $@
-MOSTLYCLEANFILES += sched.h sched.h-t
-
-EXTRA_DIST += sched.in.h
-
-## end   gnulib module sched
 
 ## begin gnulib module sched-tests
 
@@ -1328,6 +1408,14 @@ EXTRA_DIST += test-sockets.c
 
 ## end   gnulib module sockets-tests
 
+## begin gnulib module spawn-tests
+
+TESTS += test-spawn
+check_PROGRAMS += test-spawn
+EXTRA_DIST += test-spawn.c
+
+## end   gnulib module spawn-tests
+
 ## begin gnulib module sprintf-posix-tests
 
 TESTS += test-sprintf-posix
@@ -1381,9 +1469,9 @@ EXTRA_DIST += test-stddef.c
 
 ## begin gnulib module stdint-tests
 
-#TESTS += test-stdint
-#check_PROGRAMS += test-stdint
-#EXTRA_DIST += test-stdint.c
+TESTS += test-stdint
+check_PROGRAMS += test-stdint
+EXTRA_DIST += test-stdint.c
 
 ## end   gnulib module stdint-tests
 
@@ -1402,6 +1490,14 @@ check_PROGRAMS += test-stdlib
 EXTRA_DIST += test-stdlib.c test-sys_wait.h
 
 ## end   gnulib module stdlib-tests
+
+## begin gnulib module strchrnul-tests
+
+TESTS += test-strchrnul
+check_PROGRAMS += test-strchrnul
+EXTRA_DIST += test-strchrnul.c signature.h macros.h
+
+## end   gnulib module strchrnul-tests
 
 ## begin gnulib module strerror-tests
 
@@ -1725,6 +1821,24 @@ libtests_a_SOURCES += vma-iter.c
 EXTRA_DIST += vma-iter.h
 
 ## end   gnulib module vma-iter
+
+## begin gnulib module vsnprintf-posix-tests
+
+TESTS += test-vsnprintf-posix test-vsnprintf
+check_PROGRAMS += test-vsnprintf-posix test-vsnprintf
+
+EXTRA_DIST += test-vsnprintf-posix.c test-snprintf-posix.h test-vsnprintf.c minus-zero.h infinity.h nan.h signature.h macros.h
+
+## end   gnulib module vsnprintf-posix-tests
+
+## begin gnulib module vsnprintf-tests
+
+TESTS += test-vsnprintf
+check_PROGRAMS += test-vsnprintf
+
+EXTRA_DIST += test-vsnprintf.c signature.h macros.h
+
+## end   gnulib module vsnprintf-tests
 
 ## begin gnulib module vsprintf-posix-tests
 

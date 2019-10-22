@@ -7,6 +7,8 @@
 #include <stdio.h>
 
 #include "dicl_printf.h"
+#include "dicl_fprintf.h"
+#include "dicl_vsnprintf.h"
 #include "dicl_select.h"
 #include "dicl_setenv.h"
 #include "dicl_strtod.h"
@@ -23,6 +25,10 @@ int main(int argc, char**argv)
 #endif
 
     dicl_printftest();
+
+    dicl_fprintftest();
+
+    dicl_vsnprintftest();
 
     dicl_selecttest();
 

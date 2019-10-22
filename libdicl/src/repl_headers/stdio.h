@@ -22,6 +22,10 @@ extern int rpl_vfprintf(FILE *, const char *, va_list);
 #define vsprintf rpl_vsprintf
 extern int rpl_vsprintf(char *,const char *, va_list);
 
+#undef vsnprintf
+#define vsnprintf rpl_vsnprintf
+extern int rpl_vsnprintf(char *,size_t,const char *, va_list);
+
 extern int vasprintf(char**, const char*, va_list);
 
 /* Missing pieces */

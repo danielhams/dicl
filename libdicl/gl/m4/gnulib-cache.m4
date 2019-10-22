@@ -46,6 +46,8 @@
 #  mkdtemp \
 #  mktime \
 #  nanosleep \
+#  posix_spawn \
+#  posix_spawnp \
 #  printf-posix \
 #  select \
 #  setenv \
@@ -57,6 +59,7 @@
 #  unsetenv \
 #  vasprintf-posix \
 #  vfprintf-posix \
+#  vsnprintf-posix \
 #  vsprintf-posix \
 #  wait-process
 
@@ -70,6 +73,8 @@ gl_MODULES([
   mkdtemp
   mktime
   nanosleep
+  posix_spawn
+  posix_spawnp
   printf-posix
   select
   setenv
@@ -81,6 +86,7 @@ gl_MODULES([
   unsetenv
   vasprintf-posix
   vfprintf-posix
+  vsnprintf-posix
   vsprintf-posix
   wait-process
 ])
