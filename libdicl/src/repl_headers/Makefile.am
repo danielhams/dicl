@@ -4,9 +4,6 @@ SUBDIRS=			\
 	sys			\
 	$(NULL)
 
-argp.h:		$(top_srcdir)/gl/argp.h
-	cp $(top_srcdir)/gl/argp.h ./
-
 spawn.h:	$(top_srcdir)/gl/spawn.h
 	cp $(top_srcdir)/gl/spawn.h ./
 
