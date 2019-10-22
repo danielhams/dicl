@@ -48,6 +48,8 @@ AC_DEFUN([gl_EARLY],
   # Code from module alloca:
   # Code from module alloca-opt:
   # Code from module alloca-opt-tests:
+  # Code from module argp:
+  # Code from module argp-tests:
   # Code from module arpa_inet:
   # Code from module arpa_inet-tests:
   # Code from module binary-io:
@@ -119,6 +121,8 @@ AC_DEFUN([gl_EARLY],
   # Code from module getdtablesize-tests:
   # Code from module getline:
   # Code from module getline-tests:
+  # Code from module getopt-gnu:
+  # Code from module getopt-gnu-tests:
   # Code from module getopt-posix:
   # Code from module getopt-posix-tests:
   # Code from module getpagesize:
@@ -160,6 +164,8 @@ AC_DEFUN([gl_EARLY],
   # Code from module lock-tests:
   # Code from module lstat:
   # Code from module lstat-tests:
+  # Code from module malloc-gnu:
+  # Code from module malloc-gnu-tests:
   # Code from module malloc-posix:
   # Code from module malloca:
   # Code from module malloca-tests:
@@ -167,6 +173,7 @@ AC_DEFUN([gl_EARLY],
   # Code from module math-tests:
   # Code from module memchr:
   # Code from module memchr-tests:
+  # Code from module mempcpy:
   # Code from module mkdir:
   # Code from module mkdir-tests:
   # Code from module mkdtemp:
@@ -275,6 +282,7 @@ AC_DEFUN([gl_EARLY],
   # Code from module stdio-tests:
   # Code from module stdlib:
   # Code from module stdlib-tests:
+  # Code from module strcase:
   # Code from module strchrnul:
   # Code from module strchrnul-tests:
   # Code from module strerror:
@@ -284,6 +292,11 @@ AC_DEFUN([gl_EARLY],
   # Code from module strerror_r-posix-tests:
   # Code from module string:
   # Code from module string-tests:
+  # Code from module strings:
+  # Code from module strings-tests:
+  # Code from module strndup:
+  # Code from module strnlen:
+  # Code from module strnlen-tests:
   # Code from module strtod:
   # Code from module strtod-tests:
   # Code from module strtold:
@@ -310,6 +323,8 @@ AC_DEFUN([gl_EARLY],
   # Code from module sys_uio-tests:
   # Code from module sys_wait:
   # Code from module sys_wait-tests:
+  # Code from module sysexits:
+  # Code from module sysexits-tests:
   # Code from module tempname:
   # Code from module test-framework-sh:
   # Code from module test-framework-sh-tests:
@@ -378,6 +393,10 @@ AC_DEFUN([gl_INIT],
   gl_COMMON
   gl_source_base='gl'
   gl_FUNC_ALLOCA
+  gl_ARGP
+  m4_ifdef([AM_XGETTEXT_OPTION],
+    [AM_][XGETTEXT_OPTION([--flag=argp_error:2:c-format])
+     AM_][XGETTEXT_OPTION([--flag=argp_failure:4:c-format])])
   gl_MODULE_INDICATOR_FOR_TESTS([cloexec])
   gl_FUNC_CLOSE
   if test $REPLACE_CLOSE = 1; then
@@ -463,6 +482,10 @@ AC_DEFUN([gl_INIT],
     gl_PREREQ_GETLINE
   fi
   gl_STDIO_MODULE_INDICATOR([getline])
+  gl_FUNC_GETOPT_GNU
+  dnl Because of the way gl_FUNC_GETOPT_GNU is implemented (the gl_getopt_required
+  dnl mechanism), there is no need to do any AC_LIBOBJ or AC_SUBST here; they are
+  dnl done in the getopt-posix module.
   gl_FUNC_GETOPT_POSIX
   if test $REPLACE_GETOPT = 1; then
     AC_LIBOBJ([getopt])
@@ -506,6 +529,11 @@ AC_DEFUN([gl_INIT],
     gl_PREREQ_LSTAT
   fi
   gl_SYS_STAT_MODULE_INDICATOR([lstat])
+  gl_FUNC_MALLOC_GNU
+  if test $REPLACE_MALLOC = 1; then
+    AC_LIBOBJ([malloc])
+  fi
+  gl_MODULE_INDICATOR([malloc-gnu])
   gl_FUNC_MALLOC_POSIX
   if test $REPLACE_MALLOC = 1; then
     AC_LIBOBJ([malloc])
@@ -519,6 +547,12 @@ AC_DEFUN([gl_INIT],
     gl_PREREQ_MEMCHR
   fi
   gl_STRING_MODULE_INDICATOR([memchr])
+  gl_FUNC_MEMPCPY
+  if test $HAVE_MEMPCPY = 0; then
+    AC_LIBOBJ([mempcpy])
+    gl_PREREQ_MEMPCPY
+  fi
+  gl_STRING_MODULE_INDICATOR([mempcpy])
   gl_FUNC_MKDIR
   if test $REPLACE_MKDIR = 1; then
     AC_LIBOBJ([mkdir])
@@ -623,6 +657,11 @@ AC_DEFUN([gl_INIT],
   fi
   gl_SIGNAL_MODULE_INDICATOR([sigprocmask])
   gl_SIZE_MAX
+  gl_FUNC_SLEEP
+  if test $HAVE_SLEEP = 0 || test $REPLACE_SLEEP = 1; then
+    AC_LIBOBJ([sleep])
+  fi
+  gl_UNISTD_MODULE_INDICATOR([sleep])
   AC_REQUIRE([gl_SOCKETLIB])
   AC_REQUIRE([gl_SOCKETS])
   gl_TYPE_SOCKLEN_T
@@ -649,6 +688,15 @@ AC_DEFUN([gl_INIT],
   gl_STDINT_H
   gl_STDIO_H
   gl_STDLIB_H
+  gl_STRCASE
+  if test $HAVE_STRCASECMP = 0; then
+    AC_LIBOBJ([strcasecmp])
+    gl_PREREQ_STRCASECMP
+  fi
+  if test $HAVE_STRNCASECMP = 0; then
+    AC_LIBOBJ([strncasecmp])
+    gl_PREREQ_STRNCASECMP
+  fi
   gl_FUNC_STRCHRNUL
   if test $HAVE_STRCHRNUL = 0 || test $REPLACE_STRCHRNUL = 1; then
     AC_LIBOBJ([strchrnul])
@@ -668,6 +716,18 @@ AC_DEFUN([gl_INIT],
     gl_PREREQ_SYS_H_WINSOCK2
   fi
   gl_HEADER_STRING_H
+  gl_HEADER_STRINGS_H
+  gl_FUNC_STRNDUP
+  if test $HAVE_STRNDUP = 0 || test $REPLACE_STRNDUP = 1; then
+    AC_LIBOBJ([strndup])
+  fi
+  gl_STRING_MODULE_INDICATOR([strndup])
+  gl_FUNC_STRNLEN
+  if test $HAVE_DECL_STRNLEN = 0 || test $REPLACE_STRNLEN = 1; then
+    AC_LIBOBJ([strnlen])
+    gl_PREREQ_STRNLEN
+  fi
+  gl_STRING_MODULE_INDICATOR([strnlen])
   gl_FUNC_STRTOD
   if test $HAVE_STRTOD = 0 || test $REPLACE_STRTOD = 1; then
     AC_LIBOBJ([strtod])
@@ -706,6 +766,7 @@ AC_DEFUN([gl_INIT],
   AC_PROG_MKDIR_P
   gl_SYS_WAIT_H
   AC_PROG_MKDIR_P
+  gl_SYSEXITS
   gl_FUNC_GEN_TEMPNAME
   gl_HEADER_TIME_H
   gl_TIME_R
@@ -983,11 +1044,6 @@ changequote([, ])dnl
   AC_REQUIRE([gl_FLOAT_EXPONENT_LOCATION])
   AC_REQUIRE([gl_DOUBLE_EXPONENT_LOCATION])
   AC_REQUIRE([gl_LONG_DOUBLE_EXPONENT_LOCATION])
-  gl_FUNC_SLEEP
-  if test $HAVE_SLEEP = 0 || test $REPLACE_SLEEP = 1; then
-    AC_LIBOBJ([sleep])
-  fi
-  gl_UNISTD_MODULE_INDICATOR([sleep])
   AC_CHECK_DECLS_ONCE([alarm])
   AC_REQUIRE([gl_HEADER_SYS_SOCKET])
   if test "$ac_cv_header_winsock2_h" = yes; then
@@ -1014,6 +1070,10 @@ changequote([, ])dnl
   gl_STRING_MODULE_INDICATOR([strerror_r])
   dnl For the modules argp, error.
   gl_MODULE_INDICATOR([strerror_r-posix])
+  dnl Check for prerequisites for memory fence checks.
+  gl_FUNC_MMAP_ANON
+  AC_CHECK_HEADERS_ONCE([sys/mman.h])
+  AC_CHECK_FUNCS_ONCE([mprotect])
   gt_LOCALE_FR
   gt_LOCALE_FR_UTF8
   gt_LOCALE_FR
@@ -1179,6 +1239,19 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/alloca.c
   lib/alloca.in.h
   lib/arg-nonnull.h
+  lib/argp-ba.c
+  lib/argp-eexst.c
+  lib/argp-fmtstream.c
+  lib/argp-fmtstream.h
+  lib/argp-fs-xinl.c
+  lib/argp-help.c
+  lib/argp-namefrob.h
+  lib/argp-parse.c
+  lib/argp-pin.c
+  lib/argp-pv.c
+  lib/argp-pvh.c
+  lib/argp-xinl.c
+  lib/argp.h
   lib/asnprintf.c
   lib/asprintf.c
   lib/basename-lgpl.c
@@ -1252,6 +1325,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/math.in.h
   lib/memchr.c
   lib/memchr.valgrind
+  lib/mempcpy.c
   lib/mkdir.c
   lib/mkdtemp.c
   lib/mktime-internal.h
@@ -1287,6 +1361,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/signbitl.c
   lib/sigprocmask.c
   lib/size_max.h
+  lib/sleep.c
   lib/sockets.c
   lib/sockets.h
   lib/spawn.c
@@ -1307,13 +1382,18 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/stdio-impl.h
   lib/stdio.in.h
   lib/stdlib.in.h
+  lib/strcasecmp.c
   lib/strchrnul.c
   lib/strchrnul.valgrind
   lib/strerror-override.c
   lib/strerror-override.h
   lib/strerror.c
   lib/string.in.h
+  lib/strings.in.h
   lib/stripslash.c
+  lib/strncasecmp.c
+  lib/strndup.c
+  lib/strnlen.c
   lib/strtod.c
   lib/strtol.c
   lib/strtold.c
@@ -1328,6 +1408,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/sys_types.in.h
   lib/sys_uio.in.h
   lib/sys_wait.in.h
+  lib/sysexits.in.h
   lib/tempname.c
   lib/tempname.h
   lib/time.in.h
@@ -1358,6 +1439,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/__inline.m4
   m4/absolute-header.m4
   m4/alloca.m4
+  m4/argp.m4
   m4/arpa_inet_h.m4
   m4/asm-underscore.m4
   m4/close.m4
@@ -1426,6 +1508,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/malloca.m4
   m4/math_h.m4
   m4/memchr.m4
+  m4/mempcpy.m4
   m4/mkdir.m4
   m4/mkdtemp.m4
   m4/mktime.m4
@@ -1482,10 +1565,14 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/stdint_h.m4
   m4/stdio_h.m4
   m4/stdlib_h.m4
+  m4/strcase.m4
   m4/strchrnul.m4
   m4/strerror.m4
   m4/strerror_r.m4
   m4/string_h.m4
+  m4/strings_h.m4
+  m4/strndup.m4
+  m4/strnlen.m4
   m4/strtod.m4
   m4/strtold.m4
   m4/strtoll.m4
@@ -1499,6 +1586,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/sys_types_h.m4
   m4/sys_uio_h.m4
   m4/sys_wait_h.m4
+  m4/sysexits.m4
   m4/tempname.m4
   m4/thread.m4
   m4/threadlib.m4
@@ -1533,6 +1621,8 @@ AC_DEFUN([gl_FILE_LIST], [
   tests/signature.h
   tests/test-accept.c
   tests/test-alloca-opt.c
+  tests/test-argp-2.sh
+  tests/test-argp.c
   tests/test-arpa_inet.c
   tests/test-binary-io.c
   tests/test-binary-io.sh
@@ -1573,9 +1663,11 @@ AC_DEFUN([gl_FILE_LIST], [
   tests/test-getdelim.c
   tests/test-getdtablesize.c
   tests/test-getline.c
+  tests/test-getopt-gnu.c
   tests/test-getopt-main.h
   tests/test-getopt-posix.c
   tests/test-getopt.h
+  tests/test-getopt_long.h
   tests/test-getprogname.c
   tests/test-gettimeofday.c
   tests/test-ignore-value.c
@@ -1596,6 +1688,7 @@ AC_DEFUN([gl_FILE_LIST], [
   tests/test-lock.c
   tests/test-lstat.c
   tests/test-lstat.h
+  tests/test-malloc-gnu.c
   tests/test-malloca.c
   tests/test-math.c
   tests/test-memchr.c
@@ -1666,6 +1759,8 @@ AC_DEFUN([gl_FILE_LIST], [
   tests/test-strerror.c
   tests/test-strerror_r.c
   tests/test-string.c
+  tests/test-strings.c
+  tests/test-strnlen.c
   tests/test-strtod.c
   tests/test-strtod1.c
   tests/test-strtod1.sh
@@ -1685,6 +1780,7 @@ AC_DEFUN([gl_FILE_LIST], [
   tests/test-sys_uio.c
   tests/test-sys_wait.c
   tests/test-sys_wait.h
+  tests/test-sysexits.c
   tests/test-thread_create.c
   tests/test-thread_self.c
   tests/test-time.c
@@ -1744,7 +1840,6 @@ AC_DEFUN([gl_FILE_LIST], [
   tests=lib/resource-ext.h
   tests=lib/same-inode.h
   tests=lib/setsockopt.c
-  tests=lib/sleep.c
   tests=lib/socket.c
   tests=lib/spawn_faction_addclose.c
   tests=lib/spawn_faction_adddup2.c

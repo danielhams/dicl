@@ -34,6 +34,7 @@
 #  --no-libtool \
 #  --macro-prefix=gl \
 #  --no-vc-files \
+#  argp \
 #  fprintf-posix \
 #  getline \
 #  getopt-posix \
@@ -126,6 +127,12 @@ MOSTLYCLEANFILES += alloca.h alloca.h-t
 EXTRA_DIST += alloca.in.h
 
 ## end   gnulib module alloca-opt
+
+## begin gnulib module argp
+
+libgnu_a_SOURCES += argp.h argp-ba.c argp-eexst.c             argp-fmtstream.c argp-fmtstream.h argp-fs-xinl.c argp-help.c             argp-namefrob.h argp-parse.c argp-pin.c argp-pv.c argp-pvh.c             argp-xinl.c
+
+## end   gnulib module argp
 
 ## begin gnulib module c-ctype
 
@@ -544,6 +551,15 @@ EXTRA_libgnu_a_SOURCES += lstat.c
 
 ## end   gnulib module lstat
 
+## begin gnulib module malloc-gnu
+
+
+EXTRA_DIST += malloc.c
+
+EXTRA_libgnu_a_SOURCES += malloc.c
+
+## end   gnulib module malloc-gnu
+
 ## begin gnulib module malloc-posix
 
 
@@ -870,6 +886,15 @@ EXTRA_libgnu_a_SOURCES += memchr.c
 
 ## end   gnulib module memchr
 
+## begin gnulib module mempcpy
+
+
+EXTRA_DIST += mempcpy.c
+
+EXTRA_libgnu_a_SOURCES += mempcpy.c
+
+## end   gnulib module mempcpy
+
 ## begin gnulib module mkdir
 
 
@@ -1136,6 +1161,15 @@ EXTRA_libgnu_a_SOURCES += sigprocmask.c
 libgnu_a_SOURCES += size_max.h
 
 ## end   gnulib module size_max
+
+## begin gnulib module sleep
+
+
+EXTRA_DIST += sleep.c
+
+EXTRA_libgnu_a_SOURCES += sleep.c
+
+## end   gnulib module sleep
 
 ## begin gnulib module snippet/_Noreturn
 
@@ -1656,6 +1690,15 @@ EXTRA_DIST += stdlib.in.h
 
 ## end   gnulib module stdlib
 
+## begin gnulib module strcase
+
+
+EXTRA_DIST += strcasecmp.c strncasecmp.c
+
+EXTRA_libgnu_a_SOURCES += strcasecmp.c strncasecmp.c
+
+## end   gnulib module strcase
+
 ## begin gnulib module strchrnul
 
 
@@ -1784,6 +1827,55 @@ MOSTLYCLEANFILES += string.h string.h-t
 EXTRA_DIST += string.in.h
 
 ## end   gnulib module string
+
+## begin gnulib module strings
+
+BUILT_SOURCES += strings.h
+
+# We need the following in order to create <strings.h> when the system
+# doesn't have one that works with the given compiler.
+strings.h: strings.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(WARN_ON_USE_H) $(ARG_NONNULL_H)
+	$(AM_V_GEN)rm -f $@-t $@ && \
+	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
+	  sed -e 's|@''GUARD_PREFIX''@|GL|g' \
+	      -e 's|@''HAVE_STRINGS_H''@|$(HAVE_STRINGS_H)|g' \
+	      -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
+	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
+	      -e 's|@''PRAGMA_COLUMNS''@|@PRAGMA_COLUMNS@|g' \
+	      -e 's|@''NEXT_STRINGS_H''@|$(NEXT_STRINGS_H)|g' \
+	      -e 's/@''GNULIB_FFS''@/$(GNULIB_FFS)/g' \
+	      -e 's|@''HAVE_FFS''@|$(HAVE_FFS)|g' \
+	      -e 's|@''HAVE_STRCASECMP''@|$(HAVE_STRCASECMP)|g' \
+	      -e 's|@''HAVE_DECL_STRNCASECMP''@|$(HAVE_DECL_STRNCASECMP)|g' \
+	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \
+	      -e '/definition of _GL_ARG_NONNULL/r $(ARG_NONNULL_H)' \
+	      -e '/definition of _GL_WARN_ON_USE/r $(WARN_ON_USE_H)' \
+	      < $(srcdir)/strings.in.h; \
+	} > $@-t && \
+	mv $@-t $@
+MOSTLYCLEANFILES += strings.h strings.h-t
+
+EXTRA_DIST += strings.in.h
+
+## end   gnulib module strings
+
+## begin gnulib module strndup
+
+
+EXTRA_DIST += strndup.c
+
+EXTRA_libgnu_a_SOURCES += strndup.c
+
+## end   gnulib module strndup
+
+## begin gnulib module strnlen
+
+
+EXTRA_DIST += strnlen.c
+
+EXTRA_libgnu_a_SOURCES += strnlen.c
+
+## end   gnulib module strnlen
 
 ## begin gnulib module strtod
 
@@ -2084,6 +2176,35 @@ MOSTLYCLEANDIRS += sys
 EXTRA_DIST += sys_wait.in.h
 
 ## end   gnulib module sys_wait
+
+## begin gnulib module sysexits
+
+BUILT_SOURCES += $(SYSEXITS_H)
+
+# We need the following in order to create <sysexits.h> when the system
+# doesn't have one that works with the given compiler.
+if GL_GENERATE_SYSEXITS_H
+sysexits.h: sysexits.in.h $(top_builddir)/config.status
+	$(AM_V_GEN)rm -f $@-t $@ && \
+	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
+	  sed -e 's|@''GUARD_PREFIX''@|GL|g' \
+	      -e 's|@''HAVE_SYSEXITS_H''@|$(HAVE_SYSEXITS_H)|g' \
+	      -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
+	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
+	      -e 's|@''PRAGMA_COLUMNS''@|@PRAGMA_COLUMNS@|g' \
+	      -e 's|@''NEXT_SYSEXITS_H''@|$(NEXT_SYSEXITS_H)|g' \
+	      < $(srcdir)/sysexits.in.h; \
+	} > $@-t && \
+	mv -f $@-t $@
+else
+sysexits.h: $(top_builddir)/config.status
+	rm -f $@
+endif
+MOSTLYCLEANFILES += sysexits.h sysexits.h-t
+
+EXTRA_DIST += sysexits.in.h
+
+## end   gnulib module sysexits
 
 ## begin gnulib module tempname
 

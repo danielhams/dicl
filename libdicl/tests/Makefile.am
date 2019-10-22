@@ -86,6 +86,15 @@ EXTRA_DIST += test-alloca-opt.c
 
 ## end   gnulib module alloca-opt-tests
 
+## begin gnulib module argp-tests
+
+TESTS += test-argp test-argp-2.sh
+check_PROGRAMS += test-argp
+test_argp_LDADD = $(LDADD) @LIBINTL@
+EXTRA_DIST += test-argp.c test-argp-2.sh macros.h
+
+## end   gnulib module argp-tests
+
 ## begin gnulib module arpa_inet
 
 BUILT_SOURCES += arpa/inet.h
@@ -477,6 +486,15 @@ EXTRA_DIST += test-getline.c signature.h macros.h
 
 ## end   gnulib module getline-tests
 
+## begin gnulib module getopt-gnu-tests
+
+TESTS += test-getopt-gnu
+check_PROGRAMS += test-getopt-gnu
+test_getopt_gnu_LDADD = $(LDADD) $(LIBINTL)
+EXTRA_DIST += macros.h signature.h test-getopt-gnu.c test-getopt-main.h test-getopt.h test-getopt_long.h
+
+## end   gnulib module getopt-gnu-tests
+
 ## begin gnulib module getopt-posix-tests
 
 TESTS += test-getopt-posix
@@ -730,6 +748,14 @@ check_PROGRAMS += test-lstat
 EXTRA_DIST += test-lstat.h test-lstat.c signature.h macros.h
 
 ## end   gnulib module lstat-tests
+
+## begin gnulib module malloc-gnu-tests
+
+TESTS += test-malloc-gnu
+check_PROGRAMS += test-malloc-gnu
+EXTRA_DIST += test-malloc-gnu.c
+
+## end   gnulib module malloc-gnu-tests
 
 ## begin gnulib module malloca-tests
 
@@ -1325,15 +1351,6 @@ EXTRA_DIST += test-sigprocmask.c signature.h macros.h
 
 ## end   gnulib module sigprocmask-tests
 
-## begin gnulib module sleep
-
-
-EXTRA_DIST += sleep.c
-
-EXTRA_libtests_a_SOURCES += sleep.c
-
-## end   gnulib module sleep
-
 ## begin gnulib module sleep-tests
 
 TESTS += test-sleep
@@ -1532,6 +1549,22 @@ EXTRA_DIST += test-string.c
 
 ## end   gnulib module string-tests
 
+## begin gnulib module strings-tests
+
+TESTS += test-strings
+check_PROGRAMS += test-strings
+EXTRA_DIST += test-strings.c
+
+## end   gnulib module strings-tests
+
+## begin gnulib module strnlen-tests
+
+TESTS += test-strnlen
+check_PROGRAMS += test-strnlen
+EXTRA_DIST += test-strnlen.c zerosize-ptr.h signature.h macros.h
+
+## end   gnulib module strnlen-tests
+
 ## begin gnulib module strtod-tests
 
 TESTS += test-strtod
@@ -1688,6 +1721,14 @@ check_PROGRAMS += test-sys_wait
 EXTRA_DIST += test-sys_wait.c test-sys_wait.h
 
 ## end   gnulib module sys_wait-tests
+
+## begin gnulib module sysexits-tests
+
+TESTS += test-sysexits
+check_PROGRAMS += test-sysexits
+EXTRA_DIST += test-sysexits.c
+
+## end   gnulib module sysexits-tests
 
 ## begin gnulib module test-framework-sh-tests
 

@@ -39,6 +39,7 @@
 #  --no-libtool \
 #  --macro-prefix=gl \
 #  --no-vc-files \
+#  argp \
 #  fprintf-posix \
 #  getline \
 #  getopt-posix \
@@ -66,6 +67,7 @@
 # Specification in the form of a few gnulib-tool.m4 macro invocations:
 gl_LOCAL_DIR([])
 gl_MODULES([
+  argp
   fprintf-posix
   getline
   getopt-posix
