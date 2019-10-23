@@ -446,6 +446,12 @@ PRINTF_PARSE (const CHAR_T *format, DIRECTIVES *d, arguments *a)
               c = *cp++;
               switch (c)
                 {
+		  // DH
+		case 'm':
+		  {
+		  type = TYPE_STRING;
+		  break;
+		  }
                 case 'd': case 'i':
 #if HAVE_LONG_LONG_INT
                   /* If 'long long' exists and is larger than 'long':  */

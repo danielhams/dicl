@@ -40,6 +40,8 @@
 #  --macro-prefix=gl \
 #  --no-vc-files \
 #  argp \
+#  byteswap \
+#  error \
 #  fprintf-posix \
 #  getline \
 #  getopt-posix \
@@ -68,6 +70,8 @@
 gl_LOCAL_DIR([])
 gl_MODULES([
   argp
+  byteswap
+  error
   fprintf-posix
   getline
   getopt-posix

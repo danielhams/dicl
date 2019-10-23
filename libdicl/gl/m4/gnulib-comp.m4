@@ -56,6 +56,8 @@ AC_DEFUN([gl_EARLY],
   # Code from module binary-io-tests:
   # Code from module bind:
   # Code from module bind-tests:
+  # Code from module byteswap:
+  # Code from module byteswap-tests:
   # Code from module c-ctype:
   # Code from module c-ctype-tests:
   # Code from module cloexec:
@@ -397,6 +399,7 @@ AC_DEFUN([gl_INIT],
   m4_ifdef([AM_XGETTEXT_OPTION],
     [AM_][XGETTEXT_OPTION([--flag=argp_error:2:c-format])
      AM_][XGETTEXT_OPTION([--flag=argp_failure:4:c-format])])
+  gl_BYTESWAP
   gl_MODULE_INDICATOR_FOR_TESTS([cloexec])
   gl_FUNC_CLOSE
   if test $REPLACE_CLOSE = 1; then
@@ -1255,6 +1258,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/asnprintf.c
   lib/asprintf.c
   lib/basename-lgpl.c
+  lib/byteswap.in.h
   lib/c++defs.h
   lib/c-ctype.c
   lib/c-ctype.h
@@ -1442,6 +1446,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/argp.m4
   m4/arpa_inet_h.m4
   m4/asm-underscore.m4
+  m4/byteswap.m4
   m4/close.m4
   m4/codeset.m4
   m4/ctype.m4
@@ -1627,6 +1632,7 @@ AC_DEFUN([gl_FILE_LIST], [
   tests/test-binary-io.c
   tests/test-binary-io.sh
   tests/test-bind.c
+  tests/test-byteswap.c
   tests/test-c-ctype.c
   tests/test-cloexec.c
   tests/test-close.c

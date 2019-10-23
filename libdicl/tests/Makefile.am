@@ -173,6 +173,14 @@ EXTRA_DIST += test-bind.c signature.h macros.h
 
 ## end   gnulib module bind-tests
 
+## begin gnulib module byteswap-tests
+
+TESTS += test-byteswap
+check_PROGRAMS += test-byteswap
+EXTRA_DIST += test-byteswap.c macros.h
+
+## end   gnulib module byteswap-tests
+
 ## begin gnulib module c-ctype-tests
 
 TESTS += test-c-ctype

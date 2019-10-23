@@ -2924,6 +2924,14 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 # endif
               }
 #endif
+	    // DH
+	    else if ((dp->conversion == 'm'))
+	      {
+		const char * ens = strerror(errno);
+		size_t ens_length = strlen(ens);
+		memcpy( result + length, ens, ens_length );
+		length += ens_length;
+	      }
 #if (NEED_PRINTF_DIRECTIVE_A || NEED_PRINTF_LONG_DOUBLE || NEED_PRINTF_DOUBLE) && !defined IN_LIBINTL
             else if ((dp->conversion == 'a' || dp->conversion == 'A')
 # if !(NEED_PRINTF_DIRECTIVE_A || (NEED_PRINTF_LONG_DOUBLE && NEED_PRINTF_DOUBLE))
