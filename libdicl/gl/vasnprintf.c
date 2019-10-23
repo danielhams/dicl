@@ -2929,6 +2929,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 	      {
 		const char * ens = strerror(errno);
 		size_t ens_length = strlen(ens);
+		ENSURE_ALLOCATION (xsum (length, ens_length));
 		memcpy( result + length, ens, ens_length );
 		length += ens_length;
 	      }
