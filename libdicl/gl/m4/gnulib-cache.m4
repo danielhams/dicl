@@ -42,19 +42,28 @@
 #  argp \
 #  byteswap \
 #  error \
+#  fnmatch-gnu \
 #  fprintf-posix \
+#  futimens \
 #  getline \
 #  getopt-posix \
 #  getprogname \
 #  mkdtemp \
 #  mktime \
 #  nanosleep \
+#  obstack \
+#  obstack-printf \
 #  posix_spawn \
 #  posix_spawnp \
 #  printf-posix \
+#  qsort_r \
 #  select \
 #  setenv \
 #  sprintf-posix \
+#  stpcpy \
+#  stpncpy \
+#  strerror_r-posix \
+#  strsep \
 #  strtod \
 #  strtold \
 #  strtoll \
@@ -72,19 +81,28 @@ gl_MODULES([
   argp
   byteswap
   error
+  fnmatch-gnu
   fprintf-posix
+  futimens
   getline
   getopt-posix
   getprogname
   mkdtemp
   mktime
   nanosleep
+  obstack
+  obstack-printf
   posix_spawn
   posix_spawnp
   printf-posix
+  qsort_r
   select
   setenv
   sprintf-posix
+  stpcpy
+  stpncpy
+  strerror_r-posix
+  strsep
   strtod
   strtold
   strtoll

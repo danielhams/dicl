@@ -15,7 +15,10 @@ replincludedir=$(includedir)/libdicl@PACKAGE_SUFFIX@
 replinclude_HEADERS=		\
 	argp.h			\
 	byteswap.h		\
+	endian.h		\
 	error.h			\
+	fnmatch.h		\
+	obstack.h		\
 	repl_select.h		\
 	spawn.h			\
 	stdio.h			\

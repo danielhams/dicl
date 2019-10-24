@@ -37,19 +37,28 @@
 #  argp \
 #  byteswap \
 #  error \
+#  fnmatch-gnu \
 #  fprintf-posix \
+#  futimens \
 #  getline \
 #  getopt-posix \
 #  getprogname \
 #  mkdtemp \
 #  mktime \
 #  nanosleep \
+#  obstack \
+#  obstack-printf \
 #  posix_spawn \
 #  posix_spawnp \
 #  printf-posix \
+#  qsort_r \
 #  select \
 #  setenv \
 #  sprintf-posix \
+#  stpcpy \
+#  stpncpy \
+#  strerror_r-posix \
+#  strsep \
 #  strtod \
 #  strtold \
 #  strtoll \
@@ -61,7 +70,7 @@
 #  vsprintf-posix \
 #  wait-process
 
-AUTOMAKE_OPTIONS = 1.11 gnits
+AUTOMAKE_OPTIONS = 1.11 gnits subdir-objects
 
 SUBDIRS =
 noinst_HEADERS =
@@ -95,6 +104,13 @@ EXTRA_libgnu_a_SOURCES =
 HAVE_INCLUDE_NEXT = (__GNUC__ || 60000000 <= __DECC_VER)
 
 ## end   gnulib module absolute-header
+
+## begin gnulib module alignof
+
+
+EXTRA_DIST += alignof.h
+
+## end   gnulib module alignof
 
 ## begin gnulib module alloca
 
@@ -322,6 +338,13 @@ EXTRA_DIST += filename.h
 
 ## end   gnulib module filename
 
+## begin gnulib module flexmember
+
+
+EXTRA_DIST += flexmember.h
+
+## end   gnulib module flexmember
+
 ## begin gnulib module float
 
 BUILT_SOURCES += $(FLOAT_H)
@@ -352,6 +375,49 @@ EXTRA_DIST += float.c float.in.h itold.c
 EXTRA_libgnu_a_SOURCES += float.c itold.c
 
 ## end   gnulib module float
+
+## begin gnulib module fnmatch
+
+
+EXTRA_DIST += fnmatch.c fnmatch_loop.c
+
+EXTRA_libgnu_a_SOURCES += fnmatch.c fnmatch_loop.c
+
+## end   gnulib module fnmatch
+
+## begin gnulib module fnmatch-h
+
+BUILT_SOURCES += $(FNMATCH_H)
+
+# We need the following in order to create <fnmatch.h>.
+if GL_GENERATE_FNMATCH_H
+fnmatch.h: fnmatch.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
+	$(AM_V_GEN)rm -f $@-t $@ && \
+	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
+	  sed -e 's|@''GUARD_PREFIX''@|GL|g' \
+	      -e 's|@''HAVE_FNMATCH_H''@|$(HAVE_FNMATCH_H)|g' \
+	      -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
+	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
+	      -e 's|@''PRAGMA_COLUMNS''@|@PRAGMA_COLUMNS@|g' \
+	      -e 's|@''NEXT_FNMATCH_H''@|$(NEXT_FNMATCH_H)|g' \
+	      -e 's/@''GNULIB_FNMATCH''@/$(GNULIB_FNMATCH)/g' \
+	      -e 's|@''HAVE_FNMATCH''@|$(HAVE_FNMATCH)|g' \
+	      -e 's|@''REPLACE_FNMATCH''@|$(REPLACE_FNMATCH)|g' \
+	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \
+	      -e '/definition of _GL_ARG_NONNULL/r $(ARG_NONNULL_H)' \
+	      -e '/definition of _GL_WARN_ON_USE/r $(WARN_ON_USE_H)' \
+	      < $(srcdir)/fnmatch.in.h; \
+	} > $@-t && \
+	mv $@-t $@
+else
+fnmatch.h: $(top_builddir)/config.status
+	rm -f $@
+endif
+MOSTLYCLEANFILES += fnmatch.h fnmatch.h-t
+
+EXTRA_DIST += fnmatch.in.h
+
+## end   gnulib module fnmatch-h
 
 ## begin gnulib module fprintf-posix
 
@@ -404,6 +470,15 @@ EXTRA_DIST += fstat.c stat-w32.c stat-w32.h
 EXTRA_libgnu_a_SOURCES += fstat.c stat-w32.c
 
 ## end   gnulib module fstat
+
+## begin gnulib module futimens
+
+
+EXTRA_DIST += futimens.c
+
+EXTRA_libgnu_a_SOURCES += futimens.c
+
+## end   gnulib module futimens
 
 ## begin gnulib module getdelim
 
@@ -480,6 +555,12 @@ libgnu_a_SOURCES += gettext.h
 
 ## end   gnulib module gettext-h
 
+## begin gnulib module gettime
+
+libgnu_a_SOURCES += gettime.c
+
+## end   gnulib module gettime
+
 ## begin gnulib module gettimeofday
 
 
@@ -488,6 +569,21 @@ EXTRA_DIST += gettimeofday.c
 EXTRA_libgnu_a_SOURCES += gettimeofday.c
 
 ## end   gnulib module gettimeofday
+
+## begin gnulib module hard-locale
+
+libgnu_a_SOURCES += hard-locale.c
+
+EXTRA_DIST += hard-locale.h
+
+## end   gnulib module hard-locale
+
+## begin gnulib module havelib
+
+
+EXTRA_DIST += $(top_srcdir)/./config.rpath
+
+## end   gnulib module havelib
 
 ## begin gnulib module intprops
 
@@ -558,6 +654,14 @@ EXTRA_DIST += limits.in.h
 
 ## end   gnulib module limits-h
 
+## begin gnulib module localcharset
+
+libgnu_a_SOURCES += localcharset.c
+
+EXTRA_DIST += localcharset.h
+
+## end   gnulib module localcharset
+
 ## begin gnulib module localtime-buffer
 
 
@@ -566,6 +670,12 @@ EXTRA_DIST += localtime-buffer.c localtime-buffer.h
 EXTRA_libgnu_a_SOURCES += localtime-buffer.c
 
 ## end   gnulib module localtime-buffer
+
+## begin gnulib module lock
+
+libgnu_a_SOURCES += glthread/lock.h glthread/lock.c
+
+## end   gnulib module lock
 
 ## begin gnulib module lstat
 
@@ -902,6 +1012,33 @@ EXTRA_DIST += math.in.h
 
 ## end   gnulib module math
 
+## begin gnulib module mbrtowc
+
+
+EXTRA_DIST += mbrtowc.c
+
+EXTRA_libgnu_a_SOURCES += mbrtowc.c
+
+## end   gnulib module mbrtowc
+
+## begin gnulib module mbsinit
+
+
+EXTRA_DIST += mbsinit.c
+
+EXTRA_libgnu_a_SOURCES += mbsinit.c
+
+## end   gnulib module mbsinit
+
+## begin gnulib module mbsrtowcs
+
+
+EXTRA_DIST += mbsrtowcs-impl.h mbsrtowcs-state.c mbsrtowcs.c
+
+EXTRA_libgnu_a_SOURCES += mbsrtowcs-state.c mbsrtowcs.c
+
+## end   gnulib module mbsrtowcs
+
 ## begin gnulib module memchr
 
 
@@ -974,6 +1111,24 @@ EXTRA_libgnu_a_SOURCES += nanosleep.c
 
 ## end   gnulib module nanosleep
 
+## begin gnulib module obstack
+
+
+EXTRA_DIST += obstack.c obstack.h
+
+EXTRA_libgnu_a_SOURCES += obstack.c
+
+## end   gnulib module obstack
+
+## begin gnulib module obstack-printf
+
+
+EXTRA_DIST += obstack_printf.c
+
+EXTRA_libgnu_a_SOURCES += obstack_printf.c
+
+## end   gnulib module obstack-printf
+
 ## begin gnulib module open
 
 
@@ -1043,6 +1198,15 @@ EXTRA_DIST += printf.c
 EXTRA_libgnu_a_SOURCES += printf.c
 
 ## end   gnulib module printf-posix
+
+## begin gnulib module qsort_r
+
+
+EXTRA_DIST += qsort.c qsort_r.c
+
+EXTRA_libgnu_a_SOURCES += qsort.c qsort_r.c
+
+## end   gnulib module qsort_r
 
 ## begin gnulib module raise
 
@@ -1715,6 +1879,24 @@ EXTRA_DIST += stdlib.in.h
 
 ## end   gnulib module stdlib
 
+## begin gnulib module stpcpy
+
+
+EXTRA_DIST += stpcpy.c
+
+EXTRA_libgnu_a_SOURCES += stpcpy.c
+
+## end   gnulib module stpcpy
+
+## begin gnulib module stpncpy
+
+
+EXTRA_DIST += stpncpy.c
+
+EXTRA_libgnu_a_SOURCES += stpncpy.c
+
+## end   gnulib module stpncpy
+
 ## begin gnulib module strcase
 
 
@@ -1733,6 +1915,13 @@ EXTRA_libgnu_a_SOURCES += strchrnul.c
 
 ## end   gnulib module strchrnul
 
+## begin gnulib module streq
+
+
+EXTRA_DIST += streq.h
+
+## end   gnulib module streq
+
 ## begin gnulib module strerror
 
 
@@ -1750,6 +1939,15 @@ EXTRA_DIST += strerror-override.c strerror-override.h
 EXTRA_libgnu_a_SOURCES += strerror-override.c
 
 ## end   gnulib module strerror-override
+
+## begin gnulib module strerror_r-posix
+
+
+EXTRA_DIST += strerror_r.c
+
+EXTRA_libgnu_a_SOURCES += strerror_r.c
+
+## end   gnulib module strerror_r-posix
 
 ## begin gnulib module string
 
@@ -1901,6 +2099,21 @@ EXTRA_DIST += strnlen.c
 EXTRA_libgnu_a_SOURCES += strnlen.c
 
 ## end   gnulib module strnlen
+
+## begin gnulib module strnlen1
+
+libgnu_a_SOURCES += strnlen1.h strnlen1.c
+
+## end   gnulib module strnlen1
+
+## begin gnulib module strsep
+
+
+EXTRA_DIST += strsep.c
+
+EXTRA_libgnu_a_SOURCES += strsep.c
+
+## end   gnulib module strsep
 
 ## begin gnulib module strtod
 
@@ -2239,6 +2452,14 @@ EXTRA_DIST += tempname.h
 
 ## end   gnulib module tempname
 
+## begin gnulib module threadlib
+
+libgnu_a_SOURCES += glthread/threadlib.c
+
+EXTRA_DIST += $(top_srcdir)/./config.rpath
+
+## end   gnulib module threadlib
+
 ## begin gnulib module time
 
 BUILT_SOURCES += time.h
@@ -2302,6 +2523,14 @@ EXTRA_DIST += time_r.c
 EXTRA_libgnu_a_SOURCES += time_r.c
 
 ## end   gnulib module time_r
+
+## begin gnulib module timespec
+
+libgnu_a_SOURCES += timespec.c
+
+EXTRA_DIST += timespec.h
+
+## end   gnulib module timespec
 
 ## begin gnulib module unistd
 
@@ -2474,6 +2703,58 @@ EXTRA_DIST += unsetenv.c
 EXTRA_libgnu_a_SOURCES += unsetenv.c
 
 ## end   gnulib module unsetenv
+
+## begin gnulib module utime
+
+
+EXTRA_DIST += utime.c
+
+EXTRA_libgnu_a_SOURCES += utime.c
+
+## end   gnulib module utime
+
+## begin gnulib module utime-h
+
+BUILT_SOURCES += $(UTIME_H)
+
+# We need the following in order to create <utime.h> when the system
+# doesn't have one that works with the given compiler.
+if GL_GENERATE_UTIME_H
+utime.h: utime.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
+	$(AM_V_GEN)rm -f $@-t $@ && \
+	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
+	  sed -e 's|@''GUARD_PREFIX''@|GL|g' \
+	      -e 's/@''HAVE_UTIME_H''@/$(HAVE_UTIME_H)/g' \
+	      -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
+	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
+	      -e 's|@''PRAGMA_COLUMNS''@|@PRAGMA_COLUMNS@|g' \
+	      -e 's|@''NEXT_UTIME_H''@|$(NEXT_UTIME_H)|g' \
+	      -e 's/@''GNULIB_UTIME''@/$(GNULIB_UTIME)/g' \
+	      -e 's|@''HAVE_UTIME''@|$(HAVE_UTIME)|g' \
+	      -e 's|@''REPLACE_UTIME''@|$(REPLACE_UTIME)|g' \
+	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \
+	      -e '/definition of _GL_ARG_NONNULL/r $(ARG_NONNULL_H)' \
+	      -e '/definition of _GL_WARN_ON_USE/r $(WARN_ON_USE_H)' \
+	      < $(srcdir)/utime.in.h; \
+	} > $@-t && \
+	mv $@-t $@
+else
+utime.h: $(top_builddir)/config.status
+	rm -f $@
+endif
+MOSTLYCLEANFILES += utime.h utime.h-t
+
+EXTRA_DIST += utime.in.h
+
+## end   gnulib module utime-h
+
+## begin gnulib module utimens
+
+libgnu_a_SOURCES += utimens.c
+
+EXTRA_DIST += utimens.h
+
+## end   gnulib module utimens
 
 ## begin gnulib module vasnprintf
 
@@ -2667,6 +2948,84 @@ MOSTLYCLEANFILES += wchar.h wchar.h-t
 EXTRA_DIST += wchar.in.h
 
 ## end   gnulib module wchar
+
+## begin gnulib module wctype-h
+
+BUILT_SOURCES += wctype.h
+libgnu_a_SOURCES += wctype-h.c
+
+# We need the following in order to create <wctype.h> when the system
+# doesn't have one that works with the given compiler.
+wctype.h: wctype.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(WARN_ON_USE_H)
+	$(AM_V_GEN)rm -f $@-t $@ && \
+	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
+	  sed -e 's|@''GUARD_PREFIX''@|GL|g' \
+	      -e 's/@''HAVE_WCTYPE_H''@/$(HAVE_WCTYPE_H)/g' \
+	      -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
+	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
+	      -e 's|@''PRAGMA_COLUMNS''@|@PRAGMA_COLUMNS@|g' \
+	      -e 's|@''NEXT_WCTYPE_H''@|$(NEXT_WCTYPE_H)|g' \
+	      -e 's/@''HAVE_CRTDEFS_H''@/$(HAVE_CRTDEFS_H)/g' \
+	      -e 's/@''GNULIB_OVERRIDES_WINT_T''@/$(GNULIB_OVERRIDES_WINT_T)/g' \
+	      -e 's/@''GNULIB_ISWBLANK''@/$(GNULIB_ISWBLANK)/g' \
+	      -e 's/@''GNULIB_WCTYPE''@/$(GNULIB_WCTYPE)/g' \
+	      -e 's/@''GNULIB_ISWCTYPE''@/$(GNULIB_ISWCTYPE)/g' \
+	      -e 's/@''GNULIB_WCTRANS''@/$(GNULIB_WCTRANS)/g' \
+	      -e 's/@''GNULIB_TOWCTRANS''@/$(GNULIB_TOWCTRANS)/g' \
+	      -e 's/@''HAVE_ISWBLANK''@/$(HAVE_ISWBLANK)/g' \
+	      -e 's/@''HAVE_ISWCNTRL''@/$(HAVE_ISWCNTRL)/g' \
+	      -e 's/@''HAVE_WCTYPE_T''@/$(HAVE_WCTYPE_T)/g' \
+	      -e 's/@''HAVE_WCTRANS_T''@/$(HAVE_WCTRANS_T)/g' \
+	      -e 's/@''HAVE_WINT_T''@/$(HAVE_WINT_T)/g' \
+	      -e 's/@''REPLACE_ISWBLANK''@/$(REPLACE_ISWBLANK)/g' \
+	      -e 's/@''REPLACE_ISWCNTRL''@/$(REPLACE_ISWCNTRL)/g' \
+	      -e 's/@''REPLACE_TOWLOWER''@/$(REPLACE_TOWLOWER)/g' \
+	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \
+	      -e '/definition of _GL_WARN_ON_USE/r $(WARN_ON_USE_H)' \
+	      < $(srcdir)/wctype.in.h; \
+	} > $@-t && \
+	mv $@-t $@
+MOSTLYCLEANFILES += wctype.h wctype.h-t
+
+EXTRA_DIST += wctype.in.h
+
+## end   gnulib module wctype-h
+
+## begin gnulib module windows-mutex
+
+
+EXTRA_DIST += windows-initguard.h windows-mutex.c windows-mutex.h
+
+EXTRA_libgnu_a_SOURCES += windows-mutex.c
+
+## end   gnulib module windows-mutex
+
+## begin gnulib module windows-once
+
+
+EXTRA_DIST += windows-once.c windows-once.h
+
+EXTRA_libgnu_a_SOURCES += windows-once.c
+
+## end   gnulib module windows-once
+
+## begin gnulib module windows-recmutex
+
+
+EXTRA_DIST += windows-initguard.h windows-recmutex.c windows-recmutex.h
+
+EXTRA_libgnu_a_SOURCES += windows-recmutex.c
+
+## end   gnulib module windows-recmutex
+
+## begin gnulib module windows-rwlock
+
+
+EXTRA_DIST += windows-initguard.h windows-rwlock.c windows-rwlock.h
+
+EXTRA_libgnu_a_SOURCES += windows-rwlock.c
+
+## end   gnulib module windows-rwlock
 
 ## begin gnulib module xalloc
 

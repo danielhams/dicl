@@ -22,4 +22,8 @@ void setprogname(const char *progname);
 
 char *mkdtemp(char *template);
 
+void qsort_r(void *, size_t, size_t,
+	     int(*)(const void*,const void*, void*),
+	     void *);
+
 #endif

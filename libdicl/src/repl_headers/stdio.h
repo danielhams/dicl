@@ -39,8 +39,7 @@ extern int vasprintf(char**, const char*, va_list);
 #undef getline
 #define getline rpl_getline
 ssize_t rpl_getline(char **lineptr, size_t *n, FILE *stream);
-#undef getdelim
-#define getdelim rpl_getdelim
-ssize_t rpl_getdelim(char **lineptr, size_t *n, int delim, FILE *stream);
+
+ssize_t getdelim(char **lineptr, size_t *n, int delim, FILE *stream);
 
 #endif
