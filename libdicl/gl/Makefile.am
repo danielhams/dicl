@@ -37,6 +37,7 @@
 #  argp \
 #  byteswap \
 #  error \
+#  faccessat \
 #  fnmatch-gnu \
 #  fprintf-posix \
 #  futimens \
@@ -152,6 +153,22 @@ libgnu_a_SOURCES += argp.h argp-ba.c argp-eexst.c             argp-fmtstream.c a
 
 ## end   gnulib module argp
 
+## begin gnulib module assure
+
+
+EXTRA_DIST += assure.h
+
+## end   gnulib module assure
+
+## begin gnulib module at-internal
+
+
+EXTRA_DIST += openat-priv.h openat-proc.c
+
+EXTRA_libgnu_a_SOURCES += openat-proc.c
+
+## end   gnulib module at-internal
+
 ## begin gnulib module byteswap
 
 BUILT_SOURCES += $(BYTESWAP_H)
@@ -181,6 +198,15 @@ libgnu_a_SOURCES += c-ctype.h c-ctype.c
 
 ## end   gnulib module c-ctype
 
+## begin gnulib module chdir-long
+
+
+EXTRA_DIST += chdir-long.c chdir-long.h
+
+EXTRA_libgnu_a_SOURCES += chdir-long.c
+
+## end   gnulib module chdir-long
+
 ## begin gnulib module cloexec
 
 libgnu_a_SOURCES += cloexec.c
@@ -197,6 +223,63 @@ EXTRA_DIST += close.c
 EXTRA_libgnu_a_SOURCES += close.c
 
 ## end   gnulib module close
+
+## begin gnulib module dirent
+
+BUILT_SOURCES += dirent.h
+
+# We need the following in order to create <dirent.h> when the system
+# doesn't have one that works with the given compiler.
+dirent.h: dirent.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
+	$(AM_V_GEN)rm -f $@-t $@ && \
+	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
+	  sed -e 's|@''GUARD_PREFIX''@|GL|g' \
+	      -e 's|@''HAVE_DIRENT_H''@|$(HAVE_DIRENT_H)|g' \
+	      -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
+	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
+	      -e 's|@''PRAGMA_COLUMNS''@|@PRAGMA_COLUMNS@|g' \
+	      -e 's|@''NEXT_DIRENT_H''@|$(NEXT_DIRENT_H)|g' \
+	      -e 's/@''GNULIB_OPENDIR''@/$(GNULIB_OPENDIR)/g' \
+	      -e 's/@''GNULIB_READDIR''@/$(GNULIB_READDIR)/g' \
+	      -e 's/@''GNULIB_REWINDDIR''@/$(GNULIB_REWINDDIR)/g' \
+	      -e 's/@''GNULIB_CLOSEDIR''@/$(GNULIB_CLOSEDIR)/g' \
+	      -e 's/@''GNULIB_DIRFD''@/$(GNULIB_DIRFD)/g' \
+	      -e 's/@''GNULIB_FDOPENDIR''@/$(GNULIB_FDOPENDIR)/g' \
+	      -e 's/@''GNULIB_SCANDIR''@/$(GNULIB_SCANDIR)/g' \
+	      -e 's/@''GNULIB_ALPHASORT''@/$(GNULIB_ALPHASORT)/g' \
+	      -e 's/@''HAVE_OPENDIR''@/$(HAVE_OPENDIR)/g' \
+	      -e 's/@''HAVE_READDIR''@/$(HAVE_READDIR)/g' \
+	      -e 's/@''HAVE_REWINDDIR''@/$(HAVE_REWINDDIR)/g' \
+	      -e 's/@''HAVE_CLOSEDIR''@/$(HAVE_CLOSEDIR)/g' \
+	      -e 's|@''HAVE_DECL_DIRFD''@|$(HAVE_DECL_DIRFD)|g' \
+	      -e 's|@''HAVE_DECL_FDOPENDIR''@|$(HAVE_DECL_FDOPENDIR)|g' \
+	      -e 's|@''HAVE_FDOPENDIR''@|$(HAVE_FDOPENDIR)|g' \
+	      -e 's|@''HAVE_SCANDIR''@|$(HAVE_SCANDIR)|g' \
+	      -e 's|@''HAVE_ALPHASORT''@|$(HAVE_ALPHASORT)|g' \
+	      -e 's|@''REPLACE_OPENDIR''@|$(REPLACE_OPENDIR)|g' \
+	      -e 's|@''REPLACE_CLOSEDIR''@|$(REPLACE_CLOSEDIR)|g' \
+	      -e 's|@''REPLACE_DIRFD''@|$(REPLACE_DIRFD)|g' \
+	      -e 's|@''REPLACE_FDOPENDIR''@|$(REPLACE_FDOPENDIR)|g' \
+	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \
+	      -e '/definition of _GL_ARG_NONNULL/r $(ARG_NONNULL_H)' \
+	      -e '/definition of _GL_WARN_ON_USE/r $(WARN_ON_USE_H)' \
+	      < $(srcdir)/dirent.in.h; \
+	} > $@-t && \
+	mv $@-t $@
+MOSTLYCLEANFILES += dirent.h dirent.h-t
+
+EXTRA_DIST += dirent.in.h
+
+## end   gnulib module dirent
+
+## begin gnulib module dirfd
+
+
+EXTRA_DIST += dirfd.c
+
+EXTRA_libgnu_a_SOURCES += dirfd.c
+
+## end   gnulib module dirfd
 
 ## begin gnulib module dirname-lgpl
 
@@ -265,6 +348,15 @@ EXTRA_libgnu_a_SOURCES += error.c
 
 ## end   gnulib module error
 
+## begin gnulib module euidaccess
+
+
+EXTRA_DIST += euidaccess.c
+
+EXTRA_libgnu_a_SOURCES += euidaccess.c
+
+## end   gnulib module euidaccess
+
 ## begin gnulib module exitfail
 
 libgnu_a_SOURCES += exitfail.c
@@ -273,11 +365,29 @@ EXTRA_DIST += exitfail.h
 
 ## end   gnulib module exitfail
 
+## begin gnulib module faccessat
+
+
+EXTRA_DIST += at-func.c faccessat.c
+
+EXTRA_libgnu_a_SOURCES += at-func.c faccessat.c
+
+## end   gnulib module faccessat
+
 ## begin gnulib module fatal-signal
 
 libgnu_a_SOURCES += fatal-signal.h fatal-signal.c
 
 ## end   gnulib module fatal-signal
+
+## begin gnulib module fchdir
+
+
+EXTRA_DIST += fchdir.c
+
+EXTRA_libgnu_a_SOURCES += fchdir.c
+
+## end   gnulib module fchdir
 
 ## begin gnulib module fcntl
 
@@ -331,12 +441,26 @@ EXTRA_DIST += fd-hook.h
 
 ## end   gnulib module fd-hook
 
+## begin gnulib module fd-safer-flag
+
+libgnu_a_SOURCES += fd-safer-flag.c dup-safer-flag.c
+
+## end   gnulib module fd-safer-flag
+
 ## begin gnulib module filename
 
 
 EXTRA_DIST += filename.h
 
 ## end   gnulib module filename
+
+## begin gnulib module filenamecat-lgpl
+
+libgnu_a_SOURCES += filenamecat-lgpl.c
+
+EXTRA_DIST += filenamecat.h
+
+## end   gnulib module filenamecat-lgpl
 
 ## begin gnulib module flexmember
 
@@ -471,6 +595,15 @@ EXTRA_libgnu_a_SOURCES += fstat.c stat-w32.c
 
 ## end   gnulib module fstat
 
+## begin gnulib module fstatat
+
+
+EXTRA_DIST += at-func.c fstatat.c
+
+EXTRA_libgnu_a_SOURCES += at-func.c fstatat.c
+
+## end   gnulib module fstatat
+
 ## begin gnulib module futimens
 
 
@@ -479,6 +612,15 @@ EXTRA_DIST += futimens.c
 EXTRA_libgnu_a_SOURCES += futimens.c
 
 ## end   gnulib module futimens
+
+## begin gnulib module getcwd-lgpl
+
+
+EXTRA_DIST += getcwd-lgpl.c
+
+EXTRA_libgnu_a_SOURCES += getcwd-lgpl.c
+
+## end   gnulib module getcwd-lgpl
 
 ## begin gnulib module getdelim
 
@@ -497,6 +639,15 @@ EXTRA_DIST += getdtablesize.c
 EXTRA_libgnu_a_SOURCES += getdtablesize.c
 
 ## end   gnulib module getdtablesize
+
+## begin gnulib module getgroups
+
+
+EXTRA_DIST += getgroups.c
+
+EXTRA_libgnu_a_SOURCES += getgroups.c
+
+## end   gnulib module getgroups
 
 ## begin gnulib module getline
 
@@ -569,6 +720,15 @@ EXTRA_DIST += gettimeofday.c
 EXTRA_libgnu_a_SOURCES += gettimeofday.c
 
 ## end   gnulib module gettimeofday
+
+## begin gnulib module group-member
+
+
+EXTRA_DIST += group-member.c
+
+EXTRA_libgnu_a_SOURCES += group-member.c
+
+## end   gnulib module group-member
 
 ## begin gnulib module hard-locale
 
@@ -1057,6 +1217,15 @@ EXTRA_libgnu_a_SOURCES += mempcpy.c
 
 ## end   gnulib module mempcpy
 
+## begin gnulib module memrchr
+
+
+EXTRA_DIST += memrchr.c
+
+EXTRA_libgnu_a_SOURCES += memrchr.c
+
+## end   gnulib module memrchr
+
 ## begin gnulib module mkdir
 
 
@@ -1137,6 +1306,28 @@ EXTRA_DIST += open.c
 EXTRA_libgnu_a_SOURCES += open.c
 
 ## end   gnulib module open
+
+## begin gnulib module openat
+
+
+EXTRA_DIST += openat.c
+
+EXTRA_libgnu_a_SOURCES += openat.c
+
+## end   gnulib module openat
+
+## begin gnulib module openat-die
+
+libgnu_a_SOURCES += openat-die.c
+
+## end   gnulib module openat-die
+
+## begin gnulib module openat-h
+
+
+EXTRA_DIST += openat.h
+
+## end   gnulib module openat-h
 
 ## begin gnulib module pathmax
 
@@ -1225,6 +1416,30 @@ EXTRA_DIST += rawmemchr.c rawmemchr.valgrind
 EXTRA_libgnu_a_SOURCES += rawmemchr.c
 
 ## end   gnulib module rawmemchr
+
+## begin gnulib module realloc-posix
+
+
+EXTRA_DIST += realloc.c
+
+EXTRA_libgnu_a_SOURCES += realloc.c
+
+## end   gnulib module realloc-posix
+
+## begin gnulib module root-uid
+
+
+EXTRA_DIST += root-uid.h
+
+## end   gnulib module root-uid
+
+## begin gnulib module save-cwd
+
+libgnu_a_SOURCES += save-cwd.c
+
+EXTRA_DIST += save-cwd.h
+
+## end   gnulib module save-cwd
 
 ## begin gnulib module sched
 
@@ -1914,6 +2129,15 @@ EXTRA_DIST += strchrnul.c strchrnul.valgrind
 EXTRA_libgnu_a_SOURCES += strchrnul.c
 
 ## end   gnulib module strchrnul
+
+## begin gnulib module strdup-posix
+
+
+EXTRA_DIST += strdup.c
+
+EXTRA_libgnu_a_SOURCES += strdup.c
+
+## end   gnulib module strdup-posix
 
 ## begin gnulib module streq
 
@@ -2694,6 +2918,14 @@ MOSTLYCLEANFILES += unistd.h unistd.h-t
 EXTRA_DIST += unistd.in.h
 
 ## end   gnulib module unistd
+
+## begin gnulib module unistd-safer
+
+libgnu_a_SOURCES += dup-safer.c fd-safer.c pipe-safer.c
+
+EXTRA_DIST += unistd--.h unistd-safer.h
+
+## end   gnulib module unistd-safer
 
 ## begin gnulib module unsetenv
 

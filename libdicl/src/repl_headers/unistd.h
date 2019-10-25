@@ -8,4 +8,16 @@
 #endif
 #include "repl_select.h"
 
+# define AT_FDCWD (-3041965)
+
+# define AT_SYMLINK_NOFOLLOW 4096
+
+# define AT_REMOVEDIR 1
+
+# define AT_SYMLINK_FOLLOW 2
+
+# define AT_EACCESS 4
+
+int faccessat(int, const char*, int, int);
+
 #endif

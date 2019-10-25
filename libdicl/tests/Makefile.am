@@ -149,22 +149,6 @@ EXTRA_DIST += test-arpa_inet.c
 
 ## end   gnulib module arpa_inet-tests
 
-## begin gnulib module assure
-
-
-EXTRA_DIST += assure.h
-
-## end   gnulib module assure
-
-## begin gnulib module at-internal
-
-
-EXTRA_DIST += openat-priv.h openat-proc.c
-
-EXTRA_libtests_a_SOURCES += openat-proc.c
-
-## end   gnulib module at-internal
-
 ## begin gnulib module binary-io
 
 libtests_a_SOURCES += binary-io.h binary-io.c
@@ -247,15 +231,6 @@ EXTRA_DIST += test-c-ctype.c macros.h
 
 ## end   gnulib module c-ctype-tests
 
-## begin gnulib module chdir-long
-
-
-EXTRA_DIST += chdir-long.c chdir-long.h
-
-EXTRA_libtests_a_SOURCES += chdir-long.c
-
-## end   gnulib module chdir-long
-
 ## begin gnulib module chdir-tests
 
 TESTS += test-chdir
@@ -333,54 +308,6 @@ EXTRA_DIST += test-ctype.c
 
 ## end   gnulib module ctype-tests
 
-## begin gnulib module dirent
-
-BUILT_SOURCES += dirent.h
-
-# We need the following in order to create <dirent.h> when the system
-# doesn't have one that works with the given compiler.
-dirent.h: dirent.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
-	$(AM_V_GEN)rm -f $@-t $@ && \
-	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
-	  sed -e 's|@''GUARD_PREFIX''@|GL|g' \
-	      -e 's|@''HAVE_DIRENT_H''@|$(HAVE_DIRENT_H)|g' \
-	      -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
-	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
-	      -e 's|@''PRAGMA_COLUMNS''@|@PRAGMA_COLUMNS@|g' \
-	      -e 's|@''NEXT_DIRENT_H''@|$(NEXT_DIRENT_H)|g' \
-	      -e 's/@''GNULIB_OPENDIR''@/$(GNULIB_OPENDIR)/g' \
-	      -e 's/@''GNULIB_READDIR''@/$(GNULIB_READDIR)/g' \
-	      -e 's/@''GNULIB_REWINDDIR''@/$(GNULIB_REWINDDIR)/g' \
-	      -e 's/@''GNULIB_CLOSEDIR''@/$(GNULIB_CLOSEDIR)/g' \
-	      -e 's/@''GNULIB_DIRFD''@/$(GNULIB_DIRFD)/g' \
-	      -e 's/@''GNULIB_FDOPENDIR''@/$(GNULIB_FDOPENDIR)/g' \
-	      -e 's/@''GNULIB_SCANDIR''@/$(GNULIB_SCANDIR)/g' \
-	      -e 's/@''GNULIB_ALPHASORT''@/$(GNULIB_ALPHASORT)/g' \
-	      -e 's/@''HAVE_OPENDIR''@/$(HAVE_OPENDIR)/g' \
-	      -e 's/@''HAVE_READDIR''@/$(HAVE_READDIR)/g' \
-	      -e 's/@''HAVE_REWINDDIR''@/$(HAVE_REWINDDIR)/g' \
-	      -e 's/@''HAVE_CLOSEDIR''@/$(HAVE_CLOSEDIR)/g' \
-	      -e 's|@''HAVE_DECL_DIRFD''@|$(HAVE_DECL_DIRFD)|g' \
-	      -e 's|@''HAVE_DECL_FDOPENDIR''@|$(HAVE_DECL_FDOPENDIR)|g' \
-	      -e 's|@''HAVE_FDOPENDIR''@|$(HAVE_FDOPENDIR)|g' \
-	      -e 's|@''HAVE_SCANDIR''@|$(HAVE_SCANDIR)|g' \
-	      -e 's|@''HAVE_ALPHASORT''@|$(HAVE_ALPHASORT)|g' \
-	      -e 's|@''REPLACE_OPENDIR''@|$(REPLACE_OPENDIR)|g' \
-	      -e 's|@''REPLACE_CLOSEDIR''@|$(REPLACE_CLOSEDIR)|g' \
-	      -e 's|@''REPLACE_DIRFD''@|$(REPLACE_DIRFD)|g' \
-	      -e 's|@''REPLACE_FDOPENDIR''@|$(REPLACE_FDOPENDIR)|g' \
-	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \
-	      -e '/definition of _GL_ARG_NONNULL/r $(ARG_NONNULL_H)' \
-	      -e '/definition of _GL_WARN_ON_USE/r $(WARN_ON_USE_H)' \
-	      < $(srcdir)/dirent.in.h; \
-	} > $@-t && \
-	mv $@-t $@
-MOSTLYCLEANFILES += dirent.h dirent.h-t
-
-EXTRA_DIST += dirent.in.h
-
-## end   gnulib module dirent
-
 ## begin gnulib module dirent-tests
 
 TESTS += test-dirent
@@ -388,15 +315,6 @@ check_PROGRAMS += test-dirent
 EXTRA_DIST += test-dirent.c
 
 ## end   gnulib module dirent-tests
-
-## begin gnulib module dirfd
-
-
-EXTRA_DIST += dirfd.c
-
-EXTRA_libtests_a_SOURCES += dirfd.c
-
-## end   gnulib module dirfd
 
 ## begin gnulib module dtotimespec
 
@@ -447,14 +365,14 @@ EXTRA_DIST += test-errno.c
 
 ## end   gnulib module errno-tests
 
-## begin gnulib module fchdir
+## begin gnulib module faccessat-tests
 
+TESTS += test-faccessat
+check_PROGRAMS += test-faccessat
+test_faccessat_LDADD = $(LDADD) $(LIB_EACCESS) @LIBINTL@
+EXTRA_DIST += test-faccessat.c signature.h macros.h
 
-EXTRA_DIST += fchdir.c
-
-EXTRA_libtests_a_SOURCES += fchdir.c
-
-## end   gnulib module fchdir
+## end   gnulib module faccessat-tests
 
 ## begin gnulib module fchdir-tests
 
@@ -481,12 +399,6 @@ EXTRA_DIST += test-fcntl.c signature.h macros.h
 
 ## end   gnulib module fcntl-tests
 
-## begin gnulib module fd-safer-flag
-
-libtests_a_SOURCES += fd-safer-flag.c dup-safer-flag.c
-
-## end   gnulib module fd-safer-flag
-
 ## begin gnulib module fdopen
 
 
@@ -511,14 +423,6 @@ check_PROGRAMS += test-fgetc
 EXTRA_DIST += test-fgetc.c signature.h macros.h
 
 ## end   gnulib module fgetc-tests
-
-## begin gnulib module filenamecat-lgpl
-
-libtests_a_SOURCES += filenamecat-lgpl.c
-
-EXTRA_DIST += filenamecat.h
-
-## end   gnulib module filenamecat-lgpl
 
 ## begin gnulib module float-tests
 
@@ -603,15 +507,6 @@ EXTRA_DIST += test-fstat.c signature.h macros.h
 
 ## end   gnulib module fstat-tests
 
-## begin gnulib module fstatat
-
-
-EXTRA_DIST += at-func.c fstatat.c
-
-EXTRA_libtests_a_SOURCES += at-func.c fstatat.c
-
-## end   gnulib module fstatat
-
 ## begin gnulib module fstatat-tests
 
 TESTS += test-fstatat
@@ -671,15 +566,6 @@ EXTRA_DIST += test-get-rusage-as.c macros.h
 
 ## end   gnulib module get-rusage-as-tests
 
-## begin gnulib module getcwd-lgpl
-
-
-EXTRA_DIST += getcwd-lgpl.c
-
-EXTRA_libtests_a_SOURCES += getcwd-lgpl.c
-
-## end   gnulib module getcwd-lgpl
-
 ## begin gnulib module getcwd-lgpl-tests
 
 TESTS += test-getcwd-lgpl
@@ -705,6 +591,14 @@ check_PROGRAMS += test-getdtablesize
 EXTRA_DIST += test-getdtablesize.c signature.h macros.h
 
 ## end   gnulib module getdtablesize-tests
+
+## begin gnulib module getgroups-tests
+
+TESTS += test-getgroups
+check_PROGRAMS += test-getgroups
+EXTRA_DIST += test-getgroups.c signature.h macros.h
+
+## end   gnulib module getgroups-tests
 
 ## begin gnulib module getline-tests
 
@@ -1208,15 +1102,6 @@ EXTRA_DIST += test-memchr.c zerosize-ptr.h signature.h macros.h
 
 ## end   gnulib module memchr-tests
 
-## begin gnulib module memrchr
-
-
-EXTRA_DIST += memrchr.c
-
-EXTRA_libtests_a_SOURCES += memrchr.c
-
-## end   gnulib module memrchr
-
 ## begin gnulib module memrchr-tests
 
 TESTS += test-memrchr
@@ -1297,28 +1182,6 @@ check_PROGRAMS += test-open
 EXTRA_DIST += test-open.h test-open.c signature.h macros.h
 
 ## end   gnulib module open-tests
-
-## begin gnulib module openat
-
-
-EXTRA_DIST += openat.c
-
-EXTRA_libtests_a_SOURCES += openat.c
-
-## end   gnulib module openat
-
-## begin gnulib module openat-die
-
-libtests_a_SOURCES += openat-die.c
-
-## end   gnulib module openat-die
-
-## begin gnulib module openat-h
-
-
-EXTRA_DIST += openat.h
-
-## end   gnulib module openat-h
 
 ## begin gnulib module openat-tests
 
@@ -1756,29 +1619,12 @@ EXTRA_DIST += test-rawmemchr.c zerosize-ptr.h signature.h macros.h
 
 ## end   gnulib module rawmemchr-tests
 
-## begin gnulib module realloc-posix
-
-
-EXTRA_DIST += realloc.c
-
-EXTRA_libtests_a_SOURCES += realloc.c
-
-## end   gnulib module realloc-posix
-
 ## begin gnulib module same-inode
 
 
 EXTRA_DIST += same-inode.h
 
 ## end   gnulib module same-inode
-
-## begin gnulib module save-cwd
-
-libtests_a_SOURCES += save-cwd.c
-
-EXTRA_DIST += save-cwd.h
-
-## end   gnulib module save-cwd
 
 ## begin gnulib module sched-tests
 
@@ -2064,15 +1910,6 @@ EXTRA_DIST += test-strchrnul.c signature.h macros.h
 
 ## end   gnulib module strchrnul-tests
 
-## begin gnulib module strdup-posix
-
-
-EXTRA_DIST += strdup.c
-
-EXTRA_libtests_a_SOURCES += strdup.c
-
-## end   gnulib module strdup-posix
-
 ## begin gnulib module strerror-tests
 
 TESTS += test-strerror
@@ -2329,14 +2166,6 @@ check_PROGRAMS += test-timespec
 EXTRA_DIST += test-timespec.c macros.h
 
 ## end   gnulib module timespec-tests
-
-## begin gnulib module unistd-safer
-
-libtests_a_SOURCES += dup-safer.c fd-safer.c pipe-safer.c
-
-EXTRA_DIST += unistd--.h unistd-safer.h
-
-## end   gnulib module unistd-safer
 
 ## begin gnulib module unistd-safer-tests
 

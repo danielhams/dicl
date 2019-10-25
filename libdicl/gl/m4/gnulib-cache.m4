@@ -42,6 +42,7 @@
 #  argp \
 #  byteswap \
 #  error \
+#  faccessat \
 #  fnmatch-gnu \
 #  fprintf-posix \
 #  futimens \
@@ -81,6 +82,7 @@ gl_MODULES([
   argp
   byteswap
   error
+  faccessat
   fnmatch-gnu
   fprintf-posix
   futimens
