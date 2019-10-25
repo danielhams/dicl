@@ -3,7 +3,11 @@
 
 #define LITTLE_ENDIAN 1234
 #define BIG_ENDIAN 4321
+#if defined(__sgi)
+#define BYTE_ORDER 4321
+#else
 #define BYTE_ORDER 1234
+#endif
 
 #define __BYTE_ORDER    BYTE_ORDER
 #define __BIG_ENDIAN    BIG_ENDIAN
