@@ -6,6 +6,11 @@
 #else
 #include "/usr/include/stdlib.h"
 #endif
+
+#if defined(__cplusplus)
+extern "C" {
+#endif
+
 #undef strtod
 #define strtod rpl_strtod
 extern double rpl_strtod(const char *, char **);
@@ -20,10 +25,14 @@ int unsetenv(const char *name);
 const char *getprogname(void);
 void setprogname(const char *progname);
 
-char *mkdtemp(char *template);
+char *mkdtemp(char *ftemplate);
 
 void qsort_r(void *, size_t, size_t,
 	     int(*)(const void*,const void*, void*),
 	     void *);
+
+#if defined(__cplusplus)
+}
+#endif
 
 #endif

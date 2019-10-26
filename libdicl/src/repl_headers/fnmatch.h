@@ -7,6 +7,10 @@
 #include "/usr/include/fnmatch.h"
 #endif
 
+#if defined(__cplusplus)
+extern "C" {
+#endif
+
 /* We #undef these before defining them because some losing systems
    (HP-UX A.08.07 for example) define these in <unistd.h>.  */
 #undef  FNM_PATHNAME
@@ -36,5 +40,9 @@
 #undef fnmatch
 #define fnmatch rpl_fnmatch
 extern int rpl_fnmatch(const char *, const char *, int);
+
+#if defined(__cplusplus)
+}
+#endif
 
 #endif

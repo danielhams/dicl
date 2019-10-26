@@ -7,6 +7,10 @@
 #include "/usr/include/string.h"
 #endif
 
+#if defined(__cplusplus)
+extern "C" {
+#endif
+
 /* Missing pieces */
 char *stpcpy(char *, const char*);
 char *stpncpy(char *, const char*, size_t);
@@ -18,5 +22,9 @@ int strerror_r(int, char*, size_t);
 char *strndup(const char*, size_t);
 
 char *strsep(char **, char*);
+
+#if defined(__cplusplus)
+}
+#endif
 
 #endif

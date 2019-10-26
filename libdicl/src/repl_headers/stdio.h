@@ -7,6 +7,10 @@
 #include "/usr/include/stdio.h"
 #endif
 
+#if defined(__cplusplus)
+extern "C" {
+#endif
+
 extern int asprintf(char **,const char *, ...);
 
 #undef sprintf
@@ -41,5 +45,9 @@ extern int vasprintf(char**, const char*, va_list);
 ssize_t rpl_getline(char **lineptr, size_t *n, FILE *stream);
 
 ssize_t getdelim(char **lineptr, size_t *n, int delim, FILE *stream);
+
+#if defined(__cplusplus)
+}
+#endif
 
 #endif

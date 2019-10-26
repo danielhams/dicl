@@ -8,6 +8,10 @@
 #endif
 #include "repl_select.h"
 
+#if defined(__cplusplus)
+extern "C" {
+#endif
+
 # define AT_FDCWD (-3041965)
 
 # define AT_SYMLINK_NOFOLLOW 4096
@@ -19,5 +23,9 @@
 # define AT_EACCESS 4
 
 int faccessat(int, const char*, int, int);
+
+#if defined(__cplusplus)
+}
+#endif
 
 #endif
