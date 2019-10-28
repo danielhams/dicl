@@ -12,6 +12,8 @@ extern "C" {
 #endif
 
 /* Missing pieces */
+void *mempcpy(void *, const void* ,size_t);
+
 char *stpcpy(char *, const char*);
 char *stpncpy(char *, const char*, size_t);
 
