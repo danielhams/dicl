@@ -13,13 +13,20 @@ dicltester - The client testing application
 Use one of the release builds from github or build it yourself. Using a release will be simpler, as the autoconf bootstrap can take quite some time.
 
 ### To use
-Add the `libdicl-0.1` installed directory into your project `CPPFLAGS` and add `-ldicl-0.1` to your project `LDFLAGS` or `LIBS` (depends on the builder/project).
+Add the `libdicl-0.1` installed include directory into your project `CPPFLAGS` and add `-ldicl-0.1` to your project `LDFLAGS` or `LIBS` (depends on the builder/project).
+
+e.g.
+
+```
+export CPPFLAGS="-I/install/prefix/include/libdicl-1.0"
+export LDFLAGS="-L/install/prefix/lib32 -ldicl-0.1"
+```
 
 ### To build
 ```
 cd libdicl
 ./bootstrap
-./configure --prefix=/install/prefix --libdir=/instasll/prefix/lib32
+./configure --prefix=/install/prefix --libdir=/install/prefix/lib32
 make -j $NUM_JOBS
 make install
 ```
