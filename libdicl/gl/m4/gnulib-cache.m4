@@ -63,8 +63,10 @@
 #  sprintf-posix \
 #  stpcpy \
 #  stpncpy \
+#  strcasestr \
 #  strerror_r-posix \
 #  strsep \
+#  strstr \
 #  strtod \
 #  strtold \
 #  strtoll \
@@ -103,8 +105,10 @@ gl_MODULES([
   sprintf-posix
   stpcpy
   stpncpy
+  strcasestr
   strerror_r-posix
   strsep
+  strstr
   strtod
   strtold
   strtoll

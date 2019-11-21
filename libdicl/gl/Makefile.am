@@ -58,8 +58,10 @@
 #  sprintf-posix \
 #  stpcpy \
 #  stpncpy \
+#  strcasestr \
 #  strerror_r-posix \
 #  strsep \
+#  strstr \
 #  strtod \
 #  strtold \
 #  strtoll \
@@ -2121,6 +2123,15 @@ EXTRA_libgnu_a_SOURCES += strcasecmp.c strncasecmp.c
 
 ## end   gnulib module strcase
 
+## begin gnulib module strcasestr-simple
+
+
+EXTRA_DIST += str-two-way.h strcasestr.c
+
+EXTRA_libgnu_a_SOURCES += strcasestr.c
+
+## end   gnulib module strcasestr-simple
+
 ## begin gnulib module strchrnul
 
 
@@ -2338,6 +2349,15 @@ EXTRA_DIST += strsep.c
 EXTRA_libgnu_a_SOURCES += strsep.c
 
 ## end   gnulib module strsep
+
+## begin gnulib module strstr-simple
+
+
+EXTRA_DIST += str-two-way.h strstr.c
+
+EXTRA_libgnu_a_SOURCES += strstr.c
+
+## end   gnulib module strstr-simple
 
 ## begin gnulib module strtod
 

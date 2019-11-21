@@ -1902,6 +1902,15 @@ EXTRA_DIST += test-stdlib.c test-sys_wait.h
 
 ## end   gnulib module stdlib-tests
 
+## begin gnulib module strcasestr-tests
+
+TESTS += test-strcasestr
+check_PROGRAMS += test-strcasestr
+
+EXTRA_DIST += test-strcasestr.c signature.h macros.h
+
+## end   gnulib module strcasestr-tests
+
 ## begin gnulib module strchrnul-tests
 
 TESTS += test-strchrnul
@@ -1949,6 +1958,14 @@ check_PROGRAMS += test-strnlen
 EXTRA_DIST += test-strnlen.c zerosize-ptr.h signature.h macros.h
 
 ## end   gnulib module strnlen-tests
+
+## begin gnulib module strstr-tests
+
+TESTS += test-strstr
+check_PROGRAMS += test-strstr
+EXTRA_DIST += test-strstr.c zerosize-ptr.h signature.h macros.h
+
+## end   gnulib module strstr-tests
 
 ## begin gnulib module strtod-tests
 

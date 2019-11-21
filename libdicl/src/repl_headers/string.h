@@ -11,6 +11,11 @@
 extern "C" {
 #endif
 
+/* Replacements */
+#undef strstr
+#define strstr rpl_strstr
+char *strstr(const char*, const char*);
+
 /* Missing pieces */
 void *mempcpy(void *, const void* ,size_t);
 
@@ -24,6 +29,8 @@ int strerror_r(int, char*, size_t);
 char *strndup(const char*, size_t);
 
 char *strsep(char **, char*);
+
+char *strcasestr(const char*, const char*);
 
 #if defined(__cplusplus)
 }

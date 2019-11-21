@@ -365,6 +365,9 @@ AC_DEFUN([gl_EARLY],
   # Code from module stpcpy:
   # Code from module stpncpy:
   # Code from module strcase:
+  # Code from module strcasestr:
+  # Code from module strcasestr-simple:
+  # Code from module strcasestr-tests:
   # Code from module strchrnul:
   # Code from module strchrnul-tests:
   # Code from module strdup-posix:
@@ -383,6 +386,9 @@ AC_DEFUN([gl_EARLY],
   # Code from module strnlen-tests:
   # Code from module strnlen1:
   # Code from module strsep:
+  # Code from module strstr:
+  # Code from module strstr-simple:
+  # Code from module strstr-tests:
   # Code from module strtod:
   # Code from module strtod-tests:
   # Code from module strtold:
@@ -952,6 +958,17 @@ AC_DEFUN([gl_INIT],
     AC_LIBOBJ([strncasecmp])
     gl_PREREQ_STRNCASECMP
   fi
+  gl_FUNC_STRCASESTR
+  if test $HAVE_STRCASESTR = 0 || test $REPLACE_STRCASESTR = 1; then
+    AC_LIBOBJ([strcasestr])
+    gl_PREREQ_STRCASESTR
+  fi
+  gl_FUNC_STRCASESTR_SIMPLE
+  if test $HAVE_STRCASESTR = 0 || test $REPLACE_STRCASESTR = 1; then
+    AC_LIBOBJ([strcasestr])
+    gl_PREREQ_STRCASESTR
+  fi
+  gl_STRING_MODULE_INDICATOR([strcasestr])
   gl_FUNC_STRCHRNUL
   if test $HAVE_STRCHRNUL = 0 || test $REPLACE_STRCHRNUL = 1; then
     AC_LIBOBJ([strchrnul])
@@ -1003,6 +1020,15 @@ AC_DEFUN([gl_INIT],
     gl_PREREQ_STRSEP
   fi
   gl_STRING_MODULE_INDICATOR([strsep])
+  gl_FUNC_STRSTR
+  if test $REPLACE_STRSTR = 1; then
+    AC_LIBOBJ([strstr])
+  fi
+  gl_FUNC_STRSTR_SIMPLE
+  if test $REPLACE_STRSTR = 1; then
+    AC_LIBOBJ([strstr])
+  fi
+  gl_STRING_MODULE_INDICATOR([strstr])
   gl_FUNC_STRTOD
   if test $HAVE_STRTOD = 0 || test $REPLACE_STRTOD = 1; then
     AC_LIBOBJ([strtod])
@@ -1412,7 +1438,12 @@ changequote([, ])dnl
   AC_REQUIRE([gl_LONG_DOUBLE_VS_DOUBLE])
   AC_REQUIRE([gt_TYPE_WCHAR_T])
   AC_REQUIRE([gt_TYPE_WINT_T])
+  AC_CHECK_DECLS_ONCE([alarm])
   dnl Check for prerequisites for memory fence checks.
+  gl_FUNC_MMAP_ANON
+  AC_CHECK_HEADERS_ONCE([sys/mman.h])
+  AC_CHECK_FUNCS_ONCE([mprotect])
+  AC_CHECK_DECLS_ONCE([alarm])
   gl_FUNC_MMAP_ANON
   AC_CHECK_HEADERS_ONCE([sys/mman.h])
   AC_CHECK_FUNCS_ONCE([mprotect])
@@ -1784,7 +1815,9 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/stdlib.in.h
   lib/stpcpy.c
   lib/stpncpy.c
+  lib/str-two-way.h
   lib/strcasecmp.c
+  lib/strcasestr.c
   lib/strchrnul.c
   lib/strchrnul.valgrind
   lib/strdup.c
@@ -1802,6 +1835,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/strnlen1.c
   lib/strnlen1.h
   lib/strsep.c
+  lib/strstr.c
   lib/strtod.c
   lib/strtol.c
   lib/strtold.c
@@ -2038,6 +2072,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/stpcpy.m4
   m4/stpncpy.m4
   m4/strcase.m4
+  m4/strcasestr.m4
   m4/strchrnul.m4
   m4/strdup.m4
   m4/strerror.m4
@@ -2047,6 +2082,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/strndup.m4
   m4/strnlen.m4
   m4/strsep.m4
+  m4/strstr.m4
   m4/strtod.m4
   m4/strtold.m4
   m4/strtoll.m4
@@ -2293,12 +2329,14 @@ AC_DEFUN([gl_FILE_LIST], [
   tests/test-stdint.c
   tests/test-stdio.c
   tests/test-stdlib.c
+  tests/test-strcasestr.c
   tests/test-strchrnul.c
   tests/test-strerror.c
   tests/test-strerror_r.c
   tests/test-string.c
   tests/test-strings.c
   tests/test-strnlen.c
+  tests/test-strstr.c
   tests/test-strtod.c
   tests/test-strtod1.c
   tests/test-strtod1.sh
