@@ -14,4 +14,13 @@
 # (1) Put back the -fPIC -DPIC in gl/Makefile.am
 # (2) git checkout gl/printf-parse.c gl/vasnprintf.c tests/test-gettimeofday.c tests/test-sys_time.c
 
-$GNULIB_HOME/gnulib-tool --import --lib=libgnu --source-base=gl --m4-base=/gl/m4 --doc-base=doc --tests-base=tests --aux-dir=. --with-tests --no-conditional-dependencies --no-libtool --macro-prefix=gl --no-vc-files argp byteswap error faccessat fnmatch-gnu fprintf-posix futimens getline getopt-posix getprogname mkdtemp mktime nanosleep obstack obstack-printf posix_spawn posix_spawnp printf-posix qsort_r select setenv sprintf-posix stpcpy stpncpy strerror_r-posix strsep strstr strcasestr strtod strtold strtoll strtoull unsetenv vasprintf-posix vfprintf-posix vsprintf-posix vsnprintf-posix wait-process
+$GNULIB_HOME/gnulib-tool --import --lib=libgnu --source-base=gl \
+    --m4-base=/gl/m4 --doc-base=doc --tests-base=tests --aux-dir=. \
+    --with-tests --no-conditional-dependencies --no-libtool \
+    --macro-prefix=gl --no-vc-files \
+    argp byteswap error faccessat fnmatch-gnu fprintf-posix futimens \
+    getline getopt-posix getprogname mkdtemp mktime nanosleep obstack \
+    obstack-printf posix_spawn posix_spawnp printf-posix qsort_r select \
+    setenv sprintf-posix stpcpy stpncpy strerror_r-posix strsep strstr \
+    strcasestr strtod strtold strtoll strtoull unsetenv vasprintf-posix \
+    vfprintf-posix vsprintf-posix vsnprintf-posix wait-process
