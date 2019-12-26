@@ -1783,15 +1783,6 @@ EXTRA_DIST += warn-on-use.h
 
 ## end   gnulib module snippet/warn-on-use
 
-## begin gnulib module snprintf
-
-
-EXTRA_DIST += snprintf.c
-
-EXTRA_libtests_a_SOURCES += snprintf.c
-
-## end   gnulib module snprintf
-
 ## begin gnulib module snprintf-tests
 
 TESTS += test-snprintf
@@ -1958,6 +1949,15 @@ check_PROGRAMS += test-strnlen
 EXTRA_DIST += test-strnlen.c zerosize-ptr.h signature.h macros.h
 
 ## end   gnulib module strnlen-tests
+
+## begin gnulib module strsignal-tests
+
+TESTS += test-strsignal
+check_PROGRAMS += test-strsignal
+test_strsignal_LDADD = $(LDADD) @LIBINTL@ $(LIBTHREAD)
+EXTRA_DIST += test-strsignal.c signature.h macros.h
+
+## end   gnulib module strsignal-tests
 
 ## begin gnulib module strstr-tests
 
@@ -2183,6 +2183,16 @@ check_PROGRAMS += test-timespec
 EXTRA_DIST += test-timespec.c macros.h
 
 ## end   gnulib module timespec-tests
+
+## begin gnulib module tls-tests
+
+TESTS += test-tls
+check_PROGRAMS += test-tls
+test_tls_LDADD = $(LDADD) @LIBMULTITHREAD@ @YIELD_LIB@
+
+EXTRA_DIST += test-tls.c
+
+## end   gnulib module tls-tests
 
 ## begin gnulib module unistd-safer-tests
 
@@ -2432,15 +2442,6 @@ EXTRA_DIST += windows-thread.c windows-thread.h
 EXTRA_libtests_a_SOURCES += windows-thread.c
 
 ## end   gnulib module windows-thread
-
-## begin gnulib module windows-tls
-
-
-EXTRA_DIST += windows-tls.c windows-tls.h
-
-EXTRA_libtests_a_SOURCES += windows-tls.c
-
-## end   gnulib module windows-tls
 
 ## begin gnulib module xalloc-die-tests
 

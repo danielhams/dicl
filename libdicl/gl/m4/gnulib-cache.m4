@@ -66,6 +66,7 @@
 #  strcasestr \
 #  strerror_r-posix \
 #  strsep \
+#  strsignal \
 #  strstr \
 #  strtod \
 #  strtold \
@@ -108,6 +109,7 @@ gl_MODULES([
   strcasestr
   strerror_r-posix
   strsep
+  strsignal
   strstr
   strtod
   strtold

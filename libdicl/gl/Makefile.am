@@ -61,6 +61,7 @@
 #  strcasestr \
 #  strerror_r-posix \
 #  strsep \
+#  strsignal \
 #  strstr \
 #  strtod \
 #  strtold \
@@ -1625,6 +1626,15 @@ EXTRA_DIST += warn-on-use.h
 
 ## end   gnulib module snippet/warn-on-use
 
+## begin gnulib module snprintf
+
+
+EXTRA_DIST += snprintf.c
+
+EXTRA_libgnu_a_SOURCES += snprintf.c
+
+## end   gnulib module snprintf
+
 ## begin gnulib module sockets
 
 libgnu_a_SOURCES += sockets.h sockets.c
@@ -2350,6 +2360,15 @@ EXTRA_libgnu_a_SOURCES += strsep.c
 
 ## end   gnulib module strsep
 
+## begin gnulib module strsignal
+
+
+EXTRA_DIST += siglist.h strsignal.c
+
+EXTRA_libgnu_a_SOURCES += strsignal.c
+
+## end   gnulib module strsignal
+
 ## begin gnulib module strstr-simple
 
 
@@ -2775,6 +2794,12 @@ libgnu_a_SOURCES += timespec.c
 EXTRA_DIST += timespec.h
 
 ## end   gnulib module timespec
+
+## begin gnulib module tls
+
+libgnu_a_SOURCES += glthread/tls.h glthread/tls.c
+
+## end   gnulib module tls
 
 ## begin gnulib module unistd
 
@@ -3278,6 +3303,15 @@ EXTRA_DIST += windows-initguard.h windows-rwlock.c windows-rwlock.h
 EXTRA_libgnu_a_SOURCES += windows-rwlock.c
 
 ## end   gnulib module windows-rwlock
+
+## begin gnulib module windows-tls
+
+
+EXTRA_DIST += windows-tls.c windows-tls.h
+
+EXTRA_libgnu_a_SOURCES += windows-tls.c
+
+## end   gnulib module windows-tls
 
 ## begin gnulib module xalloc
 

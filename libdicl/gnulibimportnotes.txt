@@ -22,8 +22,9 @@ $GNULIB_HOME/gnulib-tool --import --lib=libgnu --source-base=gl \
     getline getopt-posix getprogname mkdtemp mktime nanosleep obstack \
     obstack-printf posix_spawn posix_spawnp printf-posix qsort_r select \
     setenv sprintf-posix stpcpy stpncpy strerror_r-posix strsep strstr \
-    strcasestr strtod strtold strtoll strtoull unsetenv vasprintf-posix \
-    vfprintf-posix vsprintf-posix vsnprintf-posix wait-process
+    strcasestr strsignal strtod strtold strtoll strtoull unsetenv \
+    vasprintf-posix vfprintf-posix vsprintf-posix vsnprintf-posix \
+    wait-process
 
 perl -pi -e "s|AM_CFLAGS =|AM_CFLAGS = -fPIC -DPIC|g" gl/Makefile.am
 git checkout gl/printf-parse.c gl/vasnprintf.c tests/test-gettimeofday.c tests/test-sys_time.c

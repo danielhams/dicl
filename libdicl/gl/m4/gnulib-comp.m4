@@ -386,6 +386,8 @@ AC_DEFUN([gl_EARLY],
   # Code from module strnlen-tests:
   # Code from module strnlen1:
   # Code from module strsep:
+  # Code from module strsignal:
+  # Code from module strsignal-tests:
   # Code from module strstr:
   # Code from module strstr-simple:
   # Code from module strstr-tests:
@@ -431,6 +433,8 @@ AC_DEFUN([gl_EARLY],
   # Code from module timespec-add:
   # Code from module timespec-sub:
   # Code from module timespec-tests:
+  # Code from module tls:
+  # Code from module tls-tests:
   # Code from module unistd:
   # Code from module unistd-safer:
   # Code from module unistd-safer-tests:
@@ -911,6 +915,9 @@ AC_DEFUN([gl_INIT],
     AC_LIBOBJ([sleep])
   fi
   gl_UNISTD_MODULE_INDICATOR([sleep])
+  gl_FUNC_SNPRINTF
+  gl_STDIO_MODULE_INDICATOR([snprintf])
+  gl_MODULE_INDICATOR([snprintf])
   AC_REQUIRE([gl_SOCKETLIB])
   AC_REQUIRE([gl_SOCKETS])
   gl_TYPE_SOCKLEN_T
@@ -1020,6 +1027,12 @@ AC_DEFUN([gl_INIT],
     gl_PREREQ_STRSEP
   fi
   gl_STRING_MODULE_INDICATOR([strsep])
+  gl_FUNC_STRSIGNAL
+  if test $HAVE_STRSIGNAL = 0 || test $REPLACE_STRSIGNAL = 1; then
+    AC_LIBOBJ([strsignal])
+    gl_PREREQ_STRSIGNAL
+  fi
+  gl_STRING_MODULE_INDICATOR([strsignal])
   gl_FUNC_STRSTR
   if test $REPLACE_STRSTR = 1; then
     AC_LIBOBJ([strstr])
@@ -1078,6 +1091,7 @@ AC_DEFUN([gl_INIT],
   fi
   gl_TIME_MODULE_INDICATOR([time_r])
   gl_TIMESPEC
+  gl_TLS
   gl_UNISTD_H
   gl_UNISTD_SAFER
   gl_FUNC_UNSETENV
@@ -1138,6 +1152,12 @@ AC_DEFUN([gl_INIT],
   case "$host_os" in
     mingw*)
       AC_LIBOBJ([windows-rwlock])
+      ;;
+  esac
+  AC_REQUIRE([AC_CANONICAL_HOST])
+  case "$host_os" in
+    mingw*)
+      AC_LIBOBJ([windows-tls])
       ;;
   esac
   gl_XALLOC
@@ -1418,9 +1438,6 @@ changequote([, ])dnl
   AC_REQUIRE([gl_DOUBLE_EXPONENT_LOCATION])
   AC_REQUIRE([gl_LONG_DOUBLE_EXPONENT_LOCATION])
   AC_CHECK_DECLS_ONCE([alarm])
-  gl_FUNC_SNPRINTF
-  gl_STDIO_MODULE_INDICATOR([snprintf])
-  gl_MODULE_INDICATOR([snprintf])
   AC_REQUIRE([gl_HEADER_SYS_SOCKET])
   if test "$ac_cv_header_winsock2_h" = yes; then
     AC_LIBOBJ([socket])
@@ -1460,6 +1477,7 @@ changequote([, ])dnl
   AC_PROG_MKDIR_P
   AC_CHECK_FUNCS_ONCE([shutdown])
   gl_THREAD
+  AC_CHECK_DECLS_ONCE([alarm])
   gl_FUNC_USLEEP
   if test $HAVE_USLEEP = 0 || test $REPLACE_USLEEP = 1; then
     AC_LIBOBJ([usleep])
@@ -1505,12 +1523,6 @@ changequote([, ])dnl
   case "$host_os" in
     mingw*)
       AC_LIBOBJ([windows-thread])
-      ;;
-  esac
-  AC_REQUIRE([AC_CANONICAL_HOST])
-  case "$host_os" in
-    mingw*)
-      AC_LIBOBJ([windows-tls])
       ;;
   esac
   AC_REQUIRE([gl_YIELD])
@@ -1709,6 +1721,8 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/glthread/lock.c
   lib/glthread/lock.h
   lib/glthread/threadlib.c
+  lib/glthread/tls.c
+  lib/glthread/tls.h
   lib/group-member.c
   lib/hard-locale.c
   lib/hard-locale.h
@@ -1786,6 +1800,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/sig-handler.c
   lib/sig-handler.h
   lib/sigaction.c
+  lib/siglist.h
   lib/signal.in.h
   lib/signbitd.c
   lib/signbitf.c
@@ -1793,6 +1808,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/sigprocmask.c
   lib/size_max.h
   lib/sleep.c
+  lib/snprintf.c
   lib/sockets.c
   lib/sockets.h
   lib/spawn.c
@@ -1835,6 +1851,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/strnlen1.c
   lib/strnlen1.h
   lib/strsep.c
+  lib/strsignal.c
   lib/strstr.c
   lib/strtod.c
   lib/strtol.c
@@ -1890,6 +1907,8 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/windows-recmutex.h
   lib/windows-rwlock.c
   lib/windows-rwlock.h
+  lib/windows-tls.c
+  lib/windows-tls.h
   lib/xalloc-die.c
   lib/xalloc-oversized.h
   lib/xalloc.h
@@ -2082,6 +2101,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/strndup.m4
   m4/strnlen.m4
   m4/strsep.m4
+  m4/strsignal.m4
   m4/strstr.m4
   m4/strtod.m4
   m4/strtold.m4
@@ -2103,6 +2123,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/time_h.m4
   m4/time_r.m4
   m4/timespec.m4
+  m4/tls.m4
   m4/unistd-safer.m4
   m4/unistd_h.m4
   m4/usleep.m4
@@ -2336,6 +2357,7 @@ AC_DEFUN([gl_FILE_LIST], [
   tests/test-string.c
   tests/test-strings.c
   tests/test-strnlen.c
+  tests/test-strsignal.c
   tests/test-strstr.c
   tests/test-strtod.c
   tests/test-strtod1.c
@@ -2361,6 +2383,7 @@ AC_DEFUN([gl_FILE_LIST], [
   tests/test-thread_self.c
   tests/test-time.c
   tests/test-timespec.c
+  tests/test-tls.c
   tests/test-unistd.c
   tests/test-unsetenv.c
   tests/test-usleep.c
@@ -2451,7 +2474,6 @@ AC_DEFUN([gl_FILE_LIST], [
   tests=lib/same-inode.h
   tests=lib/setlocale.c
   tests=lib/setsockopt.c
-  tests=lib/snprintf.c
   tests=lib/socket.c
   tests=lib/spawn_faction_addclose.c
   tests=lib/spawn_faction_adddup2.c
@@ -2483,6 +2505,4 @@ AC_DEFUN([gl_FILE_LIST], [
   tests=lib/wctomb.c
   tests=lib/windows-thread.c
   tests=lib/windows-thread.h
-  tests=lib/windows-tls.c
-  tests=lib/windows-tls.h
 ])
