@@ -1,6 +1,6 @@
 AC_PREREQ(2.65)
 AC_INIT([libdicl],
-        [0.1.15],
+        [0.1.16],
         [daniel.hams@gmail.com])
 
 AC_SUBST(ACLOCAL_AMFLAGS, "-I macros")
@@ -21,6 +21,8 @@ AC_DEFINE_UNQUOTED(PACKAGE_SUFFIX, "$PACKAGE_SUFFIX", [Suffix of the package])
 AC_STDC_HEADERS
 AC_PROG_CC
 
+# Force replacement functions for some known
+# broken stuff that isn't auto-detected correctly.
 gl_cv_func_select_supports0=no
 gl_cv_func_select_detects_ebadf=no
 gl_cv_func_strtod_works=no

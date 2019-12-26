@@ -32,6 +32,9 @@ char *strsep(char **, char*);
 
 char *strcasestr(const char*, const char*);
 
+char *strsignal(int sig);
+/* If you are looking for an associated sys_siglist - try _sys_siglist */
+
 #if defined(__cplusplus)
 }
 #endif
