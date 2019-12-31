@@ -18,6 +18,11 @@ replinclude_HEADERS=		\
 	endian.h		\
 	error.h			\
 	fnmatch.h		\
+	getopt-cdefs.h		\
+	getopt-core.h		\
+	getopt-ext.h		\
+	getopt-pfx-core.h	\
+	getopt-pfx-ext.h	\
 	obstack.h		\
 	repl_select.h		\
 	spawn.h			\
