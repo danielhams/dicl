@@ -4,11 +4,11 @@ SUBDIRS=			\
 	sys			\
 	$(NULL)
 
-byteswap.h:	$(top_srcdir)/gl/byteswap.h
-	cp $(top_srcdir)/gl/byteswap.h ./
+byteswap.h:	$(top_builddir)/gl/byteswap.h
+	cp $(top_builddir)/gl/byteswap.h ./
 
-spawn.h:	$(top_srcdir)/gl/spawn.h
-	cp $(top_srcdir)/gl/spawn.h ./
+spawn.h:	$(top_builddir)/gl/spawn.h
+	cp $(top_builddir)/gl/spawn.h ./
 
 replincludedir=$(includedir)/libdicl@PACKAGE_SUFFIX@
 
