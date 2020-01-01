@@ -1397,6 +1397,15 @@ EXTRA_DIST += test-printf-posix.sh test-printf-posix.c test-printf-posix.h test-
 
 ## end   gnulib module printf-posix-tests
 
+## begin gnulib module pselect-tests
+
+TESTS += test-pselect
+check_PROGRAMS += test-pselect
+test_pselect_LDADD = $(LDADD) @LIB_SELECT@ @LIBSOCKET@ @LIB_PTHREAD_SIGMASK@ $(INET_PTON_LIB)
+EXTRA_DIST += test-pselect.c test-select.h macros.h signature.h
+
+## end   gnulib module pselect-tests
+
 ## begin gnulib module pthread-h
 
 BUILT_SOURCES += pthread.h
@@ -1566,15 +1575,6 @@ test_pthread_thread_LDADD = $(LDADD) @LIBMULTITHREAD@
 EXTRA_DIST += test-pthread-thread.c macros.h
 
 ## end   gnulib module pthread-thread-tests
-
-## begin gnulib module pthread_sigmask
-
-
-EXTRA_DIST += pthread_sigmask.c
-
-EXTRA_libtests_a_SOURCES += pthread_sigmask.c
-
-## end   gnulib module pthread_sigmask
 
 ## begin gnulib module pthread_sigmask-tests
 

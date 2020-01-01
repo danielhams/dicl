@@ -289,6 +289,8 @@ AC_DEFUN([gl_EARLY],
   # Code from module printf-posix:
   # Code from module printf-posix-tests:
   # Code from module printf-safe:
+  # Code from module pselect:
+  # Code from module pselect-tests:
   # Code from module pthread-h:
   AC_DEFINE([_REENTRANT], 1, [For thread-safety on OSF/1, Solaris.])
   AC_DEFINE([_THREAD_SAFE], 1, [For thread-safety on AIX, FreeBSD.])
@@ -850,6 +852,17 @@ AC_DEFUN([gl_INIT],
   gl_FUNC_PRINTF_POSIX
   gl_STDIO_MODULE_INDICATOR([printf-posix])
   m4_divert_text([INIT_PREPARE], [gl_printf_safe=yes])
+  gl_FUNC_PSELECT
+  if test $HAVE_PSELECT = 0 || test $REPLACE_PSELECT = 1; then
+    AC_LIBOBJ([pselect])
+  fi
+  gl_SYS_SELECT_MODULE_INDICATOR([pselect])
+  gl_FUNC_PTHREAD_SIGMASK
+  if test $HAVE_PTHREAD_SIGMASK = 0 || test $REPLACE_PTHREAD_SIGMASK = 1; then
+    AC_LIBOBJ([pthread_sigmask])
+    gl_PREREQ_PTHREAD_SIGMASK
+  fi
+  gl_SIGNAL_MODULE_INDICATOR([pthread_sigmask])
   gl_FUNC_QSORT_R
   if test $HAVE_QSORT_R = 0; then
     # The function is missing from the system or has an unknown signature.
@@ -1396,18 +1409,13 @@ changequote([, ])dnl
     [posix_spawn_ported=yes])
   AM_CONDITIONAL([POSIX_SPAWN_PORTED], [test $posix_spawn_ported = yes])
   AC_CHECK_FUNCS_ONCE([getrlimit setrlimit])
+  AC_CHECK_HEADERS_ONCE([sys/wait.h])
   gl_PTHREAD_H
   gl_PTHREAD_THREAD
   if test $HAVE_PTHREAD_CREATE = 0 || test $REPLACE_PTHREAD_CREATE = 1; then
     AC_LIBOBJ([pthread-thread])
   fi
   gl_PTHREAD_MODULE_INDICATOR([pthread-thread])
-  gl_FUNC_PTHREAD_SIGMASK
-  if test $HAVE_PTHREAD_SIGMASK = 0 || test $REPLACE_PTHREAD_SIGMASK = 1; then
-    AC_LIBOBJ([pthread_sigmask])
-    gl_PREREQ_PTHREAD_SIGMASK
-  fi
-  gl_SIGNAL_MODULE_INDICATOR([pthread_sigmask])
   gl_FUNC_PUTENV
   if test $REPLACE_PUTENV = 1; then
     AC_LIBOBJ([putenv])
@@ -1785,6 +1793,8 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/printf-parse.c
   lib/printf-parse.h
   lib/printf.c
+  lib/pselect.c
+  lib/pthread_sigmask.c
   lib/qsort.c
   lib/qsort_r.c
   lib/raise.c
@@ -2049,6 +2059,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/printf-frexpl.m4
   m4/printf-posix-rpl.m4
   m4/printf.m4
+  m4/pselect.m4
   m4/pthread-thread.m4
   m4/pthread_h.m4
   m4/pthread_rwlock_rdlock.m4
@@ -2309,6 +2320,7 @@ AC_DEFUN([gl_FILE_LIST], [
   tests/test-printf-posix.sh
   tests/test-printf-posix2.c
   tests/test-printf-posix2.sh
+  tests/test-pselect.c
   tests/test-pthread-thread.c
   tests/test-pthread.c
   tests/test-pthread_sigmask1.c
@@ -2468,7 +2480,6 @@ AC_DEFUN([gl_FILE_LIST], [
   tests=lib/pipe.c
   tests=lib/pthread-thread.c
   tests=lib/pthread.in.h
-  tests=lib/pthread_sigmask.c
   tests=lib/putenv.c
   tests=lib/resource-ext.h
   tests=lib/same-inode.h

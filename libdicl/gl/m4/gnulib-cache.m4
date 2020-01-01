@@ -57,6 +57,7 @@
 #  posix_spawn \
 #  posix_spawnp \
 #  printf-posix \
+#  pselect \
 #  qsort_r \
 #  select \
 #  setenv \
@@ -100,6 +101,7 @@ gl_MODULES([
   posix_spawn
   posix_spawnp
   printf-posix
+  pselect
   qsort_r
   select
   setenv

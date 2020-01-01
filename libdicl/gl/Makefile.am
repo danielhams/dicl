@@ -52,6 +52,7 @@
 #  posix_spawn \
 #  posix_spawnp \
 #  printf-posix \
+#  pselect \
 #  qsort_r \
 #  select \
 #  setenv \
@@ -1392,6 +1393,24 @@ EXTRA_DIST += printf.c
 EXTRA_libgnu_a_SOURCES += printf.c
 
 ## end   gnulib module printf-posix
+
+## begin gnulib module pselect
+
+
+EXTRA_DIST += pselect.c
+
+EXTRA_libgnu_a_SOURCES += pselect.c
+
+## end   gnulib module pselect
+
+## begin gnulib module pthread_sigmask
+
+
+EXTRA_DIST += pthread_sigmask.c
+
+EXTRA_libgnu_a_SOURCES += pthread_sigmask.c
+
+## end   gnulib module pthread_sigmask
 
 ## begin gnulib module qsort_r
 
