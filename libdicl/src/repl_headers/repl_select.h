@@ -24,9 +24,10 @@ extern "C" {
 extern int rpl_select(int, fd_set *, fd_set *, fd_set *, struct timeval *);
 
 /* New - pselect for irix */
-extern int pselect(int, fd_set *, fd_set *, fd_set *,
-		   const struct timespec *restrict,
-		   const sigset_t *restrict);
+#define pselect rpl_pselect
+extern int rpl_pselect(int, fd_set *, fd_set *, fd_set *,
+		       const struct timespec *restrict,
+		       const sigset_t *restrict);
 
 #if defined(__cplusplus)
 }
