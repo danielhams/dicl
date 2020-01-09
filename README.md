@@ -7,6 +7,7 @@ A little project pulling in some of the gnulib defined functions that can provid
 There's both the "library" as well as a simple test client application that exercises some of the functionality.
 
 libdicl - The library
+
 dicltester - The client testing application
 
 ## How to build/use
