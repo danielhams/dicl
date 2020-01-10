@@ -18,8 +18,8 @@
    License along with gnulib; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#ifndef _GETOPT_PFX_CORE_H
-#define _GETOPT_PFX_CORE_H 1
+#ifndef LIBDICL_GETOPT_PFX_CORE_H
+#define LIBDICL_GETOPT_PFX_CORE_H 1
 
 /* This header should not be used directly; include getopt.h or
    unistd.h instead.  It does not have a protective #error, because
@@ -56,4 +56,4 @@
 
 #include <getopt-core.h>
 
-#endif /* _GETOPT_PFX_CORE_H */
+#endif /* LIBDICL_GETOPT_PFX_CORE_H */

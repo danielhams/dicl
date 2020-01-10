@@ -17,8 +17,8 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#ifndef _GETOPT_CORE_H
-#define _GETOPT_CORE_H 1
+#ifndef LIBDICL_GETOPT_CORE_H
+#define LIBDICL_GETOPT_CORE_H 1
 
 /* This header should not be used directly; include getopt.h or
    unistd.h instead.  Unlike most bits headers, it does not have
@@ -93,4 +93,4 @@ extern int getopt (int ___argc, char *const *___argv, const char *__shortopts)
 
 __END_DECLS
 
-#endif /* _GETOPT_CORE_H */
+#endif /* LIBDICL_GETOPT_CORE_H */

@@ -23,11 +23,13 @@ extern "C" {
 #define select rpl_select
 extern int rpl_select(int, fd_set *, fd_set *, fd_set *, struct timeval *);
 
+#if defined(LIBDICL_NEED_REPL_PSELECT)
 /* New - pselect for irix */
 #define pselect rpl_pselect
 extern int rpl_pselect(int, fd_set *, fd_set *, fd_set *,
 		       const struct timespec *restrict,
 		       const sigset_t *restrict);
+#endif
 
 #if defined(__cplusplus)
 }

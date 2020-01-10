@@ -18,8 +18,8 @@
    License along with gnulib; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#ifndef _GETOPT_PFX_EXT_H
-#define _GETOPT_PFX_EXT_H 1
+#ifndef LIBDICL_GETOPT_PFX_EXT_H
+#define LIBDICL_GETOPT_PFX_EXT_H 1
 
 /* This header should not be used directly; include getopt.h instead.
    It does not have a protective #error, because the guard macro for
@@ -68,4 +68,4 @@
 
 #include <getopt-ext.h>
 
-#endif /* _GETOPT_PFX_EXT_H */
+#endif /* LIBDICL_GETOPT_PFX_EXT_H */

@@ -17,8 +17,8 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#ifndef _GETOPT_EXT_H
-#define _GETOPT_EXT_H 1
+#ifndef LIBDICL_GETOPT_EXT_H
+#define LIBDICL_GETOPT_EXT_H 1
 
 /* This header should not be used directly; include getopt.h instead.
    Unlike most bits headers, it does not have a protective #error,
@@ -74,4 +74,4 @@ extern int getopt_long_only (int ___argc, char *__getopt_argv_const *___argv,
 
 __END_DECLS
 
-#endif /* _GETOPT_EXT_H */
+#endif /* LIBDICL_GETOPT_EXT_H */

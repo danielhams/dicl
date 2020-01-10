@@ -19,8 +19,8 @@
    License along with gnulib; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#ifndef _GETOPT_CDEFS_H
-#define _GETOPT_CDEFS_H 1
+#ifndef LIBDICL_GETOPT_CDEFS_H
+#define LIBDICL_GETOPT_CDEFS_H 1
 
 /* This header should not be used directly; include getopt.h or
    unistd.h instead.  It does not have a protective #error, because
@@ -65,4 +65,4 @@
 # endif
 #endif
 
-#endif /* _GETOPT_CDEFS_H */
+#endif /* LIBDICL_GETOPT_CDEFS_H */

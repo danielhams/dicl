@@ -19,12 +19,15 @@
    You should have received a copy of the GNU General Public
    License along with gnulib; if not, see <https://www.gnu.org/licenses/>.  */
 
-#ifndef _GL_GETOPT_H
+#ifndef LIBDICL_GL_GETOPT_H
+
+#if defined(LIBDICL_NEED_GETOPT)
 
 #if __GNUC__ >= 3
 #pragma GCC system_header
 #endif
 
+#define LIBDICL_GL_GETOPT_H 1
 
 /* The include_next requires a split double-inclusion guard.  We must
    also inform the replacement unistd.h to not recursively use
@@ -34,8 +37,6 @@
 # include_next <getopt.h>
 # undef _GL_SYSTEM_GETOPT
 #endif
-
-#define _GL_GETOPT_H 1
 
 /* Manual modification - define __GETOPT_PREFIX */
 #define __GETOPT_PREFIX rpl_
@@ -88,4 +89,6 @@
 #include <getopt-pfx-core.h>
 #include <getopt-pfx-ext.h>
 
-#endif /* _GL_GETOPT_H */
+#endif /* if defined(LIBDICL_NEED_GETOPT) */
+
+#endif /* LIBDICL_GL_GETOPT_H */

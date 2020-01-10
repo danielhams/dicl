@@ -22,7 +22,6 @@ endif
 
 libdicl@PACKAGE_SUFFIX@_la_LDFLAGS=				\
 	$(LIBDICL_LDFLAGS)					\
-	-lpthread						\
 	$(NULL)
 
 diclincludedir=$(includedir)/libdicl@PACKAGE_SUFFIX@/libdicl
