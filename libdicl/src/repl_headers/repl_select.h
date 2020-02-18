@@ -1,18 +1,20 @@
 #ifndef LIBDICL_REPL_SELECT_H
 #define LIBDICL_REPL_SELECT_H
 
-#if defined(__GNUC__)
-#include_next <unistd.h>
-#include_next <sys/types.h>
-#include_next <bstring.h>
-#include_next <sys/time.h>
-#include_next <sys/signal.h>
-#else
-#include "/usr/include/unistd.h"
-#include "/usr/include/sys/types.h"
-#include "/usr/include/bstring.h"
-#include "/usr/include/sys/time.h"
-#include "/usr/include/sys/signal.h"
+#if defined(LIBDICL_NEED_REPL_PSELECT)
+# if defined(__GNUC__)
+#  include_next <unistd.h>
+#  include_next <sys/types.h>
+#  include_next <bstring.h>
+#  include_next <sys/time.h>
+#  include_next <sys/signal.h>
+# else
+#  include "/usr/include/unistd.h"
+#  include "/usr/include/sys/types.h"
+#  include "/usr/include/bstring.h"
+#  include "/usr/include/sys/time.h"
+#  include "/usr/include/sys/signal.h"
+# endif
 #endif
 
 #if defined(__cplusplus)
