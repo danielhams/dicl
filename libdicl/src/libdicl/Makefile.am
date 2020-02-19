@@ -9,6 +9,12 @@ dicl_LTLIBRARIES = libdicl@PACKAGE_SUFFIX@.la
 
 libdicl@PACKAGE_SUFFIX@_la_SOURCES=				\
 	libdicl.c						\
+	strtod.c						\
+	strtold.c						\
+	strtol.c						\
+	strtoll.c						\
+	strtoul.c						\
+	strtoull.c						\
 	$(NULL)
 
 libdicl@PACKAGE_SUFFIX@_la_LIBADD=				\
