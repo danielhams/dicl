@@ -12,11 +12,28 @@ extern "C" {
 #endif
 
 #undef strtod
-#define strtod rpl_strtod
-extern double rpl_strtod(const char *, char **);
+#define strtod ld_strtod
+extern double ld_strtod(const char *, char **);
+
 #undef strtold
-#define strtold rpl_strtold
-extern long double rpl_strtold(const char *, char **);
+#define strtold ld_strtold
+extern long double ld_strtold(const char *, char **);
+
+#undef strtol
+#define strtol ld_strtol
+extern long int ld_strtol(const char *, char **, int );
+
+#undef strtoll
+#define strtoll ld_strtoll
+extern long long int ld_strtoll(const char *, char **, int );
+
+#undef strtoul
+#define strtoul ld_strtoul
+extern unsigned long int ld_strtoul(const char *, char **, int );
+
+#undef strtoull
+#define strtoull ld_strtoull
+extern unsigned long long int ld_strtoull(const char *, char **, int );
 
 /* Extra things not in Irix libc */
 int setenv(const char *name, const char*value, int overwrite);
