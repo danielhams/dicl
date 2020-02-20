@@ -1,6 +1,6 @@
 AC_PREREQ(2.65)
 AC_INIT([libdicl],
-        [0.1.18],
+        [0.1.19],
         [daniel.hams@gmail.com])
 
 AC_SUBST(ACLOCAL_AMFLAGS, "-I macros")
@@ -25,8 +25,13 @@ AC_PROG_CC
 # broken stuff that isn't auto-detected correctly.
 gl_cv_func_select_supports0=no
 gl_cv_func_select_detects_ebadf=no
-gl_cv_func_strtod_works=no
-gl_cv_func_strtold_works=no
+#gl_cv_func_strtod_works=no
+#gl_cv_func_strtold_works=no
+#gl_cv_func_strtol_works=no
+#ac_cv_func_strtol=no
+#ac_cv_func_strtoul=no
+#ac_cv_func_strtoll=no
+#ac_cv_func_strtoull=no
 
 gl_EARLY
 gl_INIT

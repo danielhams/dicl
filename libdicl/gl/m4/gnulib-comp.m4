@@ -289,8 +289,6 @@ AC_DEFUN([gl_EARLY],
   # Code from module printf-posix:
   # Code from module printf-posix-tests:
   # Code from module printf-safe:
-  # Code from module pselect:
-  # Code from module pselect-tests:
   # Code from module pthread-h:
   AC_DEFINE([_REENTRANT], 1, [For thread-safety on OSF/1, Solaris.])
   AC_DEFINE([_THREAD_SAFE], 1, [For thread-safety on AIX, FreeBSD.])
@@ -393,14 +391,6 @@ AC_DEFUN([gl_EARLY],
   # Code from module strstr:
   # Code from module strstr-simple:
   # Code from module strstr-tests:
-  # Code from module strtod:
-  # Code from module strtod-tests:
-  # Code from module strtold:
-  # Code from module strtold-tests:
-  # Code from module strtoll:
-  # Code from module strtoll-tests:
-  # Code from module strtoull:
-  # Code from module strtoull-tests:
   # Code from module symlink:
   # Code from module symlink-tests:
   # Code from module sys_ioctl:
@@ -852,17 +842,6 @@ AC_DEFUN([gl_INIT],
   gl_FUNC_PRINTF_POSIX
   gl_STDIO_MODULE_INDICATOR([printf-posix])
   m4_divert_text([INIT_PREPARE], [gl_printf_safe=yes])
-  gl_FUNC_PSELECT
-  if test $HAVE_PSELECT = 0 || test $REPLACE_PSELECT = 1; then
-    AC_LIBOBJ([pselect])
-  fi
-  gl_SYS_SELECT_MODULE_INDICATOR([pselect])
-  gl_FUNC_PTHREAD_SIGMASK
-  if test $HAVE_PTHREAD_SIGMASK = 0 || test $REPLACE_PTHREAD_SIGMASK = 1; then
-    AC_LIBOBJ([pthread_sigmask])
-    gl_PREREQ_PTHREAD_SIGMASK
-  fi
-  gl_SIGNAL_MODULE_INDICATOR([pthread_sigmask])
   gl_FUNC_QSORT_R
   if test $HAVE_QSORT_R = 0; then
     # The function is missing from the system or has an unknown signature.
@@ -1055,30 +1034,6 @@ AC_DEFUN([gl_INIT],
     AC_LIBOBJ([strstr])
   fi
   gl_STRING_MODULE_INDICATOR([strstr])
-  gl_FUNC_STRTOD
-  if test $HAVE_STRTOD = 0 || test $REPLACE_STRTOD = 1; then
-    AC_LIBOBJ([strtod])
-    gl_PREREQ_STRTOD
-  fi
-  gl_STDLIB_MODULE_INDICATOR([strtod])
-  gl_FUNC_STRTOLD
-  if test $HAVE_STRTOLD = 0 || test $REPLACE_STRTOLD = 1; then
-    AC_LIBOBJ([strtold])
-    gl_PREREQ_STRTOLD
-  fi
-  gl_STDLIB_MODULE_INDICATOR([strtold])
-  gl_FUNC_STRTOLL
-  if test $HAVE_STRTOLL = 0; then
-    AC_LIBOBJ([strtoll])
-    gl_PREREQ_STRTOLL
-  fi
-  gl_STDLIB_MODULE_INDICATOR([strtoll])
-  gl_FUNC_STRTOULL
-  if test $HAVE_STRTOULL = 0; then
-    AC_LIBOBJ([strtoull])
-    gl_PREREQ_STRTOULL
-  fi
-  gl_STDLIB_MODULE_INDICATOR([strtoull])
   AC_REQUIRE([gl_HEADER_SYS_SELECT])
   AC_PROG_MKDIR_P
   AC_REQUIRE([gl_HEADER_SYS_SOCKET])
@@ -1409,13 +1364,18 @@ changequote([, ])dnl
     [posix_spawn_ported=yes])
   AM_CONDITIONAL([POSIX_SPAWN_PORTED], [test $posix_spawn_ported = yes])
   AC_CHECK_FUNCS_ONCE([getrlimit setrlimit])
-  AC_CHECK_HEADERS_ONCE([sys/wait.h])
   gl_PTHREAD_H
   gl_PTHREAD_THREAD
   if test $HAVE_PTHREAD_CREATE = 0 || test $REPLACE_PTHREAD_CREATE = 1; then
     AC_LIBOBJ([pthread-thread])
   fi
   gl_PTHREAD_MODULE_INDICATOR([pthread-thread])
+  gl_FUNC_PTHREAD_SIGMASK
+  if test $HAVE_PTHREAD_SIGMASK = 0 || test $REPLACE_PTHREAD_SIGMASK = 1; then
+    AC_LIBOBJ([pthread_sigmask])
+    gl_PREREQ_PTHREAD_SIGMASK
+  fi
+  gl_SIGNAL_MODULE_INDICATOR([pthread_sigmask])
   gl_FUNC_PUTENV
   if test $REPLACE_PUTENV = 1; then
     AC_LIBOBJ([putenv])
@@ -1472,10 +1432,6 @@ changequote([, ])dnl
   gl_FUNC_MMAP_ANON
   AC_CHECK_HEADERS_ONCE([sys/mman.h])
   AC_CHECK_FUNCS_ONCE([mprotect])
-  gt_LOCALE_FR
-  gt_LOCALE_FR_UTF8
-  gt_LOCALE_FR
-  gt_LOCALE_FR_UTF8
   gl_FUNC_SYMLINK
   if test $HAVE_SYMLINK = 0 || test $REPLACE_SYMLINK = 1; then
     AC_LIBOBJ([symlink])
@@ -1656,8 +1612,6 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/basename-lgpl.c
   lib/byteswap.in.h
   lib/c++defs.h
-  lib/c-ctype.c
-  lib/c-ctype.h
   lib/cdefs.h
   lib/chdir-long.c
   lib/chdir-long.h
@@ -1793,8 +1747,6 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/printf-parse.c
   lib/printf-parse.h
   lib/printf.c
-  lib/pselect.c
-  lib/pthread_sigmask.c
   lib/qsort.c
   lib/qsort_r.c
   lib/raise.c
@@ -1863,12 +1815,6 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/strsep.c
   lib/strsignal.c
   lib/strstr.c
-  lib/strtod.c
-  lib/strtol.c
-  lib/strtold.c
-  lib/strtoll.c
-  lib/strtoul.c
-  lib/strtoull.c
   lib/sys_select.in.h
   lib/sys_socket.c
   lib/sys_socket.in.h
@@ -2007,7 +1953,6 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/langinfo_h.m4
   m4/largefile.m4
   m4/lcmessage.m4
-  m4/ldexp.m4
   m4/ldexpl.m4
   m4/lib-ld.m4
   m4/lib-link.m4
@@ -2059,7 +2004,6 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/printf-frexpl.m4
   m4/printf-posix-rpl.m4
   m4/printf.m4
-  m4/pselect.m4
   m4/pthread-thread.m4
   m4/pthread_h.m4
   m4/pthread_rwlock_rdlock.m4
@@ -2114,10 +2058,6 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/strsep.m4
   m4/strsignal.m4
   m4/strstr.m4
-  m4/strtod.m4
-  m4/strtold.m4
-  m4/strtoll.m4
-  m4/strtoull.m4
   m4/symlink.m4
   m4/sys_ioctl_h.m4
   m4/sys_select_h.m4
@@ -2320,7 +2260,6 @@ AC_DEFUN([gl_FILE_LIST], [
   tests/test-printf-posix.sh
   tests/test-printf-posix2.c
   tests/test-printf-posix2.sh
-  tests/test-pselect.c
   tests/test-pthread-thread.c
   tests/test-pthread.c
   tests/test-pthread_sigmask1.c
@@ -2371,14 +2310,6 @@ AC_DEFUN([gl_FILE_LIST], [
   tests/test-strnlen.c
   tests/test-strsignal.c
   tests/test-strstr.c
-  tests/test-strtod.c
-  tests/test-strtod1.c
-  tests/test-strtod1.sh
-  tests/test-strtold.c
-  tests/test-strtold1.c
-  tests/test-strtold1.sh
-  tests/test-strtoll.c
-  tests/test-strtoull.c
   tests/test-symlink.c
   tests/test-symlink.h
   tests/test-sys_ioctl.c
@@ -2442,6 +2373,8 @@ AC_DEFUN([gl_FILE_LIST], [
   tests=lib/bitrotate.h
   tests=lib/btowc.c
   tests=lib/c++defs.h
+  tests=lib/c-ctype.c
+  tests=lib/c-ctype.h
   tests=lib/connect.c
   tests=lib/ctype.in.h
   tests=lib/dtotimespec.c
@@ -2480,6 +2413,7 @@ AC_DEFUN([gl_FILE_LIST], [
   tests=lib/pipe.c
   tests=lib/pthread-thread.c
   tests=lib/pthread.in.h
+  tests=lib/pthread_sigmask.c
   tests=lib/putenv.c
   tests=lib/resource-ext.h
   tests=lib/same-inode.h

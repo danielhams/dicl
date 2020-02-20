@@ -21,8 +21,6 @@
 
 #ifndef LIBDICL_GL_GETOPT_H
 
-#if defined(LIBDICL_NEED_GETOPT)
-
 #if __GNUC__ >= 3
 #pragma GCC system_header
 #endif
@@ -37,6 +35,8 @@
 # include_next <getopt.h>
 # undef _GL_SYSTEM_GETOPT
 #endif
+
+#if defined(LIBDICL_NEED_GETOPT)
 
 /* Manual modification - define __GETOPT_PREFIX */
 #define __GETOPT_PREFIX rpl_

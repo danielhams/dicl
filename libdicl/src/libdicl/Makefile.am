@@ -15,6 +15,7 @@ libdicl@PACKAGE_SUFFIX@_la_SOURCES=				\
 	strtoll.c						\
 	strtoul.c						\
 	strtoull.c						\
+	c-ctype.c						\
 	$(NULL)
 
 libdicl@PACKAGE_SUFFIX@_la_LIBADD=				\
@@ -34,6 +35,7 @@ diclincludedir=$(includedir)/libdicl@PACKAGE_SUFFIX@/libdicl
 
 diclinclude_HEADERS=						\
 	libdicl.h						\
+	c-ctype.h						\
 	$(NULL)
 
 CLEANFILES=							\

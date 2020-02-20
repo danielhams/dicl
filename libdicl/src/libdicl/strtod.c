@@ -34,7 +34,7 @@
 # include <langinfo.h>
 #endif
 
-#include "../../gl/c-ctype.h"
+#include "c-ctype.h"
 
 #undef MIN
 #undef MAX
@@ -67,6 +67,9 @@
 #else
 # define USE_LDEXP 0
 #endif
+
+/* Our replacement strtol needs a prototype */
+extern long int ld_strtol(const char *, char **, int);
 
 /* Return true if C is a space in the current locale, avoiding
    problems with signed char and isspace.  */
@@ -271,7 +274,9 @@ parse_number (const char *nptr,
       /* Add any given exponent to the implicit one.  */
       int saved_errno = errno;
       char *end;
-      long int value = strtol (s + 1, &end, 10);
+
+      long int value = ld_strtol (s + 1, &end, 10);
+
       errno = saved_errno;
 
       if (s + 1 != end)

@@ -50,6 +50,14 @@ void qsort_r(void *, size_t, size_t,
 
 #if defined(__cplusplus)
 }
+namespace std {
+  double ld_strtod(const char *, char **);
+  long double ld_strtold(const char *, char **);
+  long int ld_strtol(const char *, char **, int );
+  long long int ld_strtoll(const char *, char **, int );
+  unsigned long int ld_strtoul(const char *, char **, int );
+  unsigned long long int ld_strtoull(const char *, char **, int );
+}
 #endif
 
 #endif

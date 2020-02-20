@@ -223,6 +223,12 @@ EXTRA_DIST += test-byteswap.c macros.h
 
 ## end   gnulib module byteswap-tests
 
+## begin gnulib module c-ctype
+
+libtests_a_SOURCES += c-ctype.h c-ctype.c
+
+## end   gnulib module c-ctype
+
 ## begin gnulib module c-ctype-tests
 
 TESTS += test-c-ctype
@@ -1397,15 +1403,6 @@ EXTRA_DIST += test-printf-posix.sh test-printf-posix.c test-printf-posix.h test-
 
 ## end   gnulib module printf-posix-tests
 
-## begin gnulib module pselect-tests
-
-TESTS += test-pselect
-check_PROGRAMS += test-pselect
-test_pselect_LDADD = $(LDADD) @LIB_SELECT@ @LIBSOCKET@ @LIB_PTHREAD_SIGMASK@ $(INET_PTON_LIB)
-EXTRA_DIST += test-pselect.c test-select.h macros.h signature.h
-
-## end   gnulib module pselect-tests
-
 ## begin gnulib module pthread-h
 
 BUILT_SOURCES += pthread.h
@@ -1575,6 +1572,15 @@ test_pthread_thread_LDADD = $(LDADD) @LIBMULTITHREAD@
 EXTRA_DIST += test-pthread-thread.c macros.h
 
 ## end   gnulib module pthread-thread-tests
+
+## begin gnulib module pthread_sigmask
+
+
+EXTRA_DIST += pthread_sigmask.c
+
+EXTRA_libtests_a_SOURCES += pthread_sigmask.c
+
+## end   gnulib module pthread_sigmask
 
 ## begin gnulib module pthread_sigmask-tests
 
@@ -1966,50 +1972,6 @@ check_PROGRAMS += test-strstr
 EXTRA_DIST += test-strstr.c zerosize-ptr.h signature.h macros.h
 
 ## end   gnulib module strstr-tests
-
-## begin gnulib module strtod-tests
-
-TESTS += test-strtod
-check_PROGRAMS += test-strtod
-
-TESTS += test-strtod1.sh
-TESTS_ENVIRONMENT += \
-  LOCALE_FR='@LOCALE_FR@' \
-  LOCALE_FR_UTF8='@LOCALE_FR_UTF8@'
-check_PROGRAMS += test-strtod1
-EXTRA_DIST += test-strtod.c test-strtod1.sh test-strtod1.c signature.h minus-zero.h macros.h
-
-## end   gnulib module strtod-tests
-
-## begin gnulib module strtold-tests
-
-TESTS += test-strtold
-check_PROGRAMS += test-strtold
-
-TESTS += test-strtold1.sh
-TESTS_ENVIRONMENT += \
-  LOCALE_FR='@LOCALE_FR@' \
-  LOCALE_FR_UTF8='@LOCALE_FR_UTF8@'
-check_PROGRAMS += test-strtold1
-EXTRA_DIST += test-strtold.c test-strtold1.sh test-strtold1.c signature.h minus-zero.h macros.h
-
-## end   gnulib module strtold-tests
-
-## begin gnulib module strtoll-tests
-
-TESTS += test-strtoll
-check_PROGRAMS += test-strtoll
-EXTRA_DIST += test-strtoll.c signature.h macros.h
-
-## end   gnulib module strtoll-tests
-
-## begin gnulib module strtoull-tests
-
-TESTS += test-strtoull
-check_PROGRAMS += test-strtoull
-EXTRA_DIST += test-strtoull.c signature.h macros.h
-
-## end   gnulib module strtoull-tests
 
 ## begin gnulib module symlink
 

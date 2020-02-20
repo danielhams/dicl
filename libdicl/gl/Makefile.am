@@ -52,7 +52,6 @@
 #  posix_spawn \
 #  posix_spawnp \
 #  printf-posix \
-#  pselect \
 #  qsort_r \
 #  select \
 #  setenv \
@@ -64,10 +63,6 @@
 #  strsep \
 #  strsignal \
 #  strstr \
-#  strtod \
-#  strtold \
-#  strtoll \
-#  strtoull \
 #  unsetenv \
 #  vasprintf-posix \
 #  vfprintf-posix \
@@ -195,12 +190,6 @@ MOSTLYCLEANFILES += byteswap.h byteswap.h-t
 EXTRA_DIST += byteswap.in.h
 
 ## end   gnulib module byteswap
-
-## begin gnulib module c-ctype
-
-libgnu_a_SOURCES += c-ctype.h c-ctype.c
-
-## end   gnulib module c-ctype
 
 ## begin gnulib module chdir-long
 
@@ -1394,24 +1383,6 @@ EXTRA_libgnu_a_SOURCES += printf.c
 
 ## end   gnulib module printf-posix
 
-## begin gnulib module pselect
-
-
-EXTRA_DIST += pselect.c
-
-EXTRA_libgnu_a_SOURCES += pselect.c
-
-## end   gnulib module pselect
-
-## begin gnulib module pthread_sigmask
-
-
-EXTRA_DIST += pthread_sigmask.c
-
-EXTRA_libgnu_a_SOURCES += pthread_sigmask.c
-
-## end   gnulib module pthread_sigmask
-
 ## begin gnulib module qsort_r
 
 
@@ -2396,42 +2367,6 @@ EXTRA_DIST += str-two-way.h strstr.c
 EXTRA_libgnu_a_SOURCES += strstr.c
 
 ## end   gnulib module strstr-simple
-
-## begin gnulib module strtod
-
-
-EXTRA_DIST += strtod.c
-
-EXTRA_libgnu_a_SOURCES += strtod.c
-
-## end   gnulib module strtod
-
-## begin gnulib module strtold
-
-
-EXTRA_DIST += strtod.c strtold.c
-
-EXTRA_libgnu_a_SOURCES += strtod.c strtold.c
-
-## end   gnulib module strtold
-
-## begin gnulib module strtoll
-
-
-EXTRA_DIST += strtol.c strtoll.c
-
-EXTRA_libgnu_a_SOURCES += strtol.c strtoll.c
-
-## end   gnulib module strtoll
-
-## begin gnulib module strtoull
-
-
-EXTRA_DIST += strtol.c strtoul.c strtoull.c
-
-EXTRA_libgnu_a_SOURCES += strtol.c strtoul.c strtoull.c
-
-## end   gnulib module strtoull
 
 ## begin gnulib module sys_select
 

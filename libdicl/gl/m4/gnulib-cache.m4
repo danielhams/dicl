@@ -57,7 +57,6 @@
 #  posix_spawn \
 #  posix_spawnp \
 #  printf-posix \
-#  pselect \
 #  qsort_r \
 #  select \
 #  setenv \
@@ -69,10 +68,6 @@
 #  strsep \
 #  strsignal \
 #  strstr \
-#  strtod \
-#  strtold \
-#  strtoll \
-#  strtoull \
 #  unsetenv \
 #  vasprintf-posix \
 #  vfprintf-posix \
@@ -101,7 +96,6 @@ gl_MODULES([
   posix_spawn
   posix_spawnp
   printf-posix
-  pselect
   qsort_r
   select
   setenv
@@ -113,10 +107,6 @@ gl_MODULES([
   strsep
   strsignal
   strstr
-  strtod
-  strtold
-  strtoll
-  strtoull
   unsetenv
   vasprintf-posix
   vfprintf-posix
