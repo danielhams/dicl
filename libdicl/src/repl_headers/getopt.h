@@ -36,6 +36,8 @@
 # undef _GL_SYSTEM_GETOPT
 #endif
 
+#if defined(LIBDICL_NEED_GETOPT)
+
 /* Manual modification - define __GETOPT_PREFIX */
 #define __GETOPT_PREFIX rpl_
 
@@ -86,5 +88,7 @@
 #include <getopt-cdefs.h>
 #include <getopt-pfx-core.h>
 #include <getopt-pfx-ext.h>
+
+#endif /* if defined(LIBDICL_NEED_GETOPT) */
 
 #endif /* LIBDICL_GL_GETOPT_H */
