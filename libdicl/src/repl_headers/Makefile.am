@@ -25,6 +25,7 @@ replinclude_HEADERS=		\
 	getopt-pfx-ext.h	\
 	getopt.h		\
 	obstack.h		\
+	regex.h			\
 	repl_select.h		\
 	spawn.h			\
 	stdio.h			\

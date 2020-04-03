@@ -196,15 +196,6 @@ EXTRA_DIST += test-bitrotate.c macros.h
 
 ## end   gnulib module bitrotate-tests
 
-## begin gnulib module btowc
-
-
-EXTRA_DIST += btowc.c
-
-EXTRA_libtests_a_SOURCES += btowc.c
-
-## end   gnulib module btowc
-
 ## begin gnulib module btowc-tests
 
 TESTS += test-btowc1.sh test-btowc2.sh
@@ -236,6 +227,21 @@ check_PROGRAMS += test-c-ctype
 EXTRA_DIST += test-c-ctype.c macros.h
 
 ## end   gnulib module c-ctype-tests
+
+## begin gnulib module c-strcase
+
+libtests_a_SOURCES += c-strcase.h c-strcasecmp.c c-strncasecmp.c
+
+## end   gnulib module c-strcase
+
+## begin gnulib module c-strcase-tests
+
+TESTS += test-c-strcase.sh
+TESTS_ENVIRONMENT += LOCALE_FR='@LOCALE_FR@' LOCALE_TR_UTF8='@LOCALE_TR_UTF8@'
+check_PROGRAMS += test-c-strcasecmp test-c-strncasecmp
+EXTRA_DIST += test-c-strcase.sh test-c-strcasecmp.c test-c-strncasecmp.c macros.h
+
+## end   gnulib module c-strcase-tests
 
 ## begin gnulib module chdir-tests
 
@@ -862,40 +868,6 @@ EXTRA_DIST += test-isnanl-nolibm.c test-isnanl.h minus-zero.h infinity.h nan.h m
 
 ## end   gnulib module isnanl-nolibm-tests
 
-## begin gnulib module langinfo
-
-BUILT_SOURCES += langinfo.h
-
-# We need the following in order to create an empty placeholder for
-# <langinfo.h> when the system doesn't have one.
-langinfo.h: langinfo.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(WARN_ON_USE_H)
-	$(AM_V_GEN)rm -f $@-t $@ && \
-	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
-	  sed -e 's|@''GUARD_PREFIX''@|GL|g' \
-	      -e 's|@''HAVE_LANGINFO_H''@|$(HAVE_LANGINFO_H)|g' \
-	      -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
-	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
-	      -e 's|@''PRAGMA_COLUMNS''@|@PRAGMA_COLUMNS@|g' \
-	      -e 's|@''NEXT_LANGINFO_H''@|$(NEXT_LANGINFO_H)|g' \
-	      -e 's/@''GNULIB_NL_LANGINFO''@/$(GNULIB_NL_LANGINFO)/g' \
-	      -e 's|@''HAVE_LANGINFO_CODESET''@|$(HAVE_LANGINFO_CODESET)|g' \
-	      -e 's|@''HAVE_LANGINFO_T_FMT_AMPM''@|$(HAVE_LANGINFO_T_FMT_AMPM)|g' \
-	      -e 's|@''HAVE_LANGINFO_ALTMON''@|$(HAVE_LANGINFO_ALTMON)|g' \
-	      -e 's|@''HAVE_LANGINFO_ERA''@|$(HAVE_LANGINFO_ERA)|g' \
-	      -e 's|@''HAVE_LANGINFO_YESEXPR''@|$(HAVE_LANGINFO_YESEXPR)|g' \
-	      -e 's|@''HAVE_NL_LANGINFO''@|$(HAVE_NL_LANGINFO)|g' \
-	      -e 's|@''REPLACE_NL_LANGINFO''@|$(REPLACE_NL_LANGINFO)|g' \
-	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \
-	      -e '/definition of _GL_WARN_ON_USE/r $(WARN_ON_USE_H)' \
-	      < $(srcdir)/langinfo.in.h; \
-	} > $@-t && \
-	mv $@-t $@
-MOSTLYCLEANFILES += langinfo.h langinfo.h-t
-
-EXTRA_DIST += langinfo.in.h
-
-## end   gnulib module langinfo
-
 ## begin gnulib module langinfo-tests
 
 TESTS += test-langinfo
@@ -937,46 +909,6 @@ EXTRA_DIST += test-localcharset.c
 
 ## end   gnulib module localcharset-tests
 
-## begin gnulib module locale
-
-BUILT_SOURCES += locale.h
-
-# We need the following in order to create <locale.h> when the system
-# doesn't have one that provides all definitions.
-locale.h: locale.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
-	$(AM_V_GEN)rm -f $@-t $@ && \
-	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
-	  sed -e 's|@''GUARD_PREFIX''@|GL|g' \
-	      -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
-	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
-	      -e 's|@''PRAGMA_COLUMNS''@|@PRAGMA_COLUMNS@|g' \
-	      -e 's|@''NEXT_LOCALE_H''@|$(NEXT_LOCALE_H)|g' \
-	      -e 's/@''GNULIB_LOCALECONV''@/$(GNULIB_LOCALECONV)/g' \
-	      -e 's/@''GNULIB_SETLOCALE''@/$(GNULIB_SETLOCALE)/g' \
-	      -e 's/@''GNULIB_DUPLOCALE''@/$(GNULIB_DUPLOCALE)/g' \
-	      -e 's/@''GNULIB_LOCALENAME''@/$(GNULIB_LOCALENAME)/g' \
-	      -e 's|@''HAVE_NEWLOCALE''@|$(HAVE_NEWLOCALE)|g' \
-	      -e 's|@''HAVE_DUPLOCALE''@|$(HAVE_DUPLOCALE)|g' \
-	      -e 's|@''HAVE_FREELOCALE''@|$(HAVE_FREELOCALE)|g' \
-	      -e 's|@''HAVE_XLOCALE_H''@|$(HAVE_XLOCALE_H)|g' \
-	      -e 's|@''REPLACE_LOCALECONV''@|$(REPLACE_LOCALECONV)|g' \
-	      -e 's|@''REPLACE_SETLOCALE''@|$(REPLACE_SETLOCALE)|g' \
-	      -e 's|@''REPLACE_NEWLOCALE''@|$(REPLACE_NEWLOCALE)|g' \
-	      -e 's|@''REPLACE_DUPLOCALE''@|$(REPLACE_DUPLOCALE)|g' \
-	      -e 's|@''REPLACE_FREELOCALE''@|$(REPLACE_FREELOCALE)|g' \
-	      -e 's|@''REPLACE_STRUCT_LCONV''@|$(REPLACE_STRUCT_LCONV)|g' \
-	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \
-	      -e '/definition of _GL_ARG_NONNULL/r $(ARG_NONNULL_H)' \
-	      -e '/definition of _GL_WARN_ON_USE/r $(WARN_ON_USE_H)' \
-	      < $(srcdir)/locale.in.h; \
-	} > $@-t && \
-	mv $@-t $@
-MOSTLYCLEANFILES += locale.h locale.h-t
-
-EXTRA_DIST += locale.in.h
-
-## end   gnulib module locale
-
 ## begin gnulib module locale-tests
 
 TESTS += test-locale
@@ -984,6 +916,14 @@ check_PROGRAMS += test-locale
 EXTRA_DIST += test-locale.c
 
 ## end   gnulib module locale-tests
+
+## begin gnulib module localeconv-tests
+
+TESTS += test-localeconv
+check_PROGRAMS += test-localeconv
+EXTRA_DIST += test-localeconv.c signature.h macros.h
+
+## end   gnulib module localeconv-tests
 
 ## begin gnulib module localename
 
@@ -1091,15 +1031,6 @@ EXTRA_DIST += test-mbsrtowcs1.sh test-mbsrtowcs2.sh test-mbsrtowcs3.sh test-mbsr
 
 ## end   gnulib module mbsrtowcs-tests
 
-## begin gnulib module mbtowc
-
-
-EXTRA_DIST += mbtowc-impl.h mbtowc.c
-
-EXTRA_libtests_a_SOURCES += mbtowc.c
-
-## end   gnulib module mbtowc
-
 ## begin gnulib module memchr-tests
 
 TESTS += test-memchr
@@ -1171,6 +1102,15 @@ check_PROGRAMS += test-netinet_in
 EXTRA_DIST += test-netinet_in.c
 
 ## end   gnulib module netinet_in-tests
+
+## begin gnulib module nl_langinfo-tests
+
+TESTS += test-nl_langinfo.sh
+TESTS_ENVIRONMENT += LOCALE_FR='@LOCALE_FR@' LOCALE_FR_UTF8='@LOCALE_FR_UTF8@'
+check_PROGRAMS += test-nl_langinfo
+EXTRA_DIST += test-nl_langinfo.sh test-nl_langinfo.c signature.h macros.h
+
+## end   gnulib module nl_langinfo-tests
 
 ## begin gnulib module obstack-printf-tests
 
@@ -1624,6 +1564,15 @@ check_PROGRAMS += test-rawmemchr
 EXTRA_DIST += test-rawmemchr.c zerosize-ptr.h signature.h macros.h
 
 ## end   gnulib module rawmemchr-tests
+
+## begin gnulib module regex-tests
+
+TESTS += test-regex
+check_PROGRAMS += test-regex
+test_regex_LDADD = $(LDADD) @LIBINTL@ $(LIBTHREAD)
+EXTRA_DIST += test-regex.c macros.h
+
+## end   gnulib module regex-tests
 
 ## begin gnulib module same-inode
 
@@ -2343,15 +2292,6 @@ check_PROGRAMS += test-wchar
 EXTRA_DIST += test-wchar.c
 
 ## end   gnulib module wchar-tests
-
-## begin gnulib module wcrtomb
-
-
-EXTRA_DIST += wcrtomb.c
-
-EXTRA_libtests_a_SOURCES += wcrtomb.c
-
-## end   gnulib module wcrtomb
 
 ## begin gnulib module wcrtomb-tests
 

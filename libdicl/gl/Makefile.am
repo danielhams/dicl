@@ -53,6 +53,7 @@
 #  posix_spawnp \
 #  printf-posix \
 #  qsort_r \
+#  regex \
 #  select \
 #  setenv \
 #  sprintf-posix \
@@ -167,6 +168,15 @@ EXTRA_DIST += openat-priv.h openat-proc.c
 EXTRA_libgnu_a_SOURCES += openat-proc.c
 
 ## end   gnulib module at-internal
+
+## begin gnulib module btowc
+
+
+EXTRA_DIST += btowc.c
+
+EXTRA_libgnu_a_SOURCES += btowc.c
+
+## end   gnulib module btowc
 
 ## begin gnulib module byteswap
 
@@ -772,6 +782,40 @@ EXTRA_libgnu_a_SOURCES += isnan.c isnanl.c
 
 ## end   gnulib module isnanl-nolibm
 
+## begin gnulib module langinfo
+
+BUILT_SOURCES += langinfo.h
+
+# We need the following in order to create an empty placeholder for
+# <langinfo.h> when the system doesn't have one.
+langinfo.h: langinfo.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(WARN_ON_USE_H)
+	$(AM_V_GEN)rm -f $@-t $@ && \
+	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
+	  sed -e 's|@''GUARD_PREFIX''@|GL|g' \
+	      -e 's|@''HAVE_LANGINFO_H''@|$(HAVE_LANGINFO_H)|g' \
+	      -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
+	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
+	      -e 's|@''PRAGMA_COLUMNS''@|@PRAGMA_COLUMNS@|g' \
+	      -e 's|@''NEXT_LANGINFO_H''@|$(NEXT_LANGINFO_H)|g' \
+	      -e 's/@''GNULIB_NL_LANGINFO''@/$(GNULIB_NL_LANGINFO)/g' \
+	      -e 's|@''HAVE_LANGINFO_CODESET''@|$(HAVE_LANGINFO_CODESET)|g' \
+	      -e 's|@''HAVE_LANGINFO_T_FMT_AMPM''@|$(HAVE_LANGINFO_T_FMT_AMPM)|g' \
+	      -e 's|@''HAVE_LANGINFO_ALTMON''@|$(HAVE_LANGINFO_ALTMON)|g' \
+	      -e 's|@''HAVE_LANGINFO_ERA''@|$(HAVE_LANGINFO_ERA)|g' \
+	      -e 's|@''HAVE_LANGINFO_YESEXPR''@|$(HAVE_LANGINFO_YESEXPR)|g' \
+	      -e 's|@''HAVE_NL_LANGINFO''@|$(HAVE_NL_LANGINFO)|g' \
+	      -e 's|@''REPLACE_NL_LANGINFO''@|$(REPLACE_NL_LANGINFO)|g' \
+	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \
+	      -e '/definition of _GL_WARN_ON_USE/r $(WARN_ON_USE_H)' \
+	      < $(srcdir)/langinfo.in.h; \
+	} > $@-t && \
+	mv $@-t $@
+MOSTLYCLEANFILES += langinfo.h langinfo.h-t
+
+EXTRA_DIST += langinfo.in.h
+
+## end   gnulib module langinfo
+
 ## begin gnulib module libc-config
 
 
@@ -814,6 +858,55 @@ libgnu_a_SOURCES += localcharset.c
 EXTRA_DIST += localcharset.h
 
 ## end   gnulib module localcharset
+
+## begin gnulib module locale
+
+BUILT_SOURCES += locale.h
+
+# We need the following in order to create <locale.h> when the system
+# doesn't have one that provides all definitions.
+locale.h: locale.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
+	$(AM_V_GEN)rm -f $@-t $@ && \
+	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
+	  sed -e 's|@''GUARD_PREFIX''@|GL|g' \
+	      -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
+	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
+	      -e 's|@''PRAGMA_COLUMNS''@|@PRAGMA_COLUMNS@|g' \
+	      -e 's|@''NEXT_LOCALE_H''@|$(NEXT_LOCALE_H)|g' \
+	      -e 's/@''GNULIB_LOCALECONV''@/$(GNULIB_LOCALECONV)/g' \
+	      -e 's/@''GNULIB_SETLOCALE''@/$(GNULIB_SETLOCALE)/g' \
+	      -e 's/@''GNULIB_DUPLOCALE''@/$(GNULIB_DUPLOCALE)/g' \
+	      -e 's/@''GNULIB_LOCALENAME''@/$(GNULIB_LOCALENAME)/g' \
+	      -e 's|@''HAVE_NEWLOCALE''@|$(HAVE_NEWLOCALE)|g' \
+	      -e 's|@''HAVE_DUPLOCALE''@|$(HAVE_DUPLOCALE)|g' \
+	      -e 's|@''HAVE_FREELOCALE''@|$(HAVE_FREELOCALE)|g' \
+	      -e 's|@''HAVE_XLOCALE_H''@|$(HAVE_XLOCALE_H)|g' \
+	      -e 's|@''REPLACE_LOCALECONV''@|$(REPLACE_LOCALECONV)|g' \
+	      -e 's|@''REPLACE_SETLOCALE''@|$(REPLACE_SETLOCALE)|g' \
+	      -e 's|@''REPLACE_NEWLOCALE''@|$(REPLACE_NEWLOCALE)|g' \
+	      -e 's|@''REPLACE_DUPLOCALE''@|$(REPLACE_DUPLOCALE)|g' \
+	      -e 's|@''REPLACE_FREELOCALE''@|$(REPLACE_FREELOCALE)|g' \
+	      -e 's|@''REPLACE_STRUCT_LCONV''@|$(REPLACE_STRUCT_LCONV)|g' \
+	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \
+	      -e '/definition of _GL_ARG_NONNULL/r $(ARG_NONNULL_H)' \
+	      -e '/definition of _GL_WARN_ON_USE/r $(WARN_ON_USE_H)' \
+	      < $(srcdir)/locale.in.h; \
+	} > $@-t && \
+	mv $@-t $@
+MOSTLYCLEANFILES += locale.h locale.h-t
+
+EXTRA_DIST += locale.in.h
+
+## end   gnulib module locale
+
+## begin gnulib module localeconv
+
+
+EXTRA_DIST += localeconv.c
+
+EXTRA_libgnu_a_SOURCES += localeconv.c
+
+## end   gnulib module localeconv
 
 ## begin gnulib module localtime-buffer
 
@@ -1192,6 +1285,15 @@ EXTRA_libgnu_a_SOURCES += mbsrtowcs-state.c mbsrtowcs.c
 
 ## end   gnulib module mbsrtowcs
 
+## begin gnulib module mbtowc
+
+
+EXTRA_DIST += mbtowc-impl.h mbtowc.c
+
+EXTRA_libgnu_a_SOURCES += mbtowc.c
+
+## end   gnulib module mbtowc
+
 ## begin gnulib module memchr
 
 
@@ -1272,6 +1374,15 @@ EXTRA_DIST += nanosleep.c
 EXTRA_libgnu_a_SOURCES += nanosleep.c
 
 ## end   gnulib module nanosleep
+
+## begin gnulib module nl_langinfo
+
+
+EXTRA_DIST += nl_langinfo.c
+
+EXTRA_libgnu_a_SOURCES += nl_langinfo.c
+
+## end   gnulib module nl_langinfo
 
 ## begin gnulib module obstack
 
@@ -1418,6 +1529,15 @@ EXTRA_DIST += realloc.c
 EXTRA_libgnu_a_SOURCES += realloc.c
 
 ## end   gnulib module realloc-posix
+
+## begin gnulib module regex
+
+
+EXTRA_DIST += regcomp.c regex.c regex.h regex_internal.c regex_internal.h regexec.c
+
+EXTRA_libgnu_a_SOURCES += regcomp.c regex.c regex_internal.c regexec.c
+
+## end   gnulib module regex
 
 ## begin gnulib module root-uid
 
@@ -3179,6 +3299,15 @@ MOSTLYCLEANFILES += wchar.h wchar.h-t
 EXTRA_DIST += wchar.in.h
 
 ## end   gnulib module wchar
+
+## begin gnulib module wcrtomb
+
+
+EXTRA_DIST += wcrtomb.c
+
+EXTRA_libgnu_a_SOURCES += wcrtomb.c
+
+## end   gnulib module wcrtomb
 
 ## begin gnulib module wctype-h
 

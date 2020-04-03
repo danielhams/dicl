@@ -58,6 +58,7 @@
 #  posix_spawnp \
 #  printf-posix \
 #  qsort_r \
+#  regex \
 #  select \
 #  setenv \
 #  sprintf-posix \
@@ -97,6 +98,7 @@ gl_MODULES([
   posix_spawnp
   printf-posix
   qsort_r
+  regex
   select
   setenv
   sprintf-posix
