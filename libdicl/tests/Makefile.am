@@ -267,6 +267,54 @@ EXTRA_DIST += test-close.c signature.h macros.h
 
 ## end   gnulib module close-tests
 
+## begin gnulib module configmake
+
+# Listed in the same order as the GNU makefile conventions, and
+# provided by autoconf 2.59c+ or 2.70.
+# The Automake-defined pkg* macros are appended, in the order
+# listed in the Automake 1.10a+ documentation.
+configmake.h: Makefile
+	$(AM_V_GEN)rm -f $@-t && \
+	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
+	  echo '#if HAVE_WINSOCK2_H'; \
+	  echo '# include <winsock2.h> /* avoid mingw pollution on DATADIR */'; \
+	  echo '#endif'; \
+	  echo '#define PREFIX "$(prefix)"'; \
+	  echo '#define EXEC_PREFIX "$(exec_prefix)"'; \
+	  echo '#define BINDIR "$(bindir)"'; \
+	  echo '#define SBINDIR "$(sbindir)"'; \
+	  echo '#define LIBEXECDIR "$(libexecdir)"'; \
+	  echo '#define DATAROOTDIR "$(datarootdir)"'; \
+	  echo '#define DATADIR "$(datadir)"'; \
+	  echo '#define SYSCONFDIR "$(sysconfdir)"'; \
+	  echo '#define SHAREDSTATEDIR "$(sharedstatedir)"'; \
+	  echo '#define LOCALSTATEDIR "$(localstatedir)"'; \
+	  echo '#define RUNSTATEDIR "$(runstatedir)"'; \
+	  echo '#define INCLUDEDIR "$(includedir)"'; \
+	  echo '#define OLDINCLUDEDIR "$(oldincludedir)"'; \
+	  echo '#define DOCDIR "$(docdir)"'; \
+	  echo '#define INFODIR "$(infodir)"'; \
+	  echo '#define HTMLDIR "$(htmldir)"'; \
+	  echo '#define DVIDIR "$(dvidir)"'; \
+	  echo '#define PDFDIR "$(pdfdir)"'; \
+	  echo '#define PSDIR "$(psdir)"'; \
+	  echo '#define LIBDIR "$(libdir)"'; \
+	  echo '#define LISPDIR "$(lispdir)"'; \
+	  echo '#define LOCALEDIR "$(localedir)"'; \
+	  echo '#define MANDIR "$(mandir)"'; \
+	  echo '#define MANEXT "$(manext)"'; \
+	  echo '#define PKGDATADIR "$(pkgdatadir)"'; \
+	  echo '#define PKGINCLUDEDIR "$(pkgincludedir)"'; \
+	  echo '#define PKGLIBDIR "$(pkglibdir)"'; \
+	  echo '#define PKGLIBEXECDIR "$(pkglibexecdir)"'; \
+	} | sed '/""/d' > $@-t && \
+	mv -f $@-t $@
+
+BUILT_SOURCES += configmake.h
+CLEANFILES += configmake.h configmake.h-t
+
+## end   gnulib module configmake
+
 ## begin gnulib module connect
 
 
@@ -459,6 +507,15 @@ check_PROGRAMS += test-fnmatch
 EXTRA_DIST += test-fnmatch.c signature.h macros.h
 
 ## end   gnulib module fnmatch-tests
+
+## begin gnulib module forkpty-tests
+
+TESTS += test-forkpty
+check_PROGRAMS += test-forkpty
+test_forkpty_LDADD = $(LDADD) @PTY_LIB@
+EXTRA_DIST += test-forkpty.c signature.h
+
+## end   gnulib module forkpty-tests
 
 ## begin gnulib module fprintf-posix-tests
 
@@ -667,6 +724,23 @@ EXTRA_DIST += signature.h test-gettimeofday.c
 
 ## end   gnulib module gettimeofday-tests
 
+## begin gnulib module grantpt
+
+
+EXTRA_DIST += grantpt.c pty-private.h
+
+EXTRA_libtests_a_SOURCES += grantpt.c
+
+## end   gnulib module grantpt
+
+## begin gnulib module grantpt-tests
+
+TESTS += test-grantpt
+check_PROGRAMS += test-grantpt
+EXTRA_DIST += test-grantpt.c signature.h macros.h
+
+## end   gnulib module grantpt-tests
+
 ## begin gnulib module hash
 
 libtests_a_SOURCES += hash.c
@@ -807,15 +881,6 @@ EXTRA_DIST += test-inttypes.c
 
 ## end   gnulib module inttypes-tests
 
-## begin gnulib module ioctl
-
-
-EXTRA_DIST += ioctl.c w32sock.h
-
-EXTRA_libtests_a_SOURCES += ioctl.c
-
-## end   gnulib module ioctl
-
 ## begin gnulib module ioctl-tests
 
 TESTS += test-ioctl
@@ -823,6 +888,23 @@ check_PROGRAMS += test-ioctl
 EXTRA_DIST += test-ioctl.c signature.h macros.h
 
 ## end   gnulib module ioctl-tests
+
+## begin gnulib module isatty
+
+
+EXTRA_DIST += isatty.c
+
+EXTRA_libtests_a_SOURCES += isatty.c
+
+## end   gnulib module isatty
+
+## begin gnulib module isatty-tests
+
+TESTS += test-isatty
+check_PROGRAMS += test-isatty
+EXTRA_DIST += test-isatty.c signature.h macros.h
+
+## end   gnulib module isatty-tests
 
 ## begin gnulib module isblank
 
@@ -956,6 +1038,15 @@ test_once2_LDADD = $(LDADD) @LIBMULTITHREAD@
 EXTRA_DIST += test-rwlock1.c test-lock.c test-once.c
 
 ## end   gnulib module lock-tests
+
+## begin gnulib module login_tty-tests
+
+TESTS += test-login_tty
+check_PROGRAMS += test-login_tty
+test_login_tty_LDADD = $(LDADD) @PTY_LIB@
+EXTRA_DIST += test-login_tty.c
+
+## end   gnulib module login_tty-tests
 
 ## begin gnulib module lstat-tests
 
@@ -1138,6 +1229,15 @@ EXTRA_DIST += test-openat.c test-open.h signature.h macros.h
 
 ## end   gnulib module openat-tests
 
+## begin gnulib module openpty-tests
+
+TESTS += test-openpty
+check_PROGRAMS += test-openpty
+test_openpty_LDADD = $(LDADD) @PTY_LIB@
+EXTRA_DIST += test-openpty.c signature.h
+
+## end   gnulib module openpty-tests
+
 ## begin gnulib module pathmax-tests
 
 TESTS += test-pathmax
@@ -1179,6 +1279,14 @@ check_PROGRAMS += test-pipe
 EXTRA_DIST += test-pipe.c signature.h macros.h
 
 ## end   gnulib module pipe-posix-tests
+
+## begin gnulib module posix_openpt-tests
+
+TESTS += test-posix_openpt
+check_PROGRAMS += test-posix_openpt
+EXTRA_DIST += test-posix_openpt.c signature.h macros.h
+
+## end   gnulib module posix_openpt-tests
 
 ## begin gnulib module posix_spawn-tests
 
@@ -1342,6 +1450,16 @@ check_PROGRAMS += test-printf-posix test-printf-posix2
 EXTRA_DIST += test-printf-posix.sh test-printf-posix.c test-printf-posix.h test-printf-posix.output test-printf-posix2.sh test-printf-posix2.c infinity.h signature.h macros.h
 
 ## end   gnulib module printf-posix-tests
+
+## begin gnulib module pt_chown
+
+# TODO: Add rules for installing as setuid root (chown root, chmod a=rx,u+s).
+pkglibexec_PROGRAMS = pt_chown
+pt_chown_LDADD = $(LDADD)
+
+EXTRA_DIST += pt_chown.c pty-private.h
+
+## end   gnulib module pt_chown
 
 ## begin gnulib module pthread-h
 
@@ -1531,6 +1649,40 @@ test_pthread_sigmask2_LDADD = $(LDADD) @LIB_PTHREAD_SIGMASK@ @LIBMULTITHREAD@
 EXTRA_DIST += test-pthread_sigmask1.c test-pthread_sigmask2.c signature.h macros.h
 
 ## end   gnulib module pthread_sigmask-tests
+
+## begin gnulib module ptsname
+
+
+EXTRA_DIST += ptsname.c
+
+EXTRA_libtests_a_SOURCES += ptsname.c
+
+## end   gnulib module ptsname
+
+## begin gnulib module ptsname-tests
+
+TESTS += test-ptsname
+check_PROGRAMS += test-ptsname
+EXTRA_DIST += test-ptsname.c signature.h macros.h
+
+## end   gnulib module ptsname-tests
+
+## begin gnulib module ptsname_r
+
+
+EXTRA_DIST += ptsname_r.c
+
+EXTRA_libtests_a_SOURCES += ptsname_r.c
+
+## end   gnulib module ptsname_r
+
+## begin gnulib module ptsname_r-tests
+
+TESTS += test-ptsname_r
+check_PROGRAMS += test-ptsname_r
+EXTRA_DIST += test-ptsname_r.c signature.h null-ptr.h macros.h
+
+## end   gnulib module ptsname_r-tests
 
 ## begin gnulib module putenv
 
@@ -1939,38 +2091,6 @@ EXTRA_DIST += test-symlink.h test-symlink.c signature.h macros.h
 
 ## end   gnulib module symlink-tests
 
-## begin gnulib module sys_ioctl
-
-BUILT_SOURCES += sys/ioctl.h
-
-# We need the following in order to create <sys/ioctl.h> when the system
-# does not have a complete one.
-sys/ioctl.h: sys_ioctl.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(WARN_ON_USE_H)
-	$(AM_V_at)$(MKDIR_P) sys
-	$(AM_V_GEN)rm -f $@-t $@ && \
-	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
-	  sed -e 's|@''GUARD_PREFIX''@|GL|g' \
-	      -e 's|@''HAVE_SYS_IOCTL_H''@|$(HAVE_SYS_IOCTL_H)|g' \
-	      -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
-	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
-	      -e 's|@''PRAGMA_COLUMNS''@|@PRAGMA_COLUMNS@|g' \
-	      -e 's|@''NEXT_SYS_IOCTL_H''@|$(NEXT_SYS_IOCTL_H)|g' \
-	      -e 's/@''GNULIB_IOCTL''@/$(GNULIB_IOCTL)/g' \
-	      -e 's|@''SYS_IOCTL_H_HAVE_WINSOCK2_H''@|$(SYS_IOCTL_H_HAVE_WINSOCK2_H)|g' \
-	      -e 's|@''SYS_IOCTL_H_HAVE_WINSOCK2_H_AND_USE_SOCKETS''@|$(SYS_IOCTL_H_HAVE_WINSOCK2_H_AND_USE_SOCKETS)|g' \
-	      -e 's|@''REPLACE_IOCTL''@|$(REPLACE_IOCTL)|g' \
-	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \
-	      -e '/definition of _GL_WARN_ON_USE/r $(WARN_ON_USE_H)' \
-	      < $(srcdir)/sys_ioctl.in.h; \
-	} > $@-t && \
-	mv $@-t $@
-MOSTLYCLEANFILES += sys/ioctl.h sys/ioctl.h-t
-MOSTLYCLEANDIRS += sys
-
-EXTRA_DIST += sys_ioctl.in.h
-
-## end   gnulib module sys_ioctl
-
 ## begin gnulib module sys_ioctl-tests
 
 TESTS += test-sys_ioctl
@@ -2043,6 +2163,51 @@ EXTRA_DIST += test-sysexits.c
 
 ## end   gnulib module sysexits-tests
 
+## begin gnulib module tcgetsid
+
+
+EXTRA_DIST += tcgetsid.c
+
+EXTRA_libtests_a_SOURCES += tcgetsid.c
+
+## end   gnulib module tcgetsid
+
+## begin gnulib module termios
+
+BUILT_SOURCES += termios.h
+
+# We need the following in order to create <termios.h> when the system
+# version does not have all declarations.
+termios.h: termios.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(WARN_ON_USE_H)
+	$(AM_V_GEN)rm -f $@-t $@ && \
+	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
+	  sed -e 's|@''GUARD_PREFIX''@|GL|g' \
+	      -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
+	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
+	      -e 's|@''PRAGMA_COLUMNS''@|@PRAGMA_COLUMNS@|g' \
+	      -e 's|@''NEXT_TERMIOS_H''@|$(NEXT_TERMIOS_H)|g' \
+	      -e 's/@''GNULIB_TCGETSID''@/$(GNULIB_TCGETSID)/g' \
+	      -e 's|@''HAVE_DECL_TCGETSID''@|$(HAVE_DECL_TCGETSID)|g' \
+	      -e 's|@''HAVE_TERMIOS_H''@|$(HAVE_TERMIOS_H)|g' \
+	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \
+	      -e '/definition of _GL_WARN_ON_USE/r $(WARN_ON_USE_H)' \
+	    < $(srcdir)/termios.in.h; \
+	} > $@-t && \
+	mv $@-t $@
+MOSTLYCLEANFILES += termios.h termios.h-t
+
+EXTRA_DIST += termios.in.h
+
+## end   gnulib module termios
+
+## begin gnulib module termios-tests
+
+TESTS += test-termios
+check_PROGRAMS += test-termios
+EXTRA_DIST += test-termios.c
+
+## end   gnulib module termios-tests
+
 ## begin gnulib module test-framework-sh-tests
 
 TESTS += test-init.sh
@@ -2105,6 +2270,23 @@ EXTRA_DIST += test-tls.c
 
 ## end   gnulib module tls-tests
 
+## begin gnulib module ttyname_r
+
+
+EXTRA_DIST += ttyname_r.c
+
+EXTRA_libtests_a_SOURCES += ttyname_r.c
+
+## end   gnulib module ttyname_r
+
+## begin gnulib module ttyname_r-tests
+
+TESTS += test-ttyname_r
+check_PROGRAMS += test-ttyname_r
+EXTRA_DIST += test-ttyname_r.c signature.h macros.h
+
+## end   gnulib module ttyname_r-tests
+
 ## begin gnulib module unistd-safer-tests
 
 TESTS += test-dup-safer
@@ -2120,6 +2302,23 @@ check_PROGRAMS += test-unistd
 EXTRA_DIST += test-unistd.c
 
 ## end   gnulib module unistd-tests
+
+## begin gnulib module unlockpt
+
+
+EXTRA_DIST += unlockpt.c
+
+EXTRA_libtests_a_SOURCES += unlockpt.c
+
+## end   gnulib module unlockpt
+
+## begin gnulib module unlockpt-tests
+
+TESTS += test-unlockpt
+check_PROGRAMS += test-unlockpt
+EXTRA_DIST += test-unlockpt.c signature.h macros.h
+
+## end   gnulib module unlockpt-tests
 
 ## begin gnulib module unsetenv-tests
 

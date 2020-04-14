@@ -39,6 +39,7 @@
 #  error \
 #  faccessat \
 #  fnmatch-gnu \
+#  forkpty \
 #  fprintf-posix \
 #  futimens \
 #  getline \
@@ -546,6 +547,15 @@ EXTRA_DIST += fnmatch.in.h
 
 ## end   gnulib module fnmatch-h
 
+## begin gnulib module forkpty
+
+
+EXTRA_DIST += forkpty.c
+
+EXTRA_libgnu_a_SOURCES += forkpty.c
+
+## end   gnulib module forkpty
+
 ## begin gnulib module fprintf-posix
 
 
@@ -755,6 +765,15 @@ EXTRA_DIST += intprops.h
 
 ## end   gnulib module intprops
 
+## begin gnulib module ioctl
+
+
+EXTRA_DIST += ioctl.c w32sock.h
+
+EXTRA_libgnu_a_SOURCES += ioctl.c
+
+## end   gnulib module ioctl
+
 ## begin gnulib module isnand-nolibm
 
 
@@ -922,6 +941,15 @@ EXTRA_libgnu_a_SOURCES += localtime-buffer.c
 libgnu_a_SOURCES += glthread/lock.h glthread/lock.c
 
 ## end   gnulib module lock
+
+## begin gnulib module login_tty
+
+
+EXTRA_DIST += login_tty.c
+
+EXTRA_libgnu_a_SOURCES += login_tty.c
+
+## end   gnulib module login_tty
 
 ## begin gnulib module lstat
 
@@ -1433,12 +1461,30 @@ EXTRA_DIST += openat.h
 
 ## end   gnulib module openat-h
 
+## begin gnulib module openpty
+
+
+EXTRA_DIST += openpty.c
+
+EXTRA_libgnu_a_SOURCES += openpty.c
+
+## end   gnulib module openpty
+
 ## begin gnulib module pathmax
 
 
 EXTRA_DIST += pathmax.h
 
 ## end   gnulib module pathmax
+
+## begin gnulib module posix_openpt
+
+
+EXTRA_DIST += posix_openpt.c
+
+EXTRA_libgnu_a_SOURCES += posix_openpt.c
+
+## end   gnulib module posix_openpt
 
 ## begin gnulib module posix_spawn
 
@@ -1493,6 +1539,40 @@ EXTRA_DIST += printf.c
 EXTRA_libgnu_a_SOURCES += printf.c
 
 ## end   gnulib module printf-posix
+
+## begin gnulib module pty
+
+BUILT_SOURCES += pty.h
+
+# We need the following in order to create <pty.h> when the system
+# doesn't have one that works with the given compiler.
+pty.h: pty.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(WARN_ON_USE_H)
+	$(AM_V_GEN)rm -f $@-t $@ && \
+	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
+	  sed -e 's|@''GUARD_PREFIX''@|GL|g' \
+	      -e 's|@''HAVE_PTY_H''@|$(HAVE_PTY_H)|g' \
+	      -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
+	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
+	      -e 's|@''PRAGMA_COLUMNS''@|@PRAGMA_COLUMNS@|g' \
+	      -e 's|@''NEXT_PTY_H''@|$(NEXT_PTY_H)|g' \
+	      -e 's/@''GNULIB_FORKPTY''@/$(GNULIB_FORKPTY)/g' \
+	      -e 's/@''GNULIB_OPENPTY''@/$(GNULIB_OPENPTY)/g' \
+	      -e 's|@''HAVE_UTIL_H''@|$(HAVE_UTIL_H)|g' \
+	      -e 's|@''HAVE_LIBUTIL_H''@|$(HAVE_LIBUTIL_H)|g' \
+	      -e 's|@''HAVE_FORKPTY''@|$(HAVE_FORKPTY)|g' \
+	      -e 's|@''HAVE_OPENPTY''@|$(HAVE_OPENPTY)|g' \
+	      -e 's|@''REPLACE_FORKPTY''@|$(REPLACE_FORKPTY)|g' \
+	      -e 's|@''REPLACE_OPENPTY''@|$(REPLACE_OPENPTY)|g' \
+	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \
+	      -e '/definition of _GL_WARN_ON_USE/r $(WARN_ON_USE_H)' \
+	      < $(srcdir)/pty.in.h; \
+	} > $@-t && \
+	mv $@-t $@
+MOSTLYCLEANFILES += pty.h pty.h-t
+
+EXTRA_DIST += pty.in.h
+
+## end   gnulib module pty
 
 ## begin gnulib module qsort_r
 
@@ -2487,6 +2567,38 @@ EXTRA_DIST += str-two-way.h strstr.c
 EXTRA_libgnu_a_SOURCES += strstr.c
 
 ## end   gnulib module strstr-simple
+
+## begin gnulib module sys_ioctl
+
+BUILT_SOURCES += sys/ioctl.h
+
+# We need the following in order to create <sys/ioctl.h> when the system
+# does not have a complete one.
+sys/ioctl.h: sys_ioctl.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(WARN_ON_USE_H)
+	$(AM_V_at)$(MKDIR_P) sys
+	$(AM_V_GEN)rm -f $@-t $@ && \
+	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
+	  sed -e 's|@''GUARD_PREFIX''@|GL|g' \
+	      -e 's|@''HAVE_SYS_IOCTL_H''@|$(HAVE_SYS_IOCTL_H)|g' \
+	      -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
+	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
+	      -e 's|@''PRAGMA_COLUMNS''@|@PRAGMA_COLUMNS@|g' \
+	      -e 's|@''NEXT_SYS_IOCTL_H''@|$(NEXT_SYS_IOCTL_H)|g' \
+	      -e 's/@''GNULIB_IOCTL''@/$(GNULIB_IOCTL)/g' \
+	      -e 's|@''SYS_IOCTL_H_HAVE_WINSOCK2_H''@|$(SYS_IOCTL_H_HAVE_WINSOCK2_H)|g' \
+	      -e 's|@''SYS_IOCTL_H_HAVE_WINSOCK2_H_AND_USE_SOCKETS''@|$(SYS_IOCTL_H_HAVE_WINSOCK2_H_AND_USE_SOCKETS)|g' \
+	      -e 's|@''REPLACE_IOCTL''@|$(REPLACE_IOCTL)|g' \
+	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \
+	      -e '/definition of _GL_WARN_ON_USE/r $(WARN_ON_USE_H)' \
+	      < $(srcdir)/sys_ioctl.in.h; \
+	} > $@-t && \
+	mv $@-t $@
+MOSTLYCLEANFILES += sys/ioctl.h sys/ioctl.h-t
+MOSTLYCLEANDIRS += sys
+
+EXTRA_DIST += sys_ioctl.in.h
+
+## end   gnulib module sys_ioctl
 
 ## begin gnulib module sys_select
 

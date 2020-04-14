@@ -44,6 +44,7 @@
 #  error \
 #  faccessat \
 #  fnmatch-gnu \
+#  forkpty \
 #  fprintf-posix \
 #  futimens \
 #  getline \
@@ -84,6 +85,7 @@ gl_MODULES([
   error
   faccessat
   fnmatch-gnu
+  forkpty
   fprintf-posix
   futimens
   getline
