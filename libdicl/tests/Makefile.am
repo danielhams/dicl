@@ -1190,15 +1190,6 @@ EXTRA_DIST += test-posix_spawn3.c signature.h
 
 ## end   gnulib module posix_spawn-tests
 
-## begin gnulib module posix_spawn_file_actions_addclose
-
-
-EXTRA_DIST += spawn_faction_addclose.c spawn_int.h
-
-EXTRA_libtests_a_SOURCES += spawn_faction_addclose.c
-
-## end   gnulib module posix_spawn_file_actions_addclose
-
 ## begin gnulib module posix_spawn_file_actions_addclose-tests
 
 TESTS += test-posix_spawn_file_actions_addclose
@@ -1206,15 +1197,6 @@ check_PROGRAMS += test-posix_spawn_file_actions_addclose
 EXTRA_DIST += test-posix_spawn_file_actions_addclose.c signature.h macros.h
 
 ## end   gnulib module posix_spawn_file_actions_addclose-tests
-
-## begin gnulib module posix_spawn_file_actions_adddup2
-
-
-EXTRA_DIST += spawn_faction_adddup2.c spawn_int.h
-
-EXTRA_libtests_a_SOURCES += spawn_faction_adddup2.c
-
-## end   gnulib module posix_spawn_file_actions_adddup2
 
 ## begin gnulib module posix_spawn_file_actions_adddup2-tests
 
@@ -1240,51 +1222,6 @@ check_PROGRAMS += test-posix_spawn_file_actions_addopen
 EXTRA_DIST += test-posix_spawn_file_actions_addopen.c signature.h macros.h
 
 ## end   gnulib module posix_spawn_file_actions_addopen-tests
-
-## begin gnulib module posix_spawn_file_actions_destroy
-
-
-EXTRA_DIST += spawn_faction_destroy.c
-
-EXTRA_libtests_a_SOURCES += spawn_faction_destroy.c
-
-## end   gnulib module posix_spawn_file_actions_destroy
-
-## begin gnulib module posix_spawn_file_actions_init
-
-
-EXTRA_DIST += spawn_faction_init.c spawn_int.h
-
-EXTRA_libtests_a_SOURCES += spawn_faction_init.c
-
-## end   gnulib module posix_spawn_file_actions_init
-
-## begin gnulib module posix_spawnattr_destroy
-
-
-EXTRA_DIST += spawnattr_destroy.c
-
-EXTRA_libtests_a_SOURCES += spawnattr_destroy.c
-
-## end   gnulib module posix_spawnattr_destroy
-
-## begin gnulib module posix_spawnattr_init
-
-
-EXTRA_DIST += spawnattr_init.c
-
-EXTRA_libtests_a_SOURCES += spawnattr_init.c
-
-## end   gnulib module posix_spawnattr_init
-
-## begin gnulib module posix_spawnattr_setflags
-
-
-EXTRA_DIST += spawnattr_setflags.c
-
-EXTRA_libtests_a_SOURCES += spawnattr_setflags.c
-
-## end   gnulib module posix_spawnattr_setflags
 
 ## begin gnulib module posix_spawnattr_setsigmask
 

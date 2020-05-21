@@ -738,7 +738,7 @@ _GL_WARN_ON_USE (posix_spawnp, "posix_spawnp is unportable - "
 #endif
 
 
-#if IN_LIBDICL_GNULIB_TESTS
+#if 1
 /* Initialize data structure with attributes for 'spawn' to default values.  */
 # if 0
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
@@ -763,7 +763,7 @@ _GL_WARN_ON_USE (posix_spawnattr_init, "posix_spawnattr_init is unportable - "
 # endif
 #endif
 
-#if IN_LIBDICL_GNULIB_TESTS
+#if 1
 /* Free resources associated with ATTR.  */
 # if 0
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
@@ -824,7 +824,7 @@ _GL_WARN_ON_USE (posix_spawnattr_getsigdefault,
 # endif
 #endif
 
-#if 0
+#if 1
 /* Set signal mask for signals with default handling in ATTR to SIGDEFAULT.  */
 # if 0
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
@@ -926,7 +926,7 @@ _GL_WARN_ON_USE (posix_spawnattr_setsigmask,
 # endif
 #endif
 
-#if 0
+#if 1
 /* Get flag word from the attribute structure.  */
 # if 0
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
@@ -960,7 +960,7 @@ _GL_WARN_ON_USE (posix_spawnattr_getflags,
 # endif
 #endif
 
-#if IN_LIBDICL_GNULIB_TESTS
+#if 1
 /* Store flags in the attribute structure.  */
 # if 0
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
@@ -1187,7 +1187,7 @@ _GL_WARN_ON_USE (posix_spawnattr_setschedparam,
 #endif
 
 
-#if IN_LIBDICL_GNULIB_TESTS
+#if 1
 /* Initialize data structure for file attribute for 'spawn' call.  */
 # if 0
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
@@ -1217,7 +1217,7 @@ _GL_WARN_ON_USE (posix_spawn_file_actions_init,
 # endif
 #endif
 
-#if IN_LIBDICL_GNULIB_TESTS
+#if 1
 /* Free resources associated with FILE-ACTIONS.  */
 # if 0
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
@@ -1286,7 +1286,7 @@ _GL_WARN_ON_USE (posix_spawn_file_actions_addopen,
 # endif
 #endif
 
-#if IN_LIBDICL_GNULIB_TESTS
+#if 1
 /* Add an action to FILE-ACTIONS which tells the implementation to call
    'close' for the given file descriptor during the 'spawn' call.  */
 # if 1
@@ -1317,7 +1317,7 @@ _GL_WARN_ON_USE (posix_spawn_file_actions_addclose,
 # endif
 #endif
 
-#if IN_LIBDICL_GNULIB_TESTS
+#if 1
 /* Add an action to FILE-ACTIONS which tells the implementation to call
    'dup2' for the given file descriptors during the 'spawn' call.  */
 # if 1

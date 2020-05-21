@@ -55,6 +55,15 @@
 #  obstack \
 #  obstack-printf \
 #  posix_spawn \
+#  posix_spawn_file_actions_addclose \
+#  posix_spawn_file_actions_adddup2 \
+#  posix_spawn_file_actions_destroy \
+#  posix_spawn_file_actions_init \
+#  posix_spawnattr_destroy \
+#  posix_spawnattr_getflags \
+#  posix_spawnattr_init \
+#  posix_spawnattr_setflags \
+#  posix_spawnattr_setsigdefault \
 #  posix_spawnp \
 #  printf-posix \
 #  qsort_r \
@@ -95,6 +104,15 @@ gl_MODULES([
   obstack
   obstack-printf
   posix_spawn
+  posix_spawn_file_actions_addclose
+  posix_spawn_file_actions_adddup2
+  posix_spawn_file_actions_destroy
+  posix_spawn_file_actions_init
+  posix_spawnattr_destroy
+  posix_spawnattr_getflags
+  posix_spawnattr_init
+  posix_spawnattr_setflags
+  posix_spawnattr_setsigdefault
   posix_spawnp
   printf-posix
   qsort_r

@@ -283,8 +283,10 @@ AC_DEFUN([gl_EARLY],
   # Code from module posix_spawn_file_actions_destroy:
   # Code from module posix_spawn_file_actions_init:
   # Code from module posix_spawnattr_destroy:
+  # Code from module posix_spawnattr_getflags:
   # Code from module posix_spawnattr_init:
   # Code from module posix_spawnattr_setflags:
+  # Code from module posix_spawnattr_setsigdefault:
   # Code from module posix_spawnattr_setsigmask:
   # Code from module posix_spawnp:
   # Code from module posix_spawnp-tests:
@@ -865,6 +867,51 @@ AC_DEFUN([gl_INIT],
     AC_LIBOBJ([spawni])
     gl_PREREQ_POSIX_SPAWN_INTERNAL
   fi
+  gl_FUNC_POSIX_SPAWN_FILE_ACTIONS_ADDCLOSE
+  if test $HAVE_POSIX_SPAWN = 0 || test $REPLACE_POSIX_SPAWN = 1 || test $REPLACE_POSIX_SPAWN_FILE_ACTIONS_ADDCLOSE = 1; then
+    AC_LIBOBJ([spawn_faction_addclose])
+  fi
+  gl_SPAWN_MODULE_INDICATOR([posix_spawn_file_actions_addclose])
+  gl_FUNC_POSIX_SPAWN_FILE_ACTIONS_ADDDUP2
+  if test $HAVE_POSIX_SPAWN = 0 || test $REPLACE_POSIX_SPAWN = 1 || test $REPLACE_POSIX_SPAWN_FILE_ACTIONS_ADDDUP2 = 1; then
+    AC_LIBOBJ([spawn_faction_adddup2])
+  fi
+  gl_SPAWN_MODULE_INDICATOR([posix_spawn_file_actions_adddup2])
+  gl_POSIX_SPAWN
+  if test $HAVE_POSIX_SPAWN = 0 || test $REPLACE_POSIX_SPAWN = 1; then
+    AC_LIBOBJ([spawn_faction_destroy])
+  fi
+  gl_SPAWN_MODULE_INDICATOR([posix_spawn_file_actions_destroy])
+  gl_POSIX_SPAWN
+  if test $HAVE_POSIX_SPAWN = 0 || test $REPLACE_POSIX_SPAWN = 1; then
+    AC_LIBOBJ([spawn_faction_init])
+  fi
+  gl_SPAWN_MODULE_INDICATOR([posix_spawn_file_actions_init])
+  gl_POSIX_SPAWN
+  if test $HAVE_POSIX_SPAWN = 0 || test $REPLACE_POSIX_SPAWN = 1; then
+    AC_LIBOBJ([spawnattr_destroy])
+  fi
+  gl_SPAWN_MODULE_INDICATOR([posix_spawnattr_destroy])
+  gl_POSIX_SPAWN
+  if test $HAVE_POSIX_SPAWN = 0 || test $REPLACE_POSIX_SPAWN = 1; then
+    AC_LIBOBJ([spawnattr_getflags])
+  fi
+  gl_SPAWN_MODULE_INDICATOR([posix_spawnattr_getflags])
+  gl_POSIX_SPAWN
+  if test $HAVE_POSIX_SPAWN = 0 || test $REPLACE_POSIX_SPAWN = 1; then
+    AC_LIBOBJ([spawnattr_init])
+  fi
+  gl_SPAWN_MODULE_INDICATOR([posix_spawnattr_init])
+  gl_POSIX_SPAWN
+  if test $HAVE_POSIX_SPAWN = 0 || test $REPLACE_POSIX_SPAWN = 1; then
+    AC_LIBOBJ([spawnattr_setflags])
+  fi
+  gl_SPAWN_MODULE_INDICATOR([posix_spawnattr_setflags])
+  gl_POSIX_SPAWN
+  if test $HAVE_POSIX_SPAWN = 0 || test $REPLACE_POSIX_SPAWN = 1; then
+    AC_LIBOBJ([spawnattr_setdefault])
+  fi
+  gl_SPAWN_MODULE_INDICATOR([posix_spawnattr_setsigdefault])
   gl_POSIX_SPAWN
   if test $HAVE_POSIX_SPAWN = 0 || test $REPLACE_POSIX_SPAWN = 1; then
     AC_LIBOBJ([spawnp])
@@ -1344,46 +1391,11 @@ changequote([, ])dnl
     [posix_spawn_ported=no],
     [posix_spawn_ported=yes])
   AM_CONDITIONAL([POSIX_SPAWN_PORTED], [test $posix_spawn_ported = yes])
-  gl_FUNC_POSIX_SPAWN_FILE_ACTIONS_ADDCLOSE
-  if test $HAVE_POSIX_SPAWN = 0 || test $REPLACE_POSIX_SPAWN = 1 || test $REPLACE_POSIX_SPAWN_FILE_ACTIONS_ADDCLOSE = 1; then
-    AC_LIBOBJ([spawn_faction_addclose])
-  fi
-  gl_SPAWN_MODULE_INDICATOR([posix_spawn_file_actions_addclose])
-  gl_FUNC_POSIX_SPAWN_FILE_ACTIONS_ADDDUP2
-  if test $HAVE_POSIX_SPAWN = 0 || test $REPLACE_POSIX_SPAWN = 1 || test $REPLACE_POSIX_SPAWN_FILE_ACTIONS_ADDDUP2 = 1; then
-    AC_LIBOBJ([spawn_faction_adddup2])
-  fi
-  gl_SPAWN_MODULE_INDICATOR([posix_spawn_file_actions_adddup2])
   gl_FUNC_POSIX_SPAWN_FILE_ACTIONS_ADDOPEN
   if test $HAVE_POSIX_SPAWN = 0 || test $REPLACE_POSIX_SPAWN = 1 || test $REPLACE_POSIX_SPAWN_FILE_ACTIONS_ADDOPEN = 1; then
     AC_LIBOBJ([spawn_faction_addopen])
   fi
   gl_SPAWN_MODULE_INDICATOR([posix_spawn_file_actions_addopen])
-  gl_POSIX_SPAWN
-  if test $HAVE_POSIX_SPAWN = 0 || test $REPLACE_POSIX_SPAWN = 1; then
-    AC_LIBOBJ([spawn_faction_destroy])
-  fi
-  gl_SPAWN_MODULE_INDICATOR([posix_spawn_file_actions_destroy])
-  gl_POSIX_SPAWN
-  if test $HAVE_POSIX_SPAWN = 0 || test $REPLACE_POSIX_SPAWN = 1; then
-    AC_LIBOBJ([spawn_faction_init])
-  fi
-  gl_SPAWN_MODULE_INDICATOR([posix_spawn_file_actions_init])
-  gl_POSIX_SPAWN
-  if test $HAVE_POSIX_SPAWN = 0 || test $REPLACE_POSIX_SPAWN = 1; then
-    AC_LIBOBJ([spawnattr_destroy])
-  fi
-  gl_SPAWN_MODULE_INDICATOR([posix_spawnattr_destroy])
-  gl_POSIX_SPAWN
-  if test $HAVE_POSIX_SPAWN = 0 || test $REPLACE_POSIX_SPAWN = 1; then
-    AC_LIBOBJ([spawnattr_init])
-  fi
-  gl_SPAWN_MODULE_INDICATOR([posix_spawnattr_init])
-  gl_POSIX_SPAWN
-  if test $HAVE_POSIX_SPAWN = 0 || test $REPLACE_POSIX_SPAWN = 1; then
-    AC_LIBOBJ([spawnattr_setflags])
-  fi
-  gl_SPAWN_MODULE_INDICATOR([posix_spawnattr_setflags])
   gl_POSIX_SPAWN
   if test $HAVE_POSIX_SPAWN = 0 || test $REPLACE_POSIX_SPAWN = 1; then
     AC_LIBOBJ([spawnattr_setsigmask])
@@ -1816,7 +1828,16 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/sockets.h
   lib/spawn.c
   lib/spawn.in.h
+  lib/spawn_faction_addclose.c
+  lib/spawn_faction_adddup2.c
+  lib/spawn_faction_destroy.c
+  lib/spawn_faction_init.c
   lib/spawn_int.h
+  lib/spawnattr_destroy.c
+  lib/spawnattr_getflags.c
+  lib/spawnattr_init.c
+  lib/spawnattr_setdefault.c
+  lib/spawnattr_setflags.c
   lib/spawni.c
   lib/spawnp.c
   lib/sprintf.c
@@ -2472,15 +2493,8 @@ AC_DEFUN([gl_FILE_LIST], [
   tests=lib/setlocale.c
   tests=lib/setsockopt.c
   tests=lib/socket.c
-  tests=lib/spawn_faction_addclose.c
-  tests=lib/spawn_faction_adddup2.c
   tests=lib/spawn_faction_addopen.c
-  tests=lib/spawn_faction_destroy.c
-  tests=lib/spawn_faction_init.c
   tests=lib/spawn_int.h
-  tests=lib/spawnattr_destroy.c
-  tests=lib/spawnattr_init.c
-  tests=lib/spawnattr_setflags.c
   tests=lib/spawnattr_setsigmask.c
   tests=lib/symlink.c
   tests=lib/sys_ioctl.in.h

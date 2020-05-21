@@ -20,8 +20,19 @@ $GNULIB_HOME/gnulib-tool --import --lib=libgnu --source-base=gl \
     --macro-prefix=gl --no-vc-files \
     argp byteswap error faccessat fnmatch-gnu fprintf-posix futimens \
     getline getopt-posix getprogname mkdtemp mktime nanosleep obstack \
-    obstack-printf posix_spawn posix_spawnp printf-posix \
-    qsort_r regex select \
+    obstack-printf \
+    posix_spawn \
+    posix_spawn_file_actions_addclose \
+    posix_spawn_file_actions_adddup2 \
+    posix_spawn_file_actions_destroy \
+    posix_spawn_file_actions_init \
+    posix_spawnattr_destroy \
+    posix_spawnattr_getflags \
+    posix_spawnattr_init \
+    posix_spawnattr_setflags \
+    posix_spawnattr_setsigdefault \
+    posix_spawnp \
+    printf-posix qsort_r regex select \
     setenv sprintf-posix stpcpy stpncpy strerror_r-posix strsep strstr \
     strcasestr strsignal unsetenv \
     vasprintf-posix vfprintf-posix vsprintf-posix vsnprintf-posix \

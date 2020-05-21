@@ -50,6 +50,15 @@
 #  obstack \
 #  obstack-printf \
 #  posix_spawn \
+#  posix_spawn_file_actions_addclose \
+#  posix_spawn_file_actions_adddup2 \
+#  posix_spawn_file_actions_destroy \
+#  posix_spawn_file_actions_init \
+#  posix_spawnattr_destroy \
+#  posix_spawnattr_getflags \
+#  posix_spawnattr_init \
+#  posix_spawnattr_setflags \
+#  posix_spawnattr_setsigdefault \
 #  posix_spawnp \
 #  printf-posix \
 #  qsort_r \
@@ -1457,6 +1466,87 @@ EXTRA_DIST += spawn_int.h spawni.c
 EXTRA_libgnu_a_SOURCES += spawni.c
 
 ## end   gnulib module posix_spawn-internal
+
+## begin gnulib module posix_spawn_file_actions_addclose
+
+
+EXTRA_DIST += spawn_faction_addclose.c spawn_int.h
+
+EXTRA_libgnu_a_SOURCES += spawn_faction_addclose.c
+
+## end   gnulib module posix_spawn_file_actions_addclose
+
+## begin gnulib module posix_spawn_file_actions_adddup2
+
+
+EXTRA_DIST += spawn_faction_adddup2.c spawn_int.h
+
+EXTRA_libgnu_a_SOURCES += spawn_faction_adddup2.c
+
+## end   gnulib module posix_spawn_file_actions_adddup2
+
+## begin gnulib module posix_spawn_file_actions_destroy
+
+
+EXTRA_DIST += spawn_faction_destroy.c
+
+EXTRA_libgnu_a_SOURCES += spawn_faction_destroy.c
+
+## end   gnulib module posix_spawn_file_actions_destroy
+
+## begin gnulib module posix_spawn_file_actions_init
+
+
+EXTRA_DIST += spawn_faction_init.c spawn_int.h
+
+EXTRA_libgnu_a_SOURCES += spawn_faction_init.c
+
+## end   gnulib module posix_spawn_file_actions_init
+
+## begin gnulib module posix_spawnattr_destroy
+
+
+EXTRA_DIST += spawnattr_destroy.c
+
+EXTRA_libgnu_a_SOURCES += spawnattr_destroy.c
+
+## end   gnulib module posix_spawnattr_destroy
+
+## begin gnulib module posix_spawnattr_getflags
+
+
+EXTRA_DIST += spawnattr_getflags.c
+
+EXTRA_libgnu_a_SOURCES += spawnattr_getflags.c
+
+## end   gnulib module posix_spawnattr_getflags
+
+## begin gnulib module posix_spawnattr_init
+
+
+EXTRA_DIST += spawnattr_init.c
+
+EXTRA_libgnu_a_SOURCES += spawnattr_init.c
+
+## end   gnulib module posix_spawnattr_init
+
+## begin gnulib module posix_spawnattr_setflags
+
+
+EXTRA_DIST += spawnattr_setflags.c
+
+EXTRA_libgnu_a_SOURCES += spawnattr_setflags.c
+
+## end   gnulib module posix_spawnattr_setflags
+
+## begin gnulib module posix_spawnattr_setsigdefault
+
+
+EXTRA_DIST += spawnattr_setdefault.c
+
+EXTRA_libgnu_a_SOURCES += spawnattr_setdefault.c
+
+## end   gnulib module posix_spawnattr_setsigdefault
 
 ## begin gnulib module posix_spawnp
 
