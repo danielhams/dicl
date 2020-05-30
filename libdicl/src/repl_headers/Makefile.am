@@ -31,5 +31,6 @@ replinclude_HEADERS=		\
 	stdio.h			\
 	stdlib.h		\
 	string.h		\
+	time.h			\
 	unistd.h		\
 	$(NULL)

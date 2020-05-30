@@ -1190,6 +1190,19 @@ EXTRA_DIST += test-posix_spawn3.c signature.h
 
 ## end   gnulib module posix_spawn-tests
 
+## begin gnulib module posix_spawn_file_actions_addchdir-tests
+
+TESTS += test-posix_spawn_file_actions_addchdir
+check_PROGRAMS += test-posix_spawn_file_actions_addchdir
+
+if POSIX_SPAWN_PORTED
+TESTS += test-posix_spawn4
+check_PROGRAMS += test-posix_spawn4
+endif
+EXTRA_DIST += test-posix_spawn_file_actions_addchdir.c test-posix_spawn4.c signature.h macros.h
+
+## end   gnulib module posix_spawn_file_actions_addchdir-tests
+
 ## begin gnulib module posix_spawn_file_actions_addclose-tests
 
 TESTS += test-posix_spawn_file_actions_addclose
@@ -1206,14 +1219,18 @@ EXTRA_DIST += test-posix_spawn_file_actions_adddup2.c signature.h macros.h
 
 ## end   gnulib module posix_spawn_file_actions_adddup2-tests
 
-## begin gnulib module posix_spawn_file_actions_addopen
+## begin gnulib module posix_spawn_file_actions_addfchdir-tests
 
+TESTS += test-posix_spawn_file_actions_addfchdir
+check_PROGRAMS += test-posix_spawn_file_actions_addfchdir
 
-EXTRA_DIST += spawn_faction_addopen.c spawn_int.h
+if POSIX_SPAWN_PORTED
+TESTS += test-posix_spawn5
+check_PROGRAMS += test-posix_spawn5
+endif
+EXTRA_DIST += test-posix_spawn_file_actions_addfchdir.c test-posix_spawn5.c signature.h macros.h
 
-EXTRA_libtests_a_SOURCES += spawn_faction_addopen.c
-
-## end   gnulib module posix_spawn_file_actions_addopen
+## end   gnulib module posix_spawn_file_actions_addfchdir-tests
 
 ## begin gnulib module posix_spawn_file_actions_addopen-tests
 
@@ -1222,15 +1239,6 @@ check_PROGRAMS += test-posix_spawn_file_actions_addopen
 EXTRA_DIST += test-posix_spawn_file_actions_addopen.c signature.h macros.h
 
 ## end   gnulib module posix_spawn_file_actions_addopen-tests
-
-## begin gnulib module posix_spawnattr_setsigmask
-
-
-EXTRA_DIST += spawnattr_setsigmask.c
-
-EXTRA_libtests_a_SOURCES += spawnattr_setsigmask.c
-
-## end   gnulib module posix_spawnattr_setsigmask
 
 ## begin gnulib module posix_spawnp-tests
 

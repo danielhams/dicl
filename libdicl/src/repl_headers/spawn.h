@@ -789,7 +789,7 @@ _GL_WARN_ON_USE (posix_spawnattr_destroy,
 # endif
 #endif
 
-#if 0
+#if 1
 /* Store signal mask for signals with default handling from ATTR in
    SIGDEFAULT.  */
 # if 0
@@ -858,7 +858,7 @@ _GL_WARN_ON_USE (posix_spawnattr_setsigdefault,
 # endif
 #endif
 
-#if 0
+#if 1
 /* Store signal mask for the new process from ATTR in SIGMASK.  */
 # if 0
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
@@ -892,7 +892,7 @@ _GL_WARN_ON_USE (posix_spawnattr_getsigmask,
 # endif
 #endif
 
-#if IN_LIBDICL_GNULIB_TESTS
+#if 1
 /* Set signal mask for the new process in ATTR to SIGMASK.  */
 # if 0
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
@@ -990,7 +990,7 @@ _GL_WARN_ON_USE (posix_spawnattr_setflags,
 # endif
 #endif
 
-#if 0
+#if 1
 /* Get process group ID from the attribute structure.  */
 # if 0
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
@@ -1024,7 +1024,7 @@ _GL_WARN_ON_USE (posix_spawnattr_getpgroup,
 # endif
 #endif
 
-#if 0
+#if 1
 /* Store process group ID in the attribute structure.  */
 # if 0
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
@@ -1054,7 +1054,7 @@ _GL_WARN_ON_USE (posix_spawnattr_setpgroup,
 # endif
 #endif
 
-#if 0
+#if 1
 /* Get scheduling policy from the attribute structure.  */
 # if 0
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
@@ -1088,7 +1088,7 @@ _GL_WARN_ON_USE (posix_spawnattr_getschedpolicy,
 # endif
 #endif
 
-#if 0
+#if 1
 /* Store scheduling policy in the attribute structure.  */
 # if 0
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
@@ -1118,7 +1118,7 @@ _GL_WARN_ON_USE (posix_spawnattr_setschedpolicy,
 # endif
 #endif
 
-#if 0
+#if 1
 /* Get scheduling parameters from the attribute structure.  */
 # if 0
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
@@ -1152,7 +1152,7 @@ _GL_WARN_ON_USE (posix_spawnattr_getschedparam,
 # endif
 #endif
 
-#if 0
+#if 1
 /* Store scheduling parameters in the attribute structure.  */
 # if 0
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
@@ -1247,7 +1247,7 @@ _GL_WARN_ON_USE (posix_spawn_file_actions_destroy,
 # endif
 #endif
 
-#if IN_LIBDICL_GNULIB_TESTS
+#if 1
 /* Add an action to FILE-ACTIONS which tells the implementation to call
    'open' for the given file during the 'spawn' call.  */
 # if 1
@@ -1352,7 +1352,7 @@ _GL_WARN_ON_USE (posix_spawn_file_actions_adddup2,
 # endif
 #endif
 
-#if 0
+#if 1
 /* Add an action to FILE-ACTIONS which tells the implementation to call
    'chdir' to the given directory during the 'spawn' call.  */
 # if 0
@@ -1367,7 +1367,7 @@ _GL_CXXALIAS_RPL (posix_spawn_file_actions_addchdir, int,
                   (posix_spawn_file_actions_t *_Restrict_ __file_actions,
                    const char *_Restrict_ __path));
 # else
-#  if !1
+#  if !0
 _GL_FUNCDECL_SYS (posix_spawn_file_actions_addchdir, int,
                   (posix_spawn_file_actions_t *_Restrict_ __file_actions,
                    const char *_Restrict_ __path)
@@ -1387,7 +1387,7 @@ _GL_WARN_ON_USE (posix_spawn_file_actions_addchdir,
 # endif
 #endif
 
-#if 0
+#if 1
 /* Add an action to FILE-ACTIONS which tells the implementation to call
    'fchdir' to the given directory during the 'spawn' call.  */
 # if 0
@@ -1402,7 +1402,7 @@ _GL_CXXALIAS_RPL (posix_spawn_file_actions_addfchdir, int,
                   (posix_spawn_file_actions_t *_Restrict_ __file_actions,
                    int __fd));
 # else
-#  if !1
+#  if !0
 _GL_FUNCDECL_SYS (posix_spawn_file_actions_addfchdir, int,
                   (posix_spawn_file_actions_t *_Restrict_ __file_actions,
                    int __fd)

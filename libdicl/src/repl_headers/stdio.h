@@ -40,9 +40,17 @@ extern int rpl_vsnprintf(char *,size_t,const char *, va_list);
 extern int vasprintf(char**, const char*, va_list);
 
 /* Missing pieces */
+
+/* getline is a little special, in that redefining it here like
+ * this can cause C++ std::basicstream::getline to become difficult
+ * to link with. For that reason, if we are C++, you must specify
+ * LIBDICL_WANTS_CPP_GETLINE_REPL
+ */
+#if !defined(__cplusplus) || defined(LIBDICL_WANTS_CPP_GETLINE_REPL)
 #undef getline
 #define getline rpl_getline
 ssize_t rpl_getline(char **lineptr, size_t *n, FILE *stream);
+#endif
 
 ssize_t getdelim(char **lineptr, size_t *n, int delim, FILE *stream);
 

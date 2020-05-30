@@ -50,15 +50,27 @@
 #  obstack \
 #  obstack-printf \
 #  posix_spawn \
+#  posix_spawn_file_actions_addchdir \
 #  posix_spawn_file_actions_addclose \
 #  posix_spawn_file_actions_adddup2 \
+#  posix_spawn_file_actions_addfchdir \
+#  posix_spawn_file_actions_addopen \
 #  posix_spawn_file_actions_destroy \
 #  posix_spawn_file_actions_init \
 #  posix_spawnattr_destroy \
 #  posix_spawnattr_getflags \
+#  posix_spawnattr_getpgroup \
+#  posix_spawnattr_getschedparam \
+#  posix_spawnattr_getschedpolicy \
+#  posix_spawnattr_getsigdefault \
+#  posix_spawnattr_getsigmask \
 #  posix_spawnattr_init \
 #  posix_spawnattr_setflags \
+#  posix_spawnattr_setpgroup \
+#  posix_spawnattr_setschedparam \
+#  posix_spawnattr_setschedpolicy \
 #  posix_spawnattr_setsigdefault \
+#  posix_spawnattr_setsigmask \
 #  posix_spawnp \
 #  printf-posix \
 #  qsort_r \
@@ -73,6 +85,7 @@
 #  strsep \
 #  strsignal \
 #  strstr \
+#  timegm \
 #  unsetenv \
 #  vasprintf-posix \
 #  vfprintf-posix \
@@ -1357,6 +1370,15 @@ EXTRA_libgnu_a_SOURCES += mktime.c
 
 ## end   gnulib module mktime
 
+## begin gnulib module mktime-internal
+
+
+EXTRA_DIST += mktime-internal.h mktime.c
+
+EXTRA_libgnu_a_SOURCES += mktime.c
+
+## end   gnulib module mktime-internal
+
 ## begin gnulib module msvc-inval
 
 
@@ -1467,6 +1489,15 @@ EXTRA_libgnu_a_SOURCES += spawni.c
 
 ## end   gnulib module posix_spawn-internal
 
+## begin gnulib module posix_spawn_file_actions_addchdir
+
+
+EXTRA_DIST += spawn_faction_addchdir.c spawn_int.h
+
+EXTRA_libgnu_a_SOURCES += spawn_faction_addchdir.c
+
+## end   gnulib module posix_spawn_file_actions_addchdir
+
 ## begin gnulib module posix_spawn_file_actions_addclose
 
 
@@ -1484,6 +1515,24 @@ EXTRA_DIST += spawn_faction_adddup2.c spawn_int.h
 EXTRA_libgnu_a_SOURCES += spawn_faction_adddup2.c
 
 ## end   gnulib module posix_spawn_file_actions_adddup2
+
+## begin gnulib module posix_spawn_file_actions_addfchdir
+
+
+EXTRA_DIST += spawn_faction_addfchdir.c spawn_int.h
+
+EXTRA_libgnu_a_SOURCES += spawn_faction_addfchdir.c
+
+## end   gnulib module posix_spawn_file_actions_addfchdir
+
+## begin gnulib module posix_spawn_file_actions_addopen
+
+
+EXTRA_DIST += spawn_faction_addopen.c spawn_int.h
+
+EXTRA_libgnu_a_SOURCES += spawn_faction_addopen.c
+
+## end   gnulib module posix_spawn_file_actions_addopen
 
 ## begin gnulib module posix_spawn_file_actions_destroy
 
@@ -1521,6 +1570,51 @@ EXTRA_libgnu_a_SOURCES += spawnattr_getflags.c
 
 ## end   gnulib module posix_spawnattr_getflags
 
+## begin gnulib module posix_spawnattr_getpgroup
+
+
+EXTRA_DIST += spawnattr_getpgroup.c
+
+EXTRA_libgnu_a_SOURCES += spawnattr_getpgroup.c
+
+## end   gnulib module posix_spawnattr_getpgroup
+
+## begin gnulib module posix_spawnattr_getschedparam
+
+
+EXTRA_DIST += spawnattr_getschedparam.c
+
+EXTRA_libgnu_a_SOURCES += spawnattr_getschedparam.c
+
+## end   gnulib module posix_spawnattr_getschedparam
+
+## begin gnulib module posix_spawnattr_getschedpolicy
+
+
+EXTRA_DIST += spawnattr_getschedpolicy.c
+
+EXTRA_libgnu_a_SOURCES += spawnattr_getschedpolicy.c
+
+## end   gnulib module posix_spawnattr_getschedpolicy
+
+## begin gnulib module posix_spawnattr_getsigdefault
+
+
+EXTRA_DIST += spawnattr_getdefault.c
+
+EXTRA_libgnu_a_SOURCES += spawnattr_getdefault.c
+
+## end   gnulib module posix_spawnattr_getsigdefault
+
+## begin gnulib module posix_spawnattr_getsigmask
+
+
+EXTRA_DIST += spawnattr_getsigmask.c
+
+EXTRA_libgnu_a_SOURCES += spawnattr_getsigmask.c
+
+## end   gnulib module posix_spawnattr_getsigmask
+
 ## begin gnulib module posix_spawnattr_init
 
 
@@ -1539,6 +1633,33 @@ EXTRA_libgnu_a_SOURCES += spawnattr_setflags.c
 
 ## end   gnulib module posix_spawnattr_setflags
 
+## begin gnulib module posix_spawnattr_setpgroup
+
+
+EXTRA_DIST += spawnattr_setpgroup.c
+
+EXTRA_libgnu_a_SOURCES += spawnattr_setpgroup.c
+
+## end   gnulib module posix_spawnattr_setpgroup
+
+## begin gnulib module posix_spawnattr_setschedparam
+
+
+EXTRA_DIST += spawnattr_setschedparam.c
+
+EXTRA_libgnu_a_SOURCES += spawnattr_setschedparam.c
+
+## end   gnulib module posix_spawnattr_setschedparam
+
+## begin gnulib module posix_spawnattr_setschedpolicy
+
+
+EXTRA_DIST += spawnattr_setschedpolicy.c
+
+EXTRA_libgnu_a_SOURCES += spawnattr_setschedpolicy.c
+
+## end   gnulib module posix_spawnattr_setschedpolicy
+
 ## begin gnulib module posix_spawnattr_setsigdefault
 
 
@@ -1547,6 +1668,15 @@ EXTRA_DIST += spawnattr_setdefault.c
 EXTRA_libgnu_a_SOURCES += spawnattr_setdefault.c
 
 ## end   gnulib module posix_spawnattr_setsigdefault
+
+## begin gnulib module posix_spawnattr_setsigmask
+
+
+EXTRA_DIST += spawnattr_setsigmask.c
+
+EXTRA_libgnu_a_SOURCES += spawnattr_setsigmask.c
+
+## end   gnulib module posix_spawnattr_setsigmask
 
 ## begin gnulib module posix_spawnp
 
@@ -2950,6 +3080,15 @@ EXTRA_DIST += time_r.c
 EXTRA_libgnu_a_SOURCES += time_r.c
 
 ## end   gnulib module time_r
+
+## begin gnulib module timegm
+
+
+EXTRA_DIST += mktime-internal.h timegm.c
+
+EXTRA_libgnu_a_SOURCES += timegm.c
+
+## end   gnulib module timegm
 
 ## begin gnulib module timespec
 

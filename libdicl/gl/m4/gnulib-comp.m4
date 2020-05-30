@@ -246,6 +246,7 @@ AC_DEFUN([gl_EARLY],
   # Code from module mkdir-tests:
   # Code from module mkdtemp:
   # Code from module mktime:
+  # Code from module mktime-internal:
   # Code from module msvc-inval:
   # Code from module msvc-nothrow:
   # Code from module multiarch:
@@ -274,18 +275,30 @@ AC_DEFUN([gl_EARLY],
   # Code from module posix_spawn:
   # Code from module posix_spawn-internal:
   # Code from module posix_spawn-tests:
+  # Code from module posix_spawn_file_actions_addchdir:
+  # Code from module posix_spawn_file_actions_addchdir-tests:
   # Code from module posix_spawn_file_actions_addclose:
   # Code from module posix_spawn_file_actions_addclose-tests:
   # Code from module posix_spawn_file_actions_adddup2:
   # Code from module posix_spawn_file_actions_adddup2-tests:
+  # Code from module posix_spawn_file_actions_addfchdir:
+  # Code from module posix_spawn_file_actions_addfchdir-tests:
   # Code from module posix_spawn_file_actions_addopen:
   # Code from module posix_spawn_file_actions_addopen-tests:
   # Code from module posix_spawn_file_actions_destroy:
   # Code from module posix_spawn_file_actions_init:
   # Code from module posix_spawnattr_destroy:
   # Code from module posix_spawnattr_getflags:
+  # Code from module posix_spawnattr_getpgroup:
+  # Code from module posix_spawnattr_getschedparam:
+  # Code from module posix_spawnattr_getschedpolicy:
+  # Code from module posix_spawnattr_getsigdefault:
+  # Code from module posix_spawnattr_getsigmask:
   # Code from module posix_spawnattr_init:
   # Code from module posix_spawnattr_setflags:
+  # Code from module posix_spawnattr_setpgroup:
+  # Code from module posix_spawnattr_setschedparam:
+  # Code from module posix_spawnattr_setschedpolicy:
   # Code from module posix_spawnattr_setsigdefault:
   # Code from module posix_spawnattr_setsigmask:
   # Code from module posix_spawnp:
@@ -431,6 +444,7 @@ AC_DEFUN([gl_EARLY],
   # Code from module time:
   # Code from module time-tests:
   # Code from module time_r:
+  # Code from module timegm:
   # Code from module timespec:
   # Code from module timespec-add:
   # Code from module timespec-sub:
@@ -815,6 +829,11 @@ AC_DEFUN([gl_INIT],
     gl_PREREQ_MKTIME
   fi
   gl_TIME_MODULE_INDICATOR([mktime])
+  gl_FUNC_MKTIME_INTERNAL
+  if test $WANT_MKTIME_INTERNAL = 1; then
+    AC_LIBOBJ([mktime])
+    gl_PREREQ_MKTIME
+  fi
   AC_REQUIRE([gl_MSVC_INVAL])
   if test $HAVE_MSVC_INVALID_PARAMETER_HANDLER = 1; then
     AC_LIBOBJ([msvc-inval])
@@ -867,6 +886,11 @@ AC_DEFUN([gl_INIT],
     AC_LIBOBJ([spawni])
     gl_PREREQ_POSIX_SPAWN_INTERNAL
   fi
+  gl_FUNC_POSIX_SPAWN_FILE_ACTIONS_ADDCHDIR
+  if test $HAVE_POSIX_SPAWN = 0 || test $REPLACE_POSIX_SPAWN = 1 || test $HAVE_POSIX_SPAWN_FILE_ACTIONS_ADDCHDIR = 0 || test $REPLACE_POSIX_SPAWN_FILE_ACTIONS_ADDCHDIR = 1; then
+    AC_LIBOBJ([spawn_faction_addchdir])
+  fi
+  gl_SPAWN_MODULE_INDICATOR([posix_spawn_file_actions_addchdir])
   gl_FUNC_POSIX_SPAWN_FILE_ACTIONS_ADDCLOSE
   if test $HAVE_POSIX_SPAWN = 0 || test $REPLACE_POSIX_SPAWN = 1 || test $REPLACE_POSIX_SPAWN_FILE_ACTIONS_ADDCLOSE = 1; then
     AC_LIBOBJ([spawn_faction_addclose])
@@ -877,6 +901,16 @@ AC_DEFUN([gl_INIT],
     AC_LIBOBJ([spawn_faction_adddup2])
   fi
   gl_SPAWN_MODULE_INDICATOR([posix_spawn_file_actions_adddup2])
+  gl_FUNC_POSIX_SPAWN_FILE_ACTIONS_ADDFCHDIR
+  if test $HAVE_POSIX_SPAWN = 0 || test $REPLACE_POSIX_SPAWN = 1 || test $HAVE_POSIX_SPAWN_FILE_ACTIONS_ADDFCHDIR = 0 || test $REPLACE_POSIX_SPAWN_FILE_ACTIONS_ADDFCHDIR = 1; then
+    AC_LIBOBJ([spawn_faction_addfchdir])
+  fi
+  gl_SPAWN_MODULE_INDICATOR([posix_spawn_file_actions_addfchdir])
+  gl_FUNC_POSIX_SPAWN_FILE_ACTIONS_ADDOPEN
+  if test $HAVE_POSIX_SPAWN = 0 || test $REPLACE_POSIX_SPAWN = 1 || test $REPLACE_POSIX_SPAWN_FILE_ACTIONS_ADDOPEN = 1; then
+    AC_LIBOBJ([spawn_faction_addopen])
+  fi
+  gl_SPAWN_MODULE_INDICATOR([posix_spawn_file_actions_addopen])
   gl_POSIX_SPAWN
   if test $HAVE_POSIX_SPAWN = 0 || test $REPLACE_POSIX_SPAWN = 1; then
     AC_LIBOBJ([spawn_faction_destroy])
@@ -899,6 +933,35 @@ AC_DEFUN([gl_INIT],
   gl_SPAWN_MODULE_INDICATOR([posix_spawnattr_getflags])
   gl_POSIX_SPAWN
   if test $HAVE_POSIX_SPAWN = 0 || test $REPLACE_POSIX_SPAWN = 1; then
+    AC_LIBOBJ([spawnattr_getpgroup])
+  fi
+  gl_SPAWN_MODULE_INDICATOR([posix_spawnattr_getpgroup])
+  gl_POSIX_SPAWN
+  if test $HAVE_POSIX_SPAWN = 0 \
+     || test $REPLACE_POSIX_SPAWN = 1 \
+     || test $gl_cv_func_spawnattr_setschedparam = no; then
+    AC_LIBOBJ([spawnattr_getschedparam])
+  fi
+  gl_SPAWN_MODULE_INDICATOR([posix_spawnattr_getschedparam])
+  gl_POSIX_SPAWN
+  if test $HAVE_POSIX_SPAWN = 0 \
+     || test $REPLACE_POSIX_SPAWN = 1 \
+     || test $gl_cv_func_spawnattr_setschedpolicy = no; then
+    AC_LIBOBJ([spawnattr_getschedpolicy])
+  fi
+  gl_SPAWN_MODULE_INDICATOR([posix_spawnattr_getschedpolicy])
+  gl_POSIX_SPAWN
+  if test $HAVE_POSIX_SPAWN = 0 || test $REPLACE_POSIX_SPAWN = 1; then
+    AC_LIBOBJ([spawnattr_getdefault])
+  fi
+  gl_SPAWN_MODULE_INDICATOR([posix_spawnattr_getsigdefault])
+  gl_POSIX_SPAWN
+  if test $HAVE_POSIX_SPAWN = 0 || test $REPLACE_POSIX_SPAWN = 1; then
+    AC_LIBOBJ([spawnattr_getsigmask])
+  fi
+  gl_SPAWN_MODULE_INDICATOR([posix_spawnattr_getsigmask])
+  gl_POSIX_SPAWN
+  if test $HAVE_POSIX_SPAWN = 0 || test $REPLACE_POSIX_SPAWN = 1; then
     AC_LIBOBJ([spawnattr_init])
   fi
   gl_SPAWN_MODULE_INDICATOR([posix_spawnattr_init])
@@ -909,9 +972,33 @@ AC_DEFUN([gl_INIT],
   gl_SPAWN_MODULE_INDICATOR([posix_spawnattr_setflags])
   gl_POSIX_SPAWN
   if test $HAVE_POSIX_SPAWN = 0 || test $REPLACE_POSIX_SPAWN = 1; then
+    AC_LIBOBJ([spawnattr_setpgroup])
+  fi
+  gl_SPAWN_MODULE_INDICATOR([posix_spawnattr_setpgroup])
+  gl_POSIX_SPAWN
+  if test $HAVE_POSIX_SPAWN = 0 \
+     || test $REPLACE_POSIX_SPAWN = 1 \
+     || test $gl_cv_func_spawnattr_setschedparam = no; then
+    AC_LIBOBJ([spawnattr_setschedparam])
+  fi
+  gl_SPAWN_MODULE_INDICATOR([posix_spawnattr_setschedparam])
+  gl_POSIX_SPAWN
+  if test $HAVE_POSIX_SPAWN = 0 \
+     || test $REPLACE_POSIX_SPAWN = 1 \
+     || test $gl_cv_func_spawnattr_setschedpolicy = no; then
+    AC_LIBOBJ([spawnattr_setschedpolicy])
+  fi
+  gl_SPAWN_MODULE_INDICATOR([posix_spawnattr_setschedpolicy])
+  gl_POSIX_SPAWN
+  if test $HAVE_POSIX_SPAWN = 0 || test $REPLACE_POSIX_SPAWN = 1; then
     AC_LIBOBJ([spawnattr_setdefault])
   fi
   gl_SPAWN_MODULE_INDICATOR([posix_spawnattr_setsigdefault])
+  gl_POSIX_SPAWN
+  if test $HAVE_POSIX_SPAWN = 0 || test $REPLACE_POSIX_SPAWN = 1; then
+    AC_LIBOBJ([spawnattr_setsigmask])
+  fi
+  gl_SPAWN_MODULE_INDICATOR([posix_spawnattr_setsigmask])
   gl_POSIX_SPAWN
   if test $HAVE_POSIX_SPAWN = 0 || test $REPLACE_POSIX_SPAWN = 1; then
     AC_LIBOBJ([spawnp])
@@ -1143,6 +1230,12 @@ AC_DEFUN([gl_INIT],
     gl_PREREQ_TIME_R
   fi
   gl_TIME_MODULE_INDICATOR([time_r])
+  gl_FUNC_TIMEGM
+  if test $HAVE_TIMEGM = 0 || test $REPLACE_TIMEGM = 1; then
+    AC_LIBOBJ([timegm])
+    gl_PREREQ_TIMEGM
+  fi
+  gl_TIME_MODULE_INDICATOR([timegm])
   gl_TIMESPEC
   gl_TLS
   gl_UNISTD_H
@@ -1391,16 +1484,6 @@ changequote([, ])dnl
     [posix_spawn_ported=no],
     [posix_spawn_ported=yes])
   AM_CONDITIONAL([POSIX_SPAWN_PORTED], [test $posix_spawn_ported = yes])
-  gl_FUNC_POSIX_SPAWN_FILE_ACTIONS_ADDOPEN
-  if test $HAVE_POSIX_SPAWN = 0 || test $REPLACE_POSIX_SPAWN = 1 || test $REPLACE_POSIX_SPAWN_FILE_ACTIONS_ADDOPEN = 1; then
-    AC_LIBOBJ([spawn_faction_addopen])
-  fi
-  gl_SPAWN_MODULE_INDICATOR([posix_spawn_file_actions_addopen])
-  gl_POSIX_SPAWN
-  if test $HAVE_POSIX_SPAWN = 0 || test $REPLACE_POSIX_SPAWN = 1; then
-    AC_LIBOBJ([spawnattr_setsigmask])
-  fi
-  gl_SPAWN_MODULE_INDICATOR([posix_spawnattr_setsigmask])
   AC_EGREP_CPP([notposix], [[
   #if defined _MSC_VER || defined __MINGW32__
     notposix
@@ -1828,16 +1911,28 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/sockets.h
   lib/spawn.c
   lib/spawn.in.h
+  lib/spawn_faction_addchdir.c
   lib/spawn_faction_addclose.c
   lib/spawn_faction_adddup2.c
+  lib/spawn_faction_addfchdir.c
+  lib/spawn_faction_addopen.c
   lib/spawn_faction_destroy.c
   lib/spawn_faction_init.c
   lib/spawn_int.h
   lib/spawnattr_destroy.c
+  lib/spawnattr_getdefault.c
   lib/spawnattr_getflags.c
+  lib/spawnattr_getpgroup.c
+  lib/spawnattr_getschedparam.c
+  lib/spawnattr_getschedpolicy.c
+  lib/spawnattr_getsigmask.c
   lib/spawnattr_init.c
   lib/spawnattr_setdefault.c
   lib/spawnattr_setflags.c
+  lib/spawnattr_setpgroup.c
+  lib/spawnattr_setschedparam.c
+  lib/spawnattr_setschedpolicy.c
+  lib/spawnattr_setsigmask.c
   lib/spawni.c
   lib/spawnp.c
   lib/sprintf.c
@@ -1890,6 +1985,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/tempname.h
   lib/time.in.h
   lib/time_r.c
+  lib/timegm.c
   lib/timespec.c
   lib/timespec.h
   lib/unistd--.h
@@ -2067,6 +2163,8 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/perror.m4
   m4/pipe.m4
   m4/posix_spawn.m4
+  m4/posix_spawn_faction_addchdir.m4
+  m4/posix_spawn_faction_addfchdir.m4
   m4/printf-frexp.m4
   m4/printf-frexpl.m4
   m4/printf-posix-rpl.m4
@@ -2141,6 +2239,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/threadlib.m4
   m4/time_h.m4
   m4/time_r.m4
+  m4/timegm.m4
   m4/timespec.m4
   m4/tls.m4
   m4/unistd-safer.m4
@@ -2323,8 +2422,12 @@ AC_DEFUN([gl_FILE_LIST], [
   tests/test-posix_spawn2.c
   tests/test-posix_spawn2.in.sh
   tests/test-posix_spawn3.c
+  tests/test-posix_spawn4.c
+  tests/test-posix_spawn5.c
+  tests/test-posix_spawn_file_actions_addchdir.c
   tests/test-posix_spawn_file_actions_addclose.c
   tests/test-posix_spawn_file_actions_adddup2.c
+  tests/test-posix_spawn_file_actions_addfchdir.c
   tests/test-posix_spawn_file_actions_addopen.c
   tests/test-printf-frexp.c
   tests/test-printf-frexpl.c
@@ -2493,9 +2596,6 @@ AC_DEFUN([gl_FILE_LIST], [
   tests=lib/setlocale.c
   tests=lib/setsockopt.c
   tests=lib/socket.c
-  tests=lib/spawn_faction_addopen.c
-  tests=lib/spawn_int.h
-  tests=lib/spawnattr_setsigmask.c
   tests=lib/symlink.c
   tests=lib/sys_ioctl.in.h
   tests=lib/timespec-add.c
