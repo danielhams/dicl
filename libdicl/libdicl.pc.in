@@ -7,5 +7,5 @@ Name: Dicl
 Description: Dans Irix Compatibility Library
 Version: @VERSION@
 Requires:
-Libs: -L${libdir} -ldicl@PACKAGE_SUFFIX@ -lpthread
+Libs: -L${libdir} -ldicl@PACKAGE_SUFFIX@
 Cflags: -I${includedir}/libdicl@PACKAGE_SUFFIX@
