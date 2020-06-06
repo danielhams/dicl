@@ -16,7 +16,7 @@ void dicl_strtolltest()
   printf("With atoi errno=%d value=%d\n",errno,vi);
 
   long long vll1 = strtoll(testuintmax,NULL,10);
-  printf("With strtoll errno=%d value=%li\n",errno,vll1);
+  printf("With strtoll errno=%d value=%lli\n",errno,vll1);
   int errnobefore = errno;
 
   char * oobll_end;
@@ -25,7 +25,7 @@ void dicl_strtolltest()
   errno=0;
 
   long long vll3 = strtoll(testuintmax,NULL,10);
-  printf("With strtoll errno=%d value=%li\n",errno,vll3);
+  printf("With strtoll errno=%d value=%lli\n",errno,vll3);
   int errnoafter = errno;
 
   if( errnobefore != 0 || errnoafter != 0 || (errnobefore != errnoafter)) {

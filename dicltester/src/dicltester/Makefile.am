@@ -14,6 +14,7 @@ dicltester_SOURCES=			\
 	$(NULL)
 
 AM_CFLAGS=				\
+	-Wall                           \
 	-pthread			\
 	$(DICLTESTER_DEPS_CFLAGS)	\
 	$(NULL)
