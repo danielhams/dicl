@@ -18,7 +18,8 @@ $GNULIB_HOME/gnulib-tool --import --lib=libgnu --source-base=gl \
     --m4-base=/gl/m4 --doc-base=doc --tests-base=tests --aux-dir=. \
     --with-tests --no-conditional-dependencies --no-libtool \
     --macro-prefix=gl --no-vc-files \
-    argp byteswap error faccessat fnmatch-gnu fprintf-posix futimens \
+    argp byteswap error faccessat fnmatch-gnu fprintf-posix \
+    fstatat futimens \
     getline getopt-posix getprogname mkdtemp mktime nanosleep obstack \
     obstack-printf \
     posix_spawn \
@@ -44,7 +45,7 @@ $GNULIB_HOME/gnulib-tool --import --lib=libgnu --source-base=gl \
     posix_spawnattr_setsigdefault \
     posix_spawnattr_setsigmask \
     posix_spawnp \
-    printf-posix qsort_r regex select \
+    printf-posix qsort_r regex readlinkat select \
     setenv sprintf-posix stpcpy stpncpy strerror_r-posix strsep strstr \
     strcasestr strsignal timegm unsetenv \
     vasprintf-posix vfprintf-posix vsprintf-posix vsnprintf-posix \

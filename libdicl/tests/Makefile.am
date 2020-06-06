@@ -1288,6 +1288,22 @@ EXTRA_DIST += test-printf-posix.sh test-printf-posix.c test-printf-posix.h test-
 
 ## end   gnulib module printf-posix-tests
 
+## begin gnulib module priv-set
+
+libtests_a_SOURCES += priv-set.c
+
+EXTRA_DIST += priv-set.h
+
+## end   gnulib module priv-set
+
+## begin gnulib module priv-set-tests
+
+TESTS += test-priv-set
+check_PROGRAMS += test-priv-set
+EXTRA_DIST += test-priv-set.c macros.h
+
+## end   gnulib module priv-set-tests
+
 ## begin gnulib module pthread-h
 
 BUILT_SOURCES += pthread.h
@@ -1510,6 +1526,23 @@ EXTRA_DIST += test-rawmemchr.c zerosize-ptr.h signature.h macros.h
 
 ## end   gnulib module rawmemchr-tests
 
+## begin gnulib module readlink-tests
+
+TESTS += test-readlink
+check_PROGRAMS += test-readlink
+EXTRA_DIST += test-readlink.h test-readlink.c signature.h macros.h
+
+## end   gnulib module readlink-tests
+
+## begin gnulib module readlinkat-tests
+
+TESTS += test-readlinkat
+check_PROGRAMS += test-readlinkat
+test_readlinkat_LDADD = $(LDADD) @LIBINTL@
+EXTRA_DIST += test-readlink.h test-readlinkat.c signature.h macros.h
+
+## end   gnulib module readlinkat-tests
+
 ## begin gnulib module regex-tests
 
 TESTS += test-regex
@@ -1518,6 +1551,23 @@ test_regex_LDADD = $(LDADD) @LIBINTL@ $(LIBTHREAD)
 EXTRA_DIST += test-regex.c macros.h
 
 ## end   gnulib module regex-tests
+
+## begin gnulib module rmdir
+
+
+EXTRA_DIST += rmdir.c
+
+EXTRA_libtests_a_SOURCES += rmdir.c
+
+## end   gnulib module rmdir
+
+## begin gnulib module rmdir-tests
+
+TESTS += test-rmdir
+check_PROGRAMS += test-rmdir
+EXTRA_DIST += test-rmdir.h test-rmdir.c signature.h macros.h
+
+## end   gnulib module rmdir-tests
 
 ## begin gnulib module same-inode
 
@@ -1745,6 +1795,21 @@ EXTRA_DIST += test-stat-time.c macros.h nap.h
 
 ## end   gnulib module stat-time-tests
 
+## begin gnulib module statat
+
+libtests_a_SOURCES += statat.c
+
+## end   gnulib module statat
+
+## begin gnulib module statat-tests
+
+TESTS += test-statat
+check_PROGRAMS += test-statat
+test_statat_LDADD = $(LDADD) @LIBINTL@
+EXTRA_DIST += test-statat.c
+
+## end   gnulib module statat-tests
+
 ## begin gnulib module stdalign-tests
 
 TESTS += test-stdalign
@@ -1883,6 +1948,24 @@ check_PROGRAMS += test-symlink
 EXTRA_DIST += test-symlink.h test-symlink.c signature.h macros.h
 
 ## end   gnulib module symlink-tests
+
+## begin gnulib module symlinkat
+
+
+EXTRA_DIST += at-func.c symlinkat.c
+
+EXTRA_libtests_a_SOURCES += at-func.c symlinkat.c
+
+## end   gnulib module symlinkat
+
+## begin gnulib module symlinkat-tests
+
+TESTS += test-symlinkat
+check_PROGRAMS += test-symlinkat
+test_symlinkat_LDADD = $(LDADD) @LIBINTL@
+EXTRA_DIST += test-symlink.h test-symlinkat.c signature.h macros.h
+
+## end   gnulib module symlinkat-tests
 
 ## begin gnulib module sys_ioctl
 
@@ -2065,6 +2148,49 @@ check_PROGRAMS += test-unistd
 EXTRA_DIST += test-unistd.c
 
 ## end   gnulib module unistd-tests
+
+## begin gnulib module unlink
+
+
+EXTRA_DIST += unlink.c
+
+EXTRA_libtests_a_SOURCES += unlink.c
+
+## end   gnulib module unlink
+
+## begin gnulib module unlink-tests
+
+TESTS += test-unlink
+check_PROGRAMS += test-unlink
+EXTRA_DIST += test-unlink.h test-unlink.c signature.h macros.h
+
+## end   gnulib module unlink-tests
+
+## begin gnulib module unlinkat
+
+
+EXTRA_DIST += at-func.c unlinkat.c
+
+EXTRA_libtests_a_SOURCES += at-func.c unlinkat.c
+
+## end   gnulib module unlinkat
+
+## begin gnulib module unlinkat-tests
+
+TESTS += test-unlinkat
+check_PROGRAMS += test-unlinkat
+test_unlinkat_LDADD = $(LDADD) @LIBINTL@
+EXTRA_DIST += test-unlinkat.c test-rmdir.h test-unlink.h signature.h macros.h
+
+## end   gnulib module unlinkat-tests
+
+## begin gnulib module unlinkdir
+
+libtests_a_SOURCES += unlinkdir.c
+
+EXTRA_DIST += unlinkdir.h
+
+## end   gnulib module unlinkdir
 
 ## begin gnulib module unsetenv-tests
 

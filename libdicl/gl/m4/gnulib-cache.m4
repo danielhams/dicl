@@ -45,6 +45,7 @@
 #  faccessat \
 #  fnmatch-gnu \
 #  fprintf-posix \
+#  fstatat \
 #  futimens \
 #  getline \
 #  getopt-posix \
@@ -79,6 +80,7 @@
 #  posix_spawnp \
 #  printf-posix \
 #  qsort_r \
+#  readlinkat \
 #  regex \
 #  select \
 #  setenv \
@@ -107,6 +109,7 @@ gl_MODULES([
   faccessat
   fnmatch-gnu
   fprintf-posix
+  fstatat
   futimens
   getline
   getopt-posix
@@ -141,6 +144,7 @@ gl_MODULES([
   posix_spawnp
   printf-posix
   qsort_r
+  readlinkat
   regex
   select
   setenv

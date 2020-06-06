@@ -310,6 +310,8 @@ AC_DEFUN([gl_EARLY],
   # Code from module printf-posix:
   # Code from module printf-posix-tests:
   # Code from module printf-safe:
+  # Code from module priv-set:
+  # Code from module priv-set-tests:
   # Code from module pthread-h:
   AC_DEFINE([_REENTRANT], 1, [For thread-safety on OSF/1, Solaris.])
   AC_DEFINE([_THREAD_SAFE], 1, [For thread-safety on AIX, FreeBSD.])
@@ -325,9 +327,15 @@ AC_DEFUN([gl_EARLY],
   # Code from module raise-tests:
   # Code from module rawmemchr:
   # Code from module rawmemchr-tests:
+  # Code from module readlink:
+  # Code from module readlink-tests:
+  # Code from module readlinkat:
+  # Code from module readlinkat-tests:
   # Code from module realloc-posix:
   # Code from module regex:
   # Code from module regex-tests:
+  # Code from module rmdir:
+  # Code from module rmdir-tests:
   # Code from module root-uid:
   # Code from module same-inode:
   # Code from module save-cwd:
@@ -373,6 +381,8 @@ AC_DEFUN([gl_EARLY],
   # Code from module stat-tests:
   # Code from module stat-time:
   # Code from module stat-time-tests:
+  # Code from module statat:
+  # Code from module statat-tests:
   # Code from module stdalign:
   # Code from module stdalign-tests:
   # Code from module stdbool:
@@ -416,6 +426,8 @@ AC_DEFUN([gl_EARLY],
   # Code from module strstr-tests:
   # Code from module symlink:
   # Code from module symlink-tests:
+  # Code from module symlinkat:
+  # Code from module symlinkat-tests:
   # Code from module sys_ioctl:
   # Code from module sys_ioctl-tests:
   # Code from module sys_select:
@@ -455,6 +467,11 @@ AC_DEFUN([gl_EARLY],
   # Code from module unistd-safer:
   # Code from module unistd-safer-tests:
   # Code from module unistd-tests:
+  # Code from module unlink:
+  # Code from module unlink-tests:
+  # Code from module unlinkat:
+  # Code from module unlinkat-tests:
+  # Code from module unlinkdir:
   # Code from module unsetenv:
   # Code from module unsetenv-tests:
   # Code from module usleep:
@@ -1030,6 +1047,17 @@ AC_DEFUN([gl_INIT],
     gl_PREREQ_RAWMEMCHR
   fi
   gl_STRING_MODULE_INDICATOR([rawmemchr])
+  gl_FUNC_READLINK
+  if test $HAVE_READLINK = 0 || test $REPLACE_READLINK = 1; then
+    AC_LIBOBJ([readlink])
+    gl_PREREQ_READLINK
+  fi
+  gl_UNISTD_MODULE_INDICATOR([readlink])
+  gl_FUNC_READLINKAT
+  if test $HAVE_READLINKAT = 0 || test $REPLACE_READLINKAT = 1; then
+    AC_LIBOBJ([readlinkat])
+  fi
+  gl_UNISTD_MODULE_INDICATOR([readlinkat])
   gl_FUNC_REALLOC_POSIX
   if test $REPLACE_REALLOC = 1; then
     AC_LIBOBJ([realloc])
@@ -1493,6 +1521,7 @@ changequote([, ])dnl
     [posix_spawn_ported=yes])
   AM_CONDITIONAL([POSIX_SPAWN_PORTED], [test $posix_spawn_ported = yes])
   AC_CHECK_FUNCS_ONCE([getrlimit setrlimit])
+  gl_PRIV_SET
   gl_PTHREAD_H
   gl_PTHREAD_THREAD
   if test $HAVE_PTHREAD_CREATE = 0 || test $REPLACE_PTHREAD_CREATE = 1; then
@@ -1515,6 +1544,11 @@ changequote([, ])dnl
   gl_FUNC_MMAP_ANON
   AC_CHECK_HEADERS_ONCE([sys/mman.h])
   AC_CHECK_FUNCS_ONCE([mprotect])
+  gl_FUNC_RMDIR
+  if test $REPLACE_RMDIR = 1; then
+    AC_LIBOBJ([rmdir])
+  fi
+  gl_UNISTD_MODULE_INDICATOR([rmdir])
   AC_CHECK_HEADERS_ONCE([sys/wait.h])
   gl_FUNC_SETLOCALE
   if test $REPLACE_SETLOCALE = 1; then
@@ -1550,6 +1584,7 @@ changequote([, ])dnl
   fi
   gl_SYS_SOCKET_MODULE_INDICATOR([socket])
   AC_REQUIRE([gl_LONG_DOUBLE_VS_DOUBLE])
+  gl_MODULE_INDICATOR([statat]) dnl for lib/openat.h
   AC_REQUIRE([gt_TYPE_WCHAR_T])
   AC_REQUIRE([gt_TYPE_WINT_T])
   AC_CHECK_DECLS_ONCE([alarm])
@@ -1566,11 +1601,27 @@ changequote([, ])dnl
     AC_LIBOBJ([symlink])
   fi
   gl_UNISTD_MODULE_INDICATOR([symlink])
+  gl_FUNC_SYMLINKAT
+  if test $HAVE_SYMLINKAT = 0 || test $REPLACE_SYMLINKAT = 1; then
+    AC_LIBOBJ([symlinkat])
+  fi
+  gl_UNISTD_MODULE_INDICATOR([symlinkat])
   gl_SYS_IOCTL_H
   AC_PROG_MKDIR_P
   AC_CHECK_FUNCS_ONCE([shutdown])
   gl_THREAD
   AC_CHECK_DECLS_ONCE([alarm])
+  gl_FUNC_UNLINK
+  if test $REPLACE_UNLINK = 1; then
+    AC_LIBOBJ([unlink])
+  fi
+  gl_UNISTD_MODULE_INDICATOR([unlink])
+  gl_FUNC_UNLINKAT
+  if test $HAVE_UNLINKAT = 0 || test $REPLACE_UNLINKAT = 1; then
+    AC_LIBOBJ([unlinkat])
+  fi
+  gl_UNISTD_MODULE_INDICATOR([unlinkat])
+  gl_UNLINKDIR
   gl_FUNC_USLEEP
   if test $HAVE_USLEEP = 0 || test $REPLACE_USLEEP = 1; then
     AC_LIBOBJ([usleep])
@@ -1882,6 +1933,8 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/raise.c
   lib/rawmemchr.c
   lib/rawmemchr.valgrind
+  lib/readlink.c
+  lib/readlinkat.c
   lib/realloc.c
   lib/regcomp.c
   lib/regex.c
@@ -2169,6 +2222,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/printf-frexpl.m4
   m4/printf-posix-rpl.m4
   m4/printf.m4
+  m4/priv-set.m4
   m4/pthread-thread.m4
   m4/pthread_h.m4
   m4/pthread_rwlock_rdlock.m4
@@ -2177,8 +2231,11 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/qsort_r.m4
   m4/raise.m4
   m4/rawmemchr.m4
+  m4/readlink.m4
+  m4/readlinkat.m4
   m4/realloc.m4
   m4/regex.m4
+  m4/rmdir.m4
   m4/save-cwd.m4
   m4/sched_h.m4
   m4/select.m4
@@ -2225,6 +2282,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/strsignal.m4
   m4/strstr.m4
   m4/symlink.m4
+  m4/symlinkat.m4
   m4/sys_ioctl_h.m4
   m4/sys_select_h.m4
   m4/sys_socket_h.m4
@@ -2244,6 +2302,9 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/tls.m4
   m4/unistd-safer.m4
   m4/unistd_h.m4
+  m4/unlink.m4
+  m4/unlinkat.m4
+  m4/unlinkdir.m4
   m4/usleep.m4
   m4/utime.m4
   m4/utime_h.m4
@@ -2437,6 +2498,7 @@ AC_DEFUN([gl_FILE_LIST], [
   tests/test-printf-posix.sh
   tests/test-printf-posix2.c
   tests/test-printf-posix2.sh
+  tests/test-priv-set.c
   tests/test-pthread-thread.c
   tests/test-pthread.c
   tests/test-pthread_sigmask1.c
@@ -2444,7 +2506,12 @@ AC_DEFUN([gl_FILE_LIST], [
   tests/test-qsort_r.c
   tests/test-raise.c
   tests/test-rawmemchr.c
+  tests/test-readlink.c
+  tests/test-readlink.h
+  tests/test-readlinkat.c
   tests/test-regex.c
+  tests/test-rmdir.c
+  tests/test-rmdir.h
   tests/test-rwlock1.c
   tests/test-sched.c
   tests/test-select-fd.c
@@ -2473,6 +2540,7 @@ AC_DEFUN([gl_FILE_LIST], [
   tests/test-stat-time.c
   tests/test-stat.c
   tests/test-stat.h
+  tests/test-statat.c
   tests/test-stdalign.c
   tests/test-stdbool.c
   tests/test-stddef.c
@@ -2490,6 +2558,7 @@ AC_DEFUN([gl_FILE_LIST], [
   tests/test-strstr.c
   tests/test-symlink.c
   tests/test-symlink.h
+  tests/test-symlinkat.c
   tests/test-sys_ioctl.c
   tests/test-sys_select.c
   tests/test-sys_socket.c
@@ -2506,6 +2575,9 @@ AC_DEFUN([gl_FILE_LIST], [
   tests/test-timespec.c
   tests/test-tls.c
   tests/test-unistd.c
+  tests/test-unlink.c
+  tests/test-unlink.h
+  tests/test-unlinkat.c
   tests/test-unsetenv.c
   tests/test-usleep.c
   tests/test-utime-h.c
@@ -2587,21 +2659,30 @@ AC_DEFUN([gl_FILE_LIST], [
   tests=lib/offtostr.c
   tests=lib/perror.c
   tests=lib/pipe.c
+  tests=lib/priv-set.c
+  tests=lib/priv-set.h
   tests=lib/pthread-thread.c
   tests=lib/pthread.in.h
   tests=lib/pthread_sigmask.c
   tests=lib/putenv.c
   tests=lib/resource-ext.h
+  tests=lib/rmdir.c
   tests=lib/same-inode.h
   tests=lib/setlocale.c
   tests=lib/setsockopt.c
   tests=lib/socket.c
+  tests=lib/statat.c
   tests=lib/symlink.c
+  tests=lib/symlinkat.c
   tests=lib/sys_ioctl.in.h
   tests=lib/timespec-add.c
   tests=lib/timespec-sub.c
   tests=lib/uinttostr.c
   tests=lib/umaxtostr.c
+  tests=lib/unlink.c
+  tests=lib/unlinkat.c
+  tests=lib/unlinkdir.c
+  tests=lib/unlinkdir.h
   tests=lib/usleep.c
   tests=lib/utimecmp.c
   tests=lib/utimecmp.h

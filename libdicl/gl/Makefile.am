@@ -40,6 +40,7 @@
 #  faccessat \
 #  fnmatch-gnu \
 #  fprintf-posix \
+#  fstatat \
 #  futimens \
 #  getline \
 #  getopt-posix \
@@ -74,6 +75,7 @@
 #  posix_spawnp \
 #  printf-posix \
 #  qsort_r \
+#  readlinkat \
 #  regex \
 #  select \
 #  setenv \
@@ -1740,6 +1742,24 @@ EXTRA_DIST += rawmemchr.c rawmemchr.valgrind
 EXTRA_libgnu_a_SOURCES += rawmemchr.c
 
 ## end   gnulib module rawmemchr
+
+## begin gnulib module readlink
+
+
+EXTRA_DIST += readlink.c
+
+EXTRA_libgnu_a_SOURCES += readlink.c
+
+## end   gnulib module readlink
+
+## begin gnulib module readlinkat
+
+
+EXTRA_DIST += at-func.c readlinkat.c
+
+EXTRA_libgnu_a_SOURCES += at-func.c readlinkat.c
+
+## end   gnulib module readlinkat
 
 ## begin gnulib module realloc-posix
 

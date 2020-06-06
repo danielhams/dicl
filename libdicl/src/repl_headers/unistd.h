@@ -24,6 +24,8 @@ extern "C" {
 
 int faccessat(int, const char*, int, int);
 
+int readlinkat(int fd, const char *path, char *buf, size_t bufsize);
+
 #if defined(__cplusplus)
 }
 #endif
