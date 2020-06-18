@@ -21,5 +21,17 @@ void dicl_strtodtest()
   long double strtoldresult = strtold(tststrtod,&endptr);
   printf("Parsed strtold is %Lf\n", strtoldresult);
 
+  const char *newstrtod = "-0x1p-1074";
+  double expected = -5e-324;
+  double newresult = strtod(newstrtod,&endptr);
+  printf("Parsed newstrtod '%s' is %f\n", newstrtod, newresult);
+  printf("This should be %f\n", expected);
+  if( expected == newresult ) {
+    printf("They match - great!\n");
+  }
+  else {
+    printf("They don't match - PROBLEM!\n");
+  }
+
   return;
 }

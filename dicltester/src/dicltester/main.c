@@ -12,6 +12,7 @@
 #include "dicl_select.h"
 #include "dicl_setenv.h"
 #include "dicl_strtod.h"
+#include "dicl_strtof.h"
 #include "dicl_strtoll.h"
 
 int main(int argc, char**argv)
@@ -36,6 +37,8 @@ int main(int argc, char**argv)
     dicl_setenvtest(argv);
 
     dicl_strtodtest();
+
+    dicl_strtoftest();
 
     dicl_strtolltest();
 

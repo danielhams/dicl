@@ -10,6 +10,7 @@ dicltester_SOURCES=			\
 	dicl_select.c			\
 	dicl_setenv.c			\
 	dicl_strtod.c			\
+	dicl_strtof.c			\
 	dicl_strtoll.c			\
 	$(NULL)
 
