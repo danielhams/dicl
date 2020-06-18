@@ -46,8 +46,9 @@ $GNULIB_HOME/gnulib-tool --import --lib=libgnu --source-base=gl \
     posix_spawnattr_setsigmask \
     posix_spawnp \
     printf-posix qsort_r regex readlinkat select \
-    setenv sprintf-posix stpcpy stpncpy strerror_r-posix strsep strstr \
-    strcasestr strsignal timegm unsetenv \
+    setenv sprintf-posix stpcpy stpncpy strerror_r-posix \
+    nstrftime strptime strsep \
+    strstr strcasestr strsignal timegm unsetenv \
     vasprintf-posix vfprintf-posix vsprintf-posix vsnprintf-posix \
     wait-process
 

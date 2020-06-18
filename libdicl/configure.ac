@@ -1,6 +1,6 @@
 AC_PREREQ(2.65)
 AC_INIT([libdicl],
-        [0.1.27],
+        [0.1.28],
         [daniel.hams@gmail.com])
 
 AC_SUBST(ACLOCAL_AMFLAGS, "-I macros")
@@ -32,6 +32,8 @@ gl_cv_func_select_detects_ebadf=no
 #ac_cv_func_strtoul=no
 #ac_cv_func_strtoll=no
 #ac_cv_func_strtoull=no
+REPLACE_STRFTIME=1
+ac_cv_func_strptime=no
 
 gl_EARLY
 gl_INIT

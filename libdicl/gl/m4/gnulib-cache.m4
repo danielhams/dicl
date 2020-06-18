@@ -53,6 +53,7 @@
 #  mkdtemp \
 #  mktime \
 #  nanosleep \
+#  nstrftime \
 #  obstack \
 #  obstack-printf \
 #  posix_spawn \
@@ -89,6 +90,7 @@
 #  stpncpy \
 #  strcasestr \
 #  strerror_r-posix \
+#  strptime \
 #  strsep \
 #  strsignal \
 #  strstr \
@@ -117,6 +119,7 @@ gl_MODULES([
   mkdtemp
   mktime
   nanosleep
+  nstrftime
   obstack
   obstack-printf
   posix_spawn
@@ -153,6 +156,7 @@ gl_MODULES([
   stpncpy
   strcasestr
   strerror_r-posix
+  strptime
   strsep
   strsignal
   strstr

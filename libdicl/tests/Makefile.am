@@ -1112,6 +1112,14 @@ EXTRA_DIST += test-nl_langinfo.sh test-nl_langinfo.c signature.h macros.h
 
 ## end   gnulib module nl_langinfo-tests
 
+## begin gnulib module nstrftime-tests
+
+TESTS += test-nstrftime
+check_PROGRAMS += test-nstrftime
+EXTRA_DIST += test-nstrftime.c macros.h
+
+## end   gnulib module nstrftime-tests
+
 ## begin gnulib module obstack-printf-tests
 
 TESTS += test-obstack-printf

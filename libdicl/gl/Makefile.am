@@ -48,6 +48,7 @@
 #  mkdtemp \
 #  mktime \
 #  nanosleep \
+#  nstrftime \
 #  obstack \
 #  obstack-printf \
 #  posix_spawn \
@@ -84,6 +85,7 @@
 #  stpncpy \
 #  strcasestr \
 #  strerror_r-posix \
+#  strptime \
 #  strsep \
 #  strsignal \
 #  strstr \
@@ -1417,6 +1419,14 @@ EXTRA_libgnu_a_SOURCES += nl_langinfo.c
 
 ## end   gnulib module nl_langinfo
 
+## begin gnulib module nstrftime
+
+libgnu_a_SOURCES += nstrftime.c
+
+EXTRA_DIST += strftime.h
+
+## end   gnulib module nstrftime
+
 ## begin gnulib module obstack
 
 
@@ -2701,6 +2711,15 @@ libgnu_a_SOURCES += strnlen1.h strnlen1.c
 
 ## end   gnulib module strnlen1
 
+## begin gnulib module strptime
+
+
+EXTRA_DIST += strptime.c
+
+EXTRA_libgnu_a_SOURCES += strptime.c
+
+## end   gnulib module strptime
+
 ## begin gnulib module strsep
 
 
@@ -3101,6 +3120,15 @@ EXTRA_libgnu_a_SOURCES += time_r.c
 
 ## end   gnulib module time_r
 
+## begin gnulib module time_rz
+
+
+EXTRA_DIST += time-internal.h time_rz.c
+
+EXTRA_libgnu_a_SOURCES += time_rz.c
+
+## end   gnulib module time_rz
+
 ## begin gnulib module timegm
 
 
@@ -3123,6 +3151,15 @@ EXTRA_DIST += timespec.h
 libgnu_a_SOURCES += glthread/tls.h glthread/tls.c
 
 ## end   gnulib module tls
+
+## begin gnulib module tzset
+
+
+EXTRA_DIST += tzset.c
+
+EXTRA_libgnu_a_SOURCES += tzset.c
+
+## end   gnulib module tzset
 
 ## begin gnulib module unistd
 

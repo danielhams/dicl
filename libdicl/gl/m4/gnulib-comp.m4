@@ -257,6 +257,8 @@ AC_DEFUN([gl_EARLY],
   # Code from module nl_langinfo:
   # Code from module nl_langinfo-tests:
   # Code from module nocrash:
+  # Code from module nstrftime:
+  # Code from module nstrftime-tests:
   # Code from module obstack:
   # Code from module obstack-printf:
   # Code from module obstack-printf-tests:
@@ -418,6 +420,7 @@ AC_DEFUN([gl_EARLY],
   # Code from module strnlen:
   # Code from module strnlen-tests:
   # Code from module strnlen1:
+  # Code from module strptime:
   # Code from module strsep:
   # Code from module strsignal:
   # Code from module strsignal-tests:
@@ -456,6 +459,7 @@ AC_DEFUN([gl_EARLY],
   # Code from module time:
   # Code from module time-tests:
   # Code from module time_r:
+  # Code from module time_rz:
   # Code from module timegm:
   # Code from module timespec:
   # Code from module timespec-add:
@@ -463,6 +467,7 @@ AC_DEFUN([gl_EARLY],
   # Code from module timespec-tests:
   # Code from module tls:
   # Code from module tls-tests:
+  # Code from module tzset:
   # Code from module unistd:
   # Code from module unistd-safer:
   # Code from module unistd-safer-tests:
@@ -872,6 +877,7 @@ AC_DEFUN([gl_INIT],
     AC_LIBOBJ([nl_langinfo])
   fi
   gl_LANGINFO_MODULE_INDICATOR([nl_langinfo])
+  gl_FUNC_GNU_STRFTIME
   AC_FUNC_OBSTACK
   dnl Note: AC_FUNC_OBSTACK does AC_LIBSOURCES([obstack.h, obstack.c]).
   gl_FUNC_OBSTACK_PRINTF
@@ -1213,6 +1219,12 @@ AC_DEFUN([gl_INIT],
     gl_PREREQ_STRNLEN
   fi
   gl_STRING_MODULE_INDICATOR([strnlen])
+  gl_FUNC_STRPTIME
+  if test $HAVE_STRPTIME = 0; then
+    AC_LIBOBJ([strptime])
+    gl_PREREQ_STRPTIME
+  fi
+  gl_TIME_MODULE_INDICATOR([strptime])
   gl_FUNC_STRSEP
   if test $HAVE_STRSEP = 0; then
     AC_LIBOBJ([strsep])
@@ -1258,6 +1270,11 @@ AC_DEFUN([gl_INIT],
     gl_PREREQ_TIME_R
   fi
   gl_TIME_MODULE_INDICATOR([time_r])
+  gl_TIME_RZ
+  if test $HAVE_TIMEZONE_T = 0; then
+    AC_LIBOBJ([time_rz])
+  fi
+  gl_TIME_MODULE_INDICATOR([time_rz])
   gl_FUNC_TIMEGM
   if test $HAVE_TIMEGM = 0 || test $REPLACE_TIMEGM = 1; then
     AC_LIBOBJ([timegm])
@@ -1266,6 +1283,11 @@ AC_DEFUN([gl_INIT],
   gl_TIME_MODULE_INDICATOR([timegm])
   gl_TIMESPEC
   gl_TLS
+  gl_FUNC_TZSET
+  if test $HAVE_TZSET = 0 || test $REPLACE_TZSET = 1; then
+    AC_LIBOBJ([tzset])
+  fi
+  gl_TIME_MODULE_INDICATOR([tzset])
   gl_UNISTD_H
   gl_UNISTD_SAFER
   gl_FUNC_UNSETENV
@@ -1908,6 +1930,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/msvc-nothrow.h
   lib/nanosleep.c
   lib/nl_langinfo.c
+  lib/nstrftime.c
   lib/obstack.c
   lib/obstack.h
   lib/obstack_printf.c
@@ -2014,6 +2037,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/strerror-override.h
   lib/strerror.c
   lib/strerror_r.c
+  lib/strftime.h
   lib/string.in.h
   lib/strings.in.h
   lib/stripslash.c
@@ -2022,6 +2046,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/strnlen.c
   lib/strnlen1.c
   lib/strnlen1.h
+  lib/strptime.c
   lib/strsep.c
   lib/strsignal.c
   lib/strstr.c
@@ -2036,11 +2061,14 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/sysexits.in.h
   lib/tempname.c
   lib/tempname.h
+  lib/time-internal.h
   lib/time.in.h
   lib/time_r.c
+  lib/time_rz.c
   lib/timegm.c
   lib/timespec.c
   lib/timespec.h
+  lib/tzset.c
   lib/unistd--.h
   lib/unistd-safer.h
   lib/unistd.c
@@ -2206,6 +2234,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/netinet_in_h.m4
   m4/nl_langinfo.m4
   m4/nocrash.m4
+  m4/nstrftime.m4
   m4/obstack-printf.m4
   m4/obstack.m4
   m4/off_t.m4
@@ -2278,6 +2307,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/strings_h.m4
   m4/strndup.m4
   m4/strnlen.m4
+  m4/strptime.m4
   m4/strsep.m4
   m4/strsignal.m4
   m4/strstr.m4
@@ -2297,9 +2327,12 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/threadlib.m4
   m4/time_h.m4
   m4/time_r.m4
+  m4/time_rz.m4
   m4/timegm.m4
   m4/timespec.m4
   m4/tls.m4
+  m4/tm_gmtoff.m4
+  m4/tzset.m4
   m4/unistd-safer.m4
   m4/unistd_h.m4
   m4/unlink.m4
@@ -2468,6 +2501,7 @@ AC_DEFUN([gl_FILE_LIST], [
   tests/test-netinet_in.c
   tests/test-nl_langinfo.c
   tests/test-nl_langinfo.sh
+  tests/test-nstrftime.c
   tests/test-obstack-printf.c
   tests/test-once.c
   tests/test-open.c
