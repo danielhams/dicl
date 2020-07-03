@@ -1,6 +1,6 @@
 # dicl
 
-## Dans Irix Compatibility Library
+## Dan's Irix Compatibility Library
 
 A little project pulling in some of the gnulib defined functions that can provide better posix / recent libc functionality than IRIX itself has to offer.
 
