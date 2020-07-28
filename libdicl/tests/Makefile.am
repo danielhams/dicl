@@ -328,6 +328,22 @@ EXTRA_DIST += test-dirent.c
 
 ## end   gnulib module dirent-tests
 
+## begin gnulib module dprintf-posix-tests
+
+TESTS += test-dprintf-posix.sh test-dprintf-posix2.sh
+check_PROGRAMS += test-dprintf-posix test-dprintf-posix2
+EXTRA_DIST += test-dprintf-posix.sh test-dprintf-posix.c test-printf-posix.output test-dprintf-posix2.sh test-dprintf-posix2.c infinity.h signature.h macros.h
+
+## end   gnulib module dprintf-posix-tests
+
+## begin gnulib module dprintf-tests
+
+TESTS += test-dprintf
+check_PROGRAMS += test-dprintf
+EXTRA_DIST += test-dprintf.c signature.h macros.h
+
+## end   gnulib module dprintf-tests
+
 ## begin gnulib module dtotimespec
 
 libtests_a_SOURCES += dtotimespec.c
@@ -1038,6 +1054,15 @@ check_PROGRAMS += test-memchr
 EXTRA_DIST += test-memchr.c zerosize-ptr.h signature.h macros.h
 
 ## end   gnulib module memchr-tests
+
+## begin gnulib module memmem-tests
+
+TESTS += test-memmem
+check_PROGRAMS += test-memmem
+
+EXTRA_DIST += test-memmem.c signature.h zerosize-ptr.h macros.h
+
+## end   gnulib module memmem-tests
 
 ## begin gnulib module memrchr-tests
 
@@ -2304,6 +2329,22 @@ EXTRA_DIST += test-vasprintf.c signature.h macros.h
 
 ## end   gnulib module vasprintf-tests
 
+## begin gnulib module vdprintf-posix-tests
+
+TESTS += test-vdprintf-posix.sh
+check_PROGRAMS += test-vdprintf-posix
+EXTRA_DIST += test-vdprintf-posix.sh test-vdprintf-posix.c test-fprintf-posix.h test-printf-posix.output infinity.h signature.h macros.h
+
+## end   gnulib module vdprintf-posix-tests
+
+## begin gnulib module vdprintf-tests
+
+TESTS += test-vdprintf
+check_PROGRAMS += test-vdprintf
+EXTRA_DIST += test-vdprintf.c signature.h macros.h
+
+## end   gnulib module vdprintf-tests
+
 ## begin gnulib module verify-tests
 
 TESTS_ENVIRONMENT += MAKE='$(MAKE)'
@@ -2423,6 +2464,14 @@ EXTRA_DIST += windows-thread.c windows-thread.h
 EXTRA_libtests_a_SOURCES += windows-thread.c
 
 ## end   gnulib module windows-thread
+
+## begin gnulib module write-tests
+
+TESTS += test-write
+check_PROGRAMS += test-write
+EXTRA_DIST += test-write.c signature.h macros.h
+
+## end   gnulib module write-tests
 
 ## begin gnulib module xalloc-die-tests
 

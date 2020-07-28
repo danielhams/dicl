@@ -18,10 +18,11 @@ $GNULIB_HOME/gnulib-tool --import --lib=libgnu --source-base=gl \
     --m4-base=/gl/m4 --doc-base=doc --tests-base=tests --aux-dir=. \
     --with-tests --no-conditional-dependencies --no-libtool \
     --macro-prefix=gl --no-vc-files \
-    argp byteswap error faccessat fnmatch-gnu fprintf-posix \
+    argp byteswap dprintf-posix error faccessat fnmatch-gnu fprintf-posix \
     fstatat futimens \
     getline getopt-posix getprogname mkdtemp mktime nanosleep obstack \
     obstack-printf \
+    memmem \
     posix_spawn \
     posix_spawn_file_actions_addchdir \
     posix_spawn_file_actions_addclose \
@@ -49,7 +50,7 @@ $GNULIB_HOME/gnulib-tool --import --lib=libgnu --source-base=gl \
     setenv sprintf-posix stpcpy stpncpy strerror_r-posix \
     nstrftime strptime strsep \
     strstr strcasestr strsignal timegm unsetenv \
-    vasprintf-posix vfprintf-posix vsprintf-posix vsnprintf-posix \
+    vasprintf-posix vdprintf-posix vfprintf-posix vsprintf-posix vsnprintf-posix \
     wait-process
 
 perl -pi -e "s|AM_CFLAGS =|AM_CFLAGS = -fPIC -DPIC|g" gl/Makefile.am

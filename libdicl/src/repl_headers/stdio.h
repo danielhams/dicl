@@ -81,10 +81,22 @@ extern int vasprintf(char**, const char*, va_list)
 #if !defined(__cplusplus) || defined(LIBDICL_WANTS_CPP_GETLINE_REPL)
 #undef getline
 #define getline rpl_getline
-ssize_t rpl_getline(char **lineptr, size_t *n, FILE *stream);
+extern ssize_t rpl_getline(char **lineptr, size_t *n, FILE *stream);
 #endif
 
-ssize_t getdelim(char **lineptr, size_t *n, int delim, FILE *stream);
+extern ssize_t getdelim(char **lineptr, size_t *n, int delim, FILE *stream);
+
+extern int dprintf(int __fd, const char * __fmt, ...)
+#if defined(__GNUC__)
+  __attribute__ ((format (__printf__, 2, 3)))
+#endif
+;
+
+  extern int vdprintf(int __fd, const char* __fmt, va_list)
+#if defined(__GNUC__)
+  __attribute__ ((format (__printf__, 2, 0)))
+#endif
+;
 
 #if defined(__cplusplus)
 }

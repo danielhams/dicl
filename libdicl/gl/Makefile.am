@@ -36,6 +36,7 @@
 #  --no-vc-files \
 #  argp \
 #  byteswap \
+#  dprintf-posix \
 #  error \
 #  faccessat \
 #  fnmatch-gnu \
@@ -45,6 +46,7 @@
 #  getline \
 #  getopt-posix \
 #  getprogname \
+#  memmem \
 #  mkdtemp \
 #  mktime \
 #  nanosleep \
@@ -92,6 +94,7 @@
 #  timegm \
 #  unsetenv \
 #  vasprintf-posix \
+#  vdprintf-posix \
 #  vfprintf-posix \
 #  vsnprintf-posix \
 #  vsprintf-posix \
@@ -324,6 +327,15 @@ EXTRA_DIST += dirname.h
 EXTRA_DIST += dosname.h
 
 ## end   gnulib module dosname
+
+## begin gnulib module dprintf
+
+
+EXTRA_DIST += dprintf.c
+
+EXTRA_libgnu_a_SOURCES += dprintf.c
+
+## end   gnulib module dprintf
 
 ## begin gnulib module dup2
 
@@ -632,6 +644,12 @@ EXTRA_DIST += at-func.c fstatat.c
 EXTRA_libgnu_a_SOURCES += at-func.c fstatat.c
 
 ## end   gnulib module fstatat
+
+## begin gnulib module full-write
+
+libgnu_a_SOURCES += full-write.h full-write.c
+
+## end   gnulib module full-write
 
 ## begin gnulib module futimens
 
@@ -1329,6 +1347,15 @@ EXTRA_libgnu_a_SOURCES += memchr.c
 
 ## end   gnulib module memchr
 
+## begin gnulib module memmem-simple
+
+
+EXTRA_DIST += memmem.c str-two-way.h
+
+EXTRA_libgnu_a_SOURCES += memmem.c
+
+## end   gnulib module memmem-simple
+
 ## begin gnulib module mempcpy
 
 
@@ -1795,6 +1822,16 @@ EXTRA_libgnu_a_SOURCES += regcomp.c regex.c regex_internal.c regexec.c
 EXTRA_DIST += root-uid.h
 
 ## end   gnulib module root-uid
+
+## begin gnulib module safe-write
+
+libgnu_a_SOURCES += safe-write.c
+
+EXTRA_DIST += safe-read.c safe-write.h sys-limits.h
+
+EXTRA_libgnu_a_SOURCES += safe-read.c
+
+## end   gnulib module safe-write
 
 ## begin gnulib module save-cwd
 
@@ -3411,6 +3448,15 @@ EXTRA_libgnu_a_SOURCES += asprintf.c vasprintf.c
 
 ## end   gnulib module vasprintf
 
+## begin gnulib module vdprintf
+
+
+EXTRA_DIST += vdprintf.c
+
+EXTRA_libgnu_a_SOURCES += vdprintf.c
+
+## end   gnulib module vdprintf
+
 ## begin gnulib module verify
 
 
@@ -3681,6 +3727,15 @@ EXTRA_DIST += windows-tls.c windows-tls.h
 EXTRA_libgnu_a_SOURCES += windows-tls.c
 
 ## end   gnulib module windows-tls
+
+## begin gnulib module write
+
+
+EXTRA_DIST += write.c
+
+EXTRA_libgnu_a_SOURCES += write.c
+
+## end   gnulib module write
 
 ## begin gnulib module xalloc
 

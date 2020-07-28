@@ -22,9 +22,9 @@ extern "C" {
 
 # define AT_EACCESS 4
 
-int faccessat(int, const char*, int, int);
+extern int faccessat(int, const char*, int, int);
 
-int readlinkat(int fd, const char *path, char *buf, size_t bufsize);
+extern int readlinkat(int fd, const char *path, char *buf, size_t bufsize);
 
 #if defined(__cplusplus)
 }

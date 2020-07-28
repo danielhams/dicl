@@ -90,6 +90,10 @@ AC_DEFUN([gl_EARLY],
   # Code from module dirname-lgpl:
   # Code from module dosname:
   # Code from module double-slash-root:
+  # Code from module dprintf:
+  # Code from module dprintf-posix:
+  # Code from module dprintf-posix-tests:
+  # Code from module dprintf-tests:
   # Code from module dtotimespec:
   # Code from module dup:
   # Code from module dup-tests:
@@ -147,6 +151,7 @@ AC_DEFUN([gl_EARLY],
   # Code from module fstatat-tests:
   # Code from module ftruncate:
   # Code from module ftruncate-tests:
+  # Code from module full-write:
   # Code from module futimens:
   # Code from module futimens-tests:
   # Code from module fwrite-tests:
@@ -239,6 +244,9 @@ AC_DEFUN([gl_EARLY],
   # Code from module mbtowc:
   # Code from module memchr:
   # Code from module memchr-tests:
+  # Code from module memmem:
+  # Code from module memmem-simple:
+  # Code from module memmem-tests:
   # Code from module mempcpy:
   # Code from module memrchr:
   # Code from module memrchr-tests:
@@ -339,6 +347,7 @@ AC_DEFUN([gl_EARLY],
   # Code from module rmdir:
   # Code from module rmdir-tests:
   # Code from module root-uid:
+  # Code from module safe-write:
   # Code from module same-inode:
   # Code from module save-cwd:
   # Code from module sched:
@@ -496,6 +505,10 @@ AC_DEFUN([gl_EARLY],
   # Code from module vasprintf-posix:
   # Code from module vasprintf-posix-tests:
   # Code from module vasprintf-tests:
+  # Code from module vdprintf:
+  # Code from module vdprintf-posix:
+  # Code from module vdprintf-posix-tests:
+  # Code from module vdprintf-tests:
   # Code from module verify:
   # Code from module verify-tests:
   # Code from module vfprintf-posix:
@@ -523,6 +536,8 @@ AC_DEFUN([gl_EARLY],
   # Code from module windows-rwlock:
   # Code from module windows-thread:
   # Code from module windows-tls:
+  # Code from module write:
+  # Code from module write-tests:
   # Code from module xalloc:
   # Code from module xalloc-die:
   # Code from module xalloc-die-tests:
@@ -584,6 +599,9 @@ AC_DEFUN([gl_INIT],
   gl_DIRENT_MODULE_INDICATOR([dirfd])
   gl_DIRNAME_LGPL
   gl_DOUBLE_SLASH_ROOT
+  gl_FUNC_DPRINTF
+  gl_STDIO_MODULE_INDICATOR([dprintf])
+  gl_FUNC_DPRINTF_POSIX
   gl_FUNC_DUP2
   if test $HAVE_DUP2 = 0 || test $REPLACE_DUP2 = 1; then
     AC_LIBOBJ([dup2])
@@ -823,6 +841,15 @@ AC_DEFUN([gl_INIT],
     gl_PREREQ_MEMCHR
   fi
   gl_STRING_MODULE_INDICATOR([memchr])
+  gl_FUNC_MEMMEM
+  if test $HAVE_MEMMEM = 0 || test $REPLACE_MEMMEM = 1; then
+    AC_LIBOBJ([memmem])
+  fi
+  gl_FUNC_MEMMEM_SIMPLE
+  if test $HAVE_MEMMEM = 0 || test $REPLACE_MEMMEM = 1; then
+    AC_LIBOBJ([memmem])
+  fi
+  gl_STRING_MODULE_INDICATOR([memmem])
   gl_FUNC_MEMPCPY
   if test $HAVE_MEMPCPY = 0; then
     AC_LIBOBJ([mempcpy])
@@ -1074,6 +1101,7 @@ AC_DEFUN([gl_INIT],
     AC_LIBOBJ([regex])
     gl_PREREQ_REGEX
   fi
+  gl_PREREQ_SAFE_WRITE
   gl_SAVE_CWD
   gl_SCHED_H
   gl_FUNC_SELECT
@@ -1311,6 +1339,9 @@ AC_DEFUN([gl_INIT],
     [AM_][XGETTEXT_OPTION([--flag=asprintf:2:c-format])
      AM_][XGETTEXT_OPTION([--flag=vasprintf:2:c-format])])
   gl_FUNC_VASPRINTF_POSIX
+  gl_FUNC_VDPRINTF
+  gl_STDIO_MODULE_INDICATOR([vdprintf])
+  gl_FUNC_VDPRINTF_POSIX
   gl_FUNC_VFPRINTF_POSIX
   gl_STDIO_MODULE_INDICATOR([vfprintf-posix])
   gl_FUNC_VSNPRINTF
@@ -1362,6 +1393,12 @@ AC_DEFUN([gl_INIT],
       AC_LIBOBJ([windows-tls])
       ;;
   esac
+  gl_FUNC_WRITE
+  if test $REPLACE_WRITE = 1; then
+    AC_LIBOBJ([write])
+    gl_PREREQ_WRITE
+  fi
+  gl_UNISTD_MODULE_INDICATOR([write])
   gl_XALLOC
   gl_XSIZE
   # End of code from modules
@@ -1432,6 +1469,7 @@ changequote([, ])dnl
   fi
   gl_SYS_SOCKET_MODULE_INDICATOR([connect])
   gl_CTYPE_H
+  AC_CHECK_FUNCS_ONCE([getrlimit setrlimit])
   gl_FUNC_DUP
   if test $REPLACE_DUP = 1; then
     AC_LIBOBJ([dup])
@@ -1508,6 +1546,10 @@ changequote([, ])dnl
   gl_FUNC_MMAP_ANON
   AC_CHECK_HEADERS_ONCE([sys/mman.h])
   AC_CHECK_FUNCS_ONCE([mprotect])
+  gl_FUNC_MMAP_ANON
+  AC_CHECK_HEADERS_ONCE([sys/mman.h])
+  AC_CHECK_FUNCS_ONCE([mprotect])
+  AC_CHECK_DECLS_ONCE([alarm])
   gl_FUNC_MMAP_ANON
   AC_CHECK_HEADERS_ONCE([sys/mman.h])
   AC_CHECK_FUNCS_ONCE([mprotect])
@@ -1820,6 +1862,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/dirname-lgpl.c
   lib/dirname.h
   lib/dosname.h
+  lib/dprintf.c
   lib/dup-safer-flag.c
   lib/dup-safer.c
   lib/dup2.c
@@ -1857,6 +1900,8 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/fseterr.h
   lib/fstat.c
   lib/fstatat.c
+  lib/full-write.c
+  lib/full-write.h
   lib/futimens.c
   lib/getcwd-lgpl.c
   lib/getdelim.c
@@ -1918,6 +1963,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/mbtowc.c
   lib/memchr.c
   lib/memchr.valgrind
+  lib/memmem.c
   lib/mempcpy.c
   lib/memrchr.c
   lib/mkdir.c
@@ -1966,6 +2012,9 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/regex_internal.h
   lib/regexec.c
   lib/root-uid.h
+  lib/safe-read.c
+  lib/safe-write.c
+  lib/safe-write.h
   lib/save-cwd.c
   lib/save-cwd.h
   lib/sched.in.h
@@ -2050,6 +2099,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/strsep.c
   lib/strsignal.c
   lib/strstr.c
+  lib/sys-limits.h
   lib/sys_select.in.h
   lib/sys_socket.c
   lib/sys_socket.in.h
@@ -2081,6 +2131,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/vasnprintf.c
   lib/vasnprintf.h
   lib/vasprintf.c
+  lib/vdprintf.c
   lib/verify.h
   lib/vfprintf.c
   lib/vsnprintf.c
@@ -2105,6 +2156,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/windows-rwlock.h
   lib/windows-tls.c
   lib/windows-tls.h
+  lib/write.c
   lib/xalloc-die.c
   lib/xalloc-oversized.h
   lib/xalloc.h
@@ -2130,6 +2182,8 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/dirfd.m4
   m4/dirname.m4
   m4/double-slash-root.m4
+  m4/dprintf-posix.m4
+  m4/dprintf.m4
   m4/dup.m4
   m4/dup2.m4
   m4/eealloc.m4
@@ -2220,6 +2274,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/mbstate_t.m4
   m4/mbtowc.m4
   m4/memchr.m4
+  m4/memmem.m4
   m4/mempcpy.m4
   m4/memrchr.m4
   m4/mkdir.m4
@@ -2265,6 +2320,8 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/realloc.m4
   m4/regex.m4
   m4/rmdir.m4
+  m4/safe-read.m4
+  m4/safe-write.m4
   m4/save-cwd.m4
   m4/sched_h.m4
   m4/select.m4
@@ -2348,6 +2405,8 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/vasnprintf.m4
   m4/vasprintf-posix.m4
   m4/vasprintf.m4
+  m4/vdprintf-posix.m4
+  m4/vdprintf.m4
   m4/vfprintf-posix.m4
   m4/vsnprintf-posix.m4
   m4/vsnprintf.m4
@@ -2362,6 +2421,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/wctomb.m4
   m4/wctype_h.m4
   m4/wint_t.m4
+  m4/write.m4
   m4/xalloc.m4
   m4/xsize.m4
   m4/yield.m4
@@ -2398,6 +2458,11 @@ AC_DEFUN([gl_FILE_LIST], [
   tests/test-connect.c
   tests/test-ctype.c
   tests/test-dirent.c
+  tests/test-dprintf-posix.c
+  tests/test-dprintf-posix.sh
+  tests/test-dprintf-posix2.c
+  tests/test-dprintf-posix2.sh
+  tests/test-dprintf.c
   tests/test-dup-safer.c
   tests/test-dup.c
   tests/test-dup2.c
@@ -2494,6 +2559,7 @@ AC_DEFUN([gl_FILE_LIST], [
   tests/test-mbsrtowcs3.sh
   tests/test-mbsrtowcs4.sh
   tests/test-memchr.c
+  tests/test-memmem.c
   tests/test-memrchr.c
   tests/test-mkdir.c
   tests/test-mkdir.h
@@ -2623,6 +2689,9 @@ AC_DEFUN([gl_FILE_LIST], [
   tests/test-vasnprintf.c
   tests/test-vasprintf-posix.c
   tests/test-vasprintf.c
+  tests/test-vdprintf-posix.c
+  tests/test-vdprintf-posix.sh
+  tests/test-vdprintf.c
   tests/test-verify-try.c
   tests/test-verify.c
   tests/test-verify.sh
@@ -2641,6 +2710,7 @@ AC_DEFUN([gl_FILE_LIST], [
   tests/test-wcrtomb.c
   tests/test-wcrtomb.sh
   tests/test-wctype-h.c
+  tests/test-write.c
   tests/test-xalloc-die.c
   tests/test-xalloc-die.sh
   tests/zerosize-ptr.h

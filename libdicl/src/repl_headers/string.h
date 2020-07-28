@@ -14,28 +14,31 @@ extern "C" {
 /* Replacements */
 #undef strstr
 #define strstr rpl_strstr
-char *strstr(const char*, const char*);
+extern char *strstr(const char*, const char*);
 
 /* Missing pieces */
-void *mempcpy(void *, const void* ,size_t);
+extern void *mempcpy(void *, const void* ,size_t);
 
-char *stpcpy(char *, const char*);
-char *stpncpy(char *, const char*, size_t);
+extern void *memmem( const void *haystack, size_t haystack_size,
+		     const void *needle, size_t needlelen);
 
-char * strchrnul(const char *, int);
+extern char *stpcpy(char *, const char*);
+extern char *stpncpy(char *, const char*, size_t);
 
-int strerror_r(int, char*, size_t);
+extern char * strchrnul(const char *, int);
 
-char *strndup(const char*, size_t);
+extern int strerror_r(int, char*, size_t);
 
-char *strsep(char **, char*);
+extern char *strndup(const char*, size_t);
 
-char *strcasestr(const char*, const char*);
+extern char *strsep(char **, char*);
 
-char *strsignal(int sig);
+extern char *strcasestr(const char*, const char*);
+
+extern char *strsignal(int sig);
 /* If you are looking for an associated sys_siglist - try _sys_siglist */
 
-size_t strnlen(const char*, size_t);
+extern size_t strnlen(const char*, size_t);
 
 #if defined(__cplusplus)
 }

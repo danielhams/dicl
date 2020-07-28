@@ -41,6 +41,7 @@
 #  --no-vc-files \
 #  argp \
 #  byteswap \
+#  dprintf-posix \
 #  error \
 #  faccessat \
 #  fnmatch-gnu \
@@ -50,6 +51,7 @@
 #  getline \
 #  getopt-posix \
 #  getprogname \
+#  memmem \
 #  mkdtemp \
 #  mktime \
 #  nanosleep \
@@ -97,6 +99,7 @@
 #  timegm \
 #  unsetenv \
 #  vasprintf-posix \
+#  vdprintf-posix \
 #  vfprintf-posix \
 #  vsnprintf-posix \
 #  vsprintf-posix \
@@ -107,6 +110,7 @@ gl_LOCAL_DIR([])
 gl_MODULES([
   argp
   byteswap
+  dprintf-posix
   error
   faccessat
   fnmatch-gnu
@@ -116,6 +120,7 @@ gl_MODULES([
   getline
   getopt-posix
   getprogname
+  memmem
   mkdtemp
   mktime
   nanosleep
@@ -163,6 +168,7 @@ gl_MODULES([
   timegm
   unsetenv
   vasprintf-posix
+  vdprintf-posix
   vfprintf-posix
   vsnprintf-posix
   vsprintf-posix
