@@ -20,6 +20,9 @@ AC_DEFINE_UNQUOTED(PACKAGE_SUFFIX, "$PACKAGE_SUFFIX", [Suffix of the package])
 
 AC_STDC_HEADERS
 AC_PROG_CC
+AC_PROG_CXX
+
+AX_CXX_COMPILE_STDCXX(17,noext,mandatory)
 
 # Force replacement functions for some known
 # broken stuff that isn't auto-detected correctly.

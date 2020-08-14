@@ -98,6 +98,42 @@ extern int dprintf(int __fd, const char * __fmt, ...)
 #endif
 ;
 
+  /*
+   * The funopen implementation is just enough to
+   * get libsolv working (and maybe a bit more) - and requires
+   * linking in of the library dedicated to it (libdiclfunopen)
+   * so these replacements are guarded by a macro.
+   */
+#if defined(LIBDICL_NEED_FUNOPEN)
+
+#define funopen ld_funopen
+extern FILE * ld_funopen( const void * cookie,
+       int (*readfn)(void *cookie, char *buf, int nmem),
+       int (*writefn)(void *cookie, const char *buf, int nmem),
+       off_t (*seekfn)(void *cookie, off_t offset, int whence),
+       int (*closefn)(void *cookie));
+
+#undef fopen
+#define fopen ld_fopen
+extern FILE * ld_fopen( const char *path, const char *mode);
+#undef fclose
+#define fclose ld_fclose
+extern int ld_fclose( FILE *stream);
+
+#undef fread
+#define fread ld_fread
+extern size_t ld_fread( void *ptr, size_t size, size_t nmemb, FILE *stream);
+
+#undef fwrite
+#define fwrite ld_fwrite
+extern size_t ld_fwrite( const void *ptr, size_t size, size_t nmemb, FILE *stream);
+
+#undef fseek
+#define fseek ld_fseek
+extern size_t ld_fseek( FILE *stream, long offset, int whence );
+
+#endif
+
 #if defined(__cplusplus)
 }
 #endif

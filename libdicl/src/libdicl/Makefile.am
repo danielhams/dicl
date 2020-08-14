@@ -2,10 +2,10 @@ NULL=
 
 dicldir=$(libdir)
 
-dicl_LTLIBRARIES = libdicl@PACKAGE_SUFFIX@.la
-
-# Not yet sure how to express this dependency
-#libdicl@PACKAGE_SUFFIX@.la: $(top_builddir)/gl/libgnu.a
+dicl_LTLIBRARIES =						\
+	libdicl@PACKAGE_SUFFIX@.la				\
+	libdiclfunopen@PACKAGE_SUFFIX@.la			\
+	$(NULL)
 
 libdicl@PACKAGE_SUFFIX@_la_SOURCES=				\
 	libdicl.c						\
@@ -19,6 +19,14 @@ libdicl@PACKAGE_SUFFIX@_la_SOURCES=				\
 	$(NULL)
 
 libdicl@PACKAGE_SUFFIX@_la_LIBADD=				\
+	$(NULL)
+
+libdiclfunopen@PACKAGE_SUFFIX@_la_SOURCES=			\
+	funopen_replacements.cpp				\
+	$(NULL)
+
+libdiclfunopen@PACKAGE_SUFFIX@_la_LIBADD=			\
+	libdicl@PACKAGE_SUFFIX@.la				\
 	$(NULL)
 
 if LIBDICL_USING_GNULD
@@ -37,12 +45,15 @@ diclincludedir=$(includedir)/libdicl@PACKAGE_SUFFIX@/libdicl
 diclinclude_HEADERS=						\
 	libdicl.h						\
 	c-ctype.h						\
+	funopen_replacements.h					\
 	$(NULL)
 
 CLEANFILES=							\
 	$(libdicl@PACKAGE_SUFFIX@_la_SOURCES:.c=.o)		\
 	$(libdicl@PACKAGE_SUFFIX@_la_SOURCES:.c=.lo)		\
+	$(libdiclfunopen@PACKAGE_SUFFIX@_la_SOURCES:.cpp=.o)	\
+	$(libdiclfunopen@PACKAGE_SUFFIX@_la_SOURCES:.cpp=.lo)	\
 	libdicl@PACKAGE_SUFFIX@.la				\
-	libdicl@PACKAGE_SUFFIX@.la				\
+	libdiclfunopen@PACKAGE_SUFFIX@.la			\
 	.libs							\
 	$(NULL)
