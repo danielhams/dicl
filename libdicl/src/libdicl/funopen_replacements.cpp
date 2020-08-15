@@ -1,3 +1,18 @@
+/*
+ * funopen_replacements.cpp
+ *
+ * An implementation of BSD "funopen" intended to work
+ * by intercepting stream calls and either using the cookie
+ * style functions for things that were "funopened" or using
+ * the regular libc path for non-cookie streams.
+ *
+ * There is _just enough_ functionality here to support the libsolv
+ * library, and it's probably missing quite a few stream calls.
+ *
+ *  Created on: 12 Aug 2020
+ *      Author: danielhams on github
+ */
+
 #include "funopen_replacements.h"
 
 #include <string>
@@ -8,6 +23,7 @@
 #include <iterator>
 #include <atomic>
 #include <optional>
+#include <iostream>
 
 using std::unordered_map;
 using std::mutex;
@@ -33,6 +49,12 @@ struct internal_file_ptr_entry
         cookie_functions cookie_funcs;
     };
 };
+
+static void fail( const char * where )
+{
+  std::cerr << "Failure in funopen: " << where << std::endl;
+  exit(-1);
+}
 
 static mutex internal_cookie_mutex;
 // Must start from zero (otherwise it's a "NULL" pointer)
@@ -106,7 +128,7 @@ FILE * ld_funopen( const void * cookie,
         .closefn = closefn,
     };
     internal_file_ptr_entry entry {
-        .is_cookie_stream = false,
+        .is_cookie_stream = true,
         .cookie_funcs = funcs
     };
     insert_entry( next_key, entry );
@@ -118,7 +140,7 @@ FILE * ld_fopen( const char *path, const char *mode )
     FILE * actual_stream = fopen( path, mode );
     size_t next_key = get_next_key();
     internal_file_ptr_entry entry {
-        .is_cookie_stream = true,
+        .is_cookie_stream = false,
         .real_stream_ptr = actual_stream
     };
     insert_entry( next_key, entry );
@@ -131,7 +153,7 @@ int ld_fclose( FILE *stream )
     optional<internal_file_ptr_entry> entry_opt = find_remove_entry_for_key(key);
     if( !entry_opt )
     {
-        exit(-1);
+      fail("ld_fclose missing entry");
     }
     internal_file_ptr_entry entry = *entry_opt;
     if( !entry.is_cookie_stream )
@@ -151,7 +173,7 @@ size_t ld_fread( void *ptr, size_t size, size_t nmemb, FILE *stream)
     optional<internal_file_ptr_entry> entry_opt = find_entry_for_key(key);
     if( !entry_opt )
     {
-        exit(-1);
+      fail("ld_fread missing entry");
     }
     internal_file_ptr_entry entry = *entry_opt;
     if( !entry.is_cookie_stream )
@@ -171,7 +193,7 @@ size_t ld_fwrite( const void *ptr, size_t size, size_t nmemb, FILE *stream)
     optional<internal_file_ptr_entry> entry_opt = find_entry_for_key(key);
     if( !entry_opt )
     {
-        exit(-1);
+      fail("ld_fwrite missing entry");
     }
     internal_file_ptr_entry entry = *entry_opt;
     if( !entry.is_cookie_stream )
@@ -191,7 +213,7 @@ size_t ld_fseek( FILE *stream, long offset, int whence )
     optional<internal_file_ptr_entry> entry_opt = find_entry_for_key(key);
     if( !entry_opt )
     {
-        exit(-1);
+      fail("ld_fseek missing entry");
     }
     internal_file_ptr_entry entry = *entry_opt;
     if( !entry.is_cookie_stream )
@@ -202,5 +224,108 @@ size_t ld_fseek( FILE *stream, long offset, int whence )
     {
       return entry.cookie_funcs.seekfn( entry.cookie_funcs.cookie,
 					offset, whence );
+    }
+}
+
+int ld_feof( FILE *stream )
+{
+    size_t key = stream_to_key(stream);
+    optional<internal_file_ptr_entry> entry_opt = find_entry_for_key(key);
+    if( !entry_opt )
+    {
+      fail("ld_feof missing entry");
+    }
+    internal_file_ptr_entry entry = *entry_opt;
+    if( !entry.is_cookie_stream )
+    {
+      return feof( entry.real_stream_ptr );
+    }
+    else
+    {
+      fail("ld_feof missing cookie path");
+    }
+}
+
+char * ld_fgets( char *s, int size, FILE *stream )
+{
+    size_t key = stream_to_key(stream);
+    optional<internal_file_ptr_entry> entry_opt = find_entry_for_key(key);
+    if( !entry_opt )
+    {
+      fail("ld_fgets missing entry");
+    }
+    internal_file_ptr_entry entry = *entry_opt;
+    if( !entry.is_cookie_stream )
+    {
+      return fgets( s, size, entry.real_stream_ptr );
+    }
+    else
+    {
+      // fgets should only read max (size-1), with stops on EOF or newline
+      size_t max = size - 1;
+      char *cur = s;
+      size_t numread = 0;
+      char tmpplace[1];
+      do {
+	size_t loopread = entry.cookie_funcs.readfn( entry.cookie_funcs.cookie,
+						    tmpplace, 1 );
+	if(loopread==0) {
+	  break;
+	}
+	*cur = tmpplace[0];
+	cur++;
+	numread++;
+	if( tmpplace[0] == '\n' ) {
+	  break;
+	}
+      }
+      while( numread < max );
+
+      if( numread == 0 ) {
+	return NULL;
+      }
+      s[numread]='\0';
+      return s;
+    }
+}
+
+int ld_fgetc( FILE *stream )
+{
+    size_t key = stream_to_key(stream);
+    optional<internal_file_ptr_entry> entry_opt = find_entry_for_key(key);
+    if( !entry_opt )
+    {
+      fail("ld_fgetc missing entry");
+    }
+    internal_file_ptr_entry entry = *entry_opt;
+    if( !entry.is_cookie_stream )
+    {
+      return fgetc( entry.real_stream_ptr );
+    }
+    else
+    {
+      char tmpplace[1];
+      size_t numread = entry.cookie_funcs.readfn( entry.cookie_funcs.cookie,
+						  tmpplace, 1 );
+      return numread == 0 ? EOF : (int)(tmpplace[0]);
+    }
+}
+
+int ld_ungetc( int c, FILE *stream )
+{
+    size_t key = stream_to_key(stream);
+    optional<internal_file_ptr_entry> entry_opt = find_entry_for_key(key);
+    if( !entry_opt )
+    {
+      fail("ld_ungetc missing entry");
+    }
+    internal_file_ptr_entry entry = *entry_opt;
+    if( !entry.is_cookie_stream )
+    {
+      return ungetc( c, entry.real_stream_ptr );
+    }
+    else
+    {
+      fail("ld_ungetc missing cookie path");
     }
 }

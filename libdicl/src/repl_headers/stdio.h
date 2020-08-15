@@ -103,6 +103,8 @@ extern int dprintf(int __fd, const char * __fmt, ...)
    * get libsolv working (and maybe a bit more) - and requires
    * linking in of the library dedicated to it (libdiclfunopen)
    * so these replacements are guarded by a macro.
+   * Don't expect this stuff to "just work" for you! It probably
+   * won't.
    */
 #if defined(LIBDICL_NEED_FUNOPEN)
 
@@ -111,26 +113,46 @@ extern FILE * ld_funopen( const void * cookie,
        int (*readfn)(void *cookie, char *buf, int nmem),
        int (*writefn)(void *cookie, const char *buf, int nmem),
        off_t (*seekfn)(void *cookie, off_t offset, int whence),
-       int (*closefn)(void *cookie));
+       int (*closefn)(void *cookie) );
 
 #undef fopen
 #define fopen ld_fopen
-extern FILE * ld_fopen( const char *path, const char *mode);
+extern FILE * ld_fopen( const char *path, const char *mode );
 #undef fclose
 #define fclose ld_fclose
-extern int ld_fclose( FILE *stream);
+extern int ld_fclose( FILE *stream );
 
 #undef fread
 #define fread ld_fread
-extern size_t ld_fread( void *ptr, size_t size, size_t nmemb, FILE *stream);
+extern size_t ld_fread( void *ptr, size_t size, size_t nmemb, FILE *stream );
 
 #undef fwrite
 #define fwrite ld_fwrite
-extern size_t ld_fwrite( const void *ptr, size_t size, size_t nmemb, FILE *stream);
+extern size_t ld_fwrite( const void *ptr, size_t size, size_t nmemb, FILE *stream );
 
 #undef fseek
 #define fseek ld_fseek
 extern size_t ld_fseek( FILE *stream, long offset, int whence );
+
+#undef feof
+#define feof ld_feof
+extern int ld_feof( FILE *stream );
+
+#undef ferror
+#define ferror ld_ferror
+extern int ld_ferror( FILE *stream );
+
+#undef fgets
+#define fgets ld_fgets
+extern char *ld_fgets( char *s, int size, FILE *stream );
+
+#undef fgetc
+#define fgetc ld_fgetc
+extern int ld_fgetc( FILE *stream );
+
+#undef ungetc
+#define ungetc ld_ungetc
+extern int ld_ungetc( int c, FILE *stream );
 
 #endif
 
