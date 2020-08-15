@@ -99,8 +99,10 @@ static optional<internal_file_ptr_entry> find_remove_entry_for_key( size_t key )
     auto finder = internal_cookie_map.find( key );
     if( finder != internal_cookie_map.end() )
     {
-        internal_cookie_map.erase(finder);
-        return { finder->second };
+      // Keep a copy of the value from the iterator to ensure correct lifetime.
+      internal_file_ptr_entry retval = finder->second;
+      internal_cookie_map.erase(finder);
+      return { retval };
     }
     else
     {
@@ -265,17 +267,16 @@ char * ld_fgets( char *s, int size, FILE *stream )
       size_t max = size - 1;
       char *cur = s;
       size_t numread = 0;
-      char tmpplace[1];
       do {
 	size_t loopread = entry.cookie_funcs.readfn( entry.cookie_funcs.cookie,
-						    tmpplace, 1 );
+						     cur, 1 );
 	if(loopread==0) {
 	  break;
 	}
-	*cur = tmpplace[0];
+	char val = *cur;
 	cur++;
 	numread++;
-	if( tmpplace[0] == '\n' ) {
+	if( val == '\n' ) {
 	  break;
 	}
       }
