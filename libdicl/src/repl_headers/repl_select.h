@@ -1,6 +1,11 @@
 #ifndef LIBDICL_REPL_SELECT_H
 #define LIBDICL_REPL_SELECT_H
 
+#include <unistd.h>
+#include <sys/types.h>
+#include <bstring.h>
+#include <sys/time.h>
+
 #if defined(__cplusplus)
 extern "C" {
 #endif
