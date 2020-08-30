@@ -14,6 +14,8 @@
 #include "dicl_strtod.h"
 #include "dicl_strtof.h"
 #include "dicl_strtoll.h"
+#include "dicl_funopenread.h"
+#include "dicl_funopenwrite.h"
 
 int main(int argc, char**argv)
 {
@@ -25,7 +27,7 @@ int main(int argc, char**argv)
 #else
     printf("compiled _without_ libdicl replacements!\n");
 #endif
-
+    /*
     dicl_printftest();
 
     dicl_fprintftest();
@@ -41,6 +43,10 @@ int main(int argc, char**argv)
     dicl_strtoftest();
 
     dicl_strtolltest();
+*/
+    dicl_funopenreadtest();
+
+    dicl_funopenwritetest();
 
     return 0;
 }

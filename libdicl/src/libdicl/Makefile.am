@@ -27,6 +27,7 @@ libdiclfunopen@PACKAGE_SUFFIX@_la_SOURCES=			\
 
 libdiclfunopen@PACKAGE_SUFFIX@_la_LIBADD=			\
 	libdicl@PACKAGE_SUFFIX@.la				\
+	-lnsl							\
 	$(NULL)
 
 if LIBDICL_USING_GNULD

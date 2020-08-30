@@ -12,6 +12,9 @@ dicltester_SOURCES=			\
 	dicl_strtod.c			\
 	dicl_strtof.c			\
 	dicl_strtoll.c			\
+	dicl_funopencommon.c		\
+	dicl_funopenread.c		\
+	dicl_funopenwrite.c		\
 	$(NULL)
 
 AM_CFLAGS=				\
@@ -23,6 +26,7 @@ AM_CFLAGS=				\
 dicltester_LDADD=			\
 	$(DICLTESTER_DEPS_LIBS)		\
 	-lpthread			\
+	-ldiclfunopen-0.1		\
 	$(NULL)
 
 CLEANFILES=				\

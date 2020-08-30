@@ -115,45 +115,6 @@ extern FILE * ld_funopen( const void * cookie,
        off_t (*seekfn)(void *cookie, off_t offset, int whence),
        int (*closefn)(void *cookie) );
 
-#undef fopen
-#define fopen ld_fopen
-extern FILE * ld_fopen( const char *path, const char *mode );
-#undef fclose
-#define fclose ld_fclose
-extern int ld_fclose( FILE *stream );
-
-#undef fread
-#define fread ld_fread
-extern size_t ld_fread( void *ptr, size_t size, size_t nmemb, FILE *stream );
-
-#undef fwrite
-#define fwrite ld_fwrite
-extern size_t ld_fwrite( const void *ptr, size_t size, size_t nmemb, FILE *stream );
-
-#undef fseek
-#define fseek ld_fseek
-extern size_t ld_fseek( FILE *stream, long offset, int whence );
-
-#undef feof
-#define feof ld_feof
-extern int ld_feof( FILE *stream );
-
-#undef ferror
-#define ferror ld_ferror
-extern int ld_ferror( FILE *stream );
-
-#undef fgets
-#define fgets ld_fgets
-extern char *ld_fgets( char *s, int size, FILE *stream );
-
-#undef fgetc
-#define fgetc ld_fgetc
-extern int ld_fgetc( FILE *stream );
-
-#undef ungetc
-#define ungetc ld_ungetc
-extern int ld_ungetc( int c, FILE *stream );
-
 #endif
 
 #if defined(__cplusplus)

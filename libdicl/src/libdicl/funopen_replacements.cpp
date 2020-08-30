@@ -15,6 +15,9 @@
 
 #include "funopen_replacements.h"
 
+#include <unistd.h>
+#include <fcntl.h>
+
 #include <string>
 #include <unordered_map>
 #include <mutex>
@@ -24,12 +27,19 @@
 #include <atomic>
 #include <optional>
 #include <iostream>
+#include <thread>
 
 using std::unordered_map;
 using std::mutex;
 using std::unique_lock;
 using std::atomic;
 using std::optional;
+using std::cout;
+using std::cerr;
+using std::endl;
+using std::thread;
+
+static constexpr int FO_DEBUG = 0;
 
 struct cookie_functions
 {
@@ -40,14 +50,13 @@ struct cookie_functions
   int (*closefn)(void *cookie);
 };
 
-struct internal_file_ptr_entry
+struct internal_funopen_data
 {
-    bool is_cookie_stream;
-    union
-    {
-        FILE * real_stream_ptr;
-        cookie_functions cookie_funcs;
-    };
+  cookie_functions cookie_funcs;
+  FILE * real_stream_ptr;
+  int fds[2];
+  bool is_read;
+  int fd;
 };
 
 static void fail( const char * where )
@@ -56,64 +65,61 @@ static void fail( const char * where )
   exit(-1);
 }
 
-static mutex internal_cookie_mutex;
-// Must start from zero (otherwise it's a "NULL" pointer)
-// Also, this is assuming that "wrapping" is ok, which it maybe isn't
-static atomic<size_t> key_counter { 1 };
-static unordered_map<size_t, internal_file_ptr_entry> internal_cookie_map;
+static void funopen_thread_func( internal_funopen_data funopen_data ) {
+  bool is_read = funopen_data.is_read;
+  cookie_functions & cookie_funcs = funopen_data.cookie_funcs;
+  void * cookie = cookie_funcs.cookie;
+  char local_buf[1024];
+  //  cout << "CT in mode is_read_mode=" << is_read << endl;
 
-static size_t get_next_key() noexcept
-{
-    size_t next_key = key_counter++;
-    return next_key;
-}
-
-static void insert_entry( size_t key, internal_file_ptr_entry value )
-{
-    unique_lock<mutex> lock( internal_cookie_mutex );
-    internal_cookie_map.emplace( key, value);
-}
-
-static FILE * key_to_stream( size_t key )
-{
-    return (FILE *)(key);
-}
-
-static optional<internal_file_ptr_entry> find_entry_for_key( size_t key )
-{
-    unique_lock<mutex> lock( internal_cookie_mutex );
-    auto finder = internal_cookie_map.find( key );
-    if( finder != internal_cookie_map.end() )
-    {
-        return { finder->second };
+  while(true) {
+    int num_this_time = sizeof(local_buf);
+    //    cout << "CTR Attempting to read " << num_this_time << endl;
+    int num_read = is_read ?
+      cookie_funcs.readfn(cookie, local_buf, num_this_time)
+      :
+      read(funopen_data.fd, local_buf, num_this_time);
+    //    cout << "CTR Actually read " << num_read << endl;
+    if( num_read < 0 ) {
+      if (errno != EINTR) { break; }
+      continue;
     }
-    else
-    {
-        return {};
+    if( num_read == 0 ) {
+      break;
     }
+    int num_left = num_read;
+    int num_written = 0;
+    while( num_left > 0 ) {
+      //      cout << "CTW ls num_left " << num_left << endl;
+      int num_written_now = is_read ?
+	write(funopen_data.fd, local_buf + num_written, num_left)
+	:
+	cookie_funcs.writefn(cookie, local_buf + num_written, num_left);
+      //      cout << "CTW num_written_now " << num_written_now << endl;
+      if( num_written_now < 0 ) {
+	if( errno != EINTR ) { break; }
+	continue;
+      }
+      if( num_written_now == 0 ) { break; }
+
+      num_left -= num_written_now;
+      num_written += num_written_now;
+    }
+    //    cout << "CTW loop check num_left " << num_left << endl;
+    if( num_left > 0 ) { break; }
+  }
+  //  cout << "CTW loop done " << endl;
+
+  if( cookie_funcs.closefn ) { cookie_funcs.closefn( cookie ); }
+  close(funopen_data.fd);
+
+  //  cout << "CT finish errno=" << errno << endl;
+
+  return;
 }
 
-static optional<internal_file_ptr_entry> find_remove_entry_for_key( size_t key )
-{
-    unique_lock<mutex> lock( internal_cookie_mutex );
-    auto finder = internal_cookie_map.find( key );
-    if( finder != internal_cookie_map.end() )
-    {
-      // Keep a copy of the value from the iterator to ensure correct lifetime.
-      internal_file_ptr_entry retval = finder->second;
-      internal_cookie_map.erase(finder);
-      return { retval };
-    }
-    else
-    {
-        return {};
-    }
-}
-
-static size_t stream_to_key( FILE * stream )
-{
-    return (size_t)(stream);
-}
+static const char *fo_read_mode = "r";
+static const char *fo_write_mode = "w";
 
 FILE * ld_funopen( const void * cookie,
         int (*readfn)(void *cookie, char *buf, int nmem),
@@ -121,212 +127,95 @@ FILE * ld_funopen( const void * cookie,
         off_t (*seekfn)(void *cookie, off_t offset, int whence),
         int (*closefn)(void *cookie))
 {
-    size_t next_key = get_next_key();
-    cookie_functions funcs {
-        .cookie = (void*)cookie,
-        .readfn  = readfn,
-        .writefn = writefn,
-        .seekfn  = seekfn,
-        .closefn = closefn,
-    };
-    internal_file_ptr_entry entry {
-        .is_cookie_stream = true,
-        .cookie_funcs = funcs
-    };
-    insert_entry( next_key, entry );
-    return key_to_stream( next_key );
-}
+  if( seekfn ) {
+    errno = ENOTSUP;
+    if (FO_DEBUG) {
+      cerr << "FO seek passed" << endl;
+    }
+    return NULL;
+  }
+  const char * mode;
+  int rd=0;
+  int wr=0;
+  if( readfn && writefn ) {
+    errno = ENOTSUP;
+    if (FO_DEBUG) {
+      cerr << "FO read + write passed" << endl;
+    }
+    return NULL;
+  }
+  else if( readfn ) {
+    mode = fo_read_mode;
+    rd=1;
+  }
+  else {
+    mode = fo_write_mode;
+    wr=1;
+  }
+  cookie_functions funcs {
+      .cookie = (void*)cookie,
+      .readfn  = readfn,
+      .writefn = writefn,
+      .seekfn  = seekfn,
+      .closefn = closefn
+  };
+  internal_funopen_data funopen_data {
+      .cookie_funcs = funcs,
+      .real_stream_ptr = NULL,
+      .fds = {0, 0},
+      .is_read = (readfn != NULL),
+      .fd = 0
+  };
+  int pipe_rv = pipe(&funopen_data.fds[0]);
+  if( pipe_rv ) {
+    if (FO_DEBUG) {
+      cerr << "FO pipe fail" << endl;
+    }
+    return NULL;
+  }
+  int fd0coe_rv = fcntl(funopen_data.fds[0], FD_CLOEXEC);
+  if( fd0coe_rv ) {
+    if (FO_DEBUG) {
+      cerr << "FO failed 0 fcntl" << endl;
+    }
+    if( close(funopen_data.fds[0]) ) {
+      cerr << "failed cloexec and close of 0" << endl;
+    }
+    if( close(funopen_data.fds[1]) ) {
+      cerr << "failed cloexec and close of 1" << endl;
+    }
+    return NULL;
+  }
+  int fd1coe_rv = fcntl(funopen_data.fds[1], FD_CLOEXEC);
+  if( fd1coe_rv ) {
+    if (FO_DEBUG) {
+      cerr << "FO failed 1 fcntl" << endl;
+    }
+    if( close(funopen_data.fds[0]) ) {
+      cerr << "failed cloexec and close of 0" << endl;
+    }
+    if( close(funopen_data.fds[1]) ) {
+      cerr << "failed cloexec and close of 1" << endl;
+    }
+    return NULL;
+  }
 
-FILE * ld_fopen( const char *path, const char *mode )
-{
-    FILE * actual_stream = fopen( path, mode );
-    size_t next_key = get_next_key();
-    internal_file_ptr_entry entry {
-        .is_cookie_stream = false,
-        .real_stream_ptr = actual_stream
-    };
-    insert_entry( next_key, entry );
-    return key_to_stream( next_key );
-}
+  funopen_data.real_stream_ptr = fdopen(funopen_data.fds[wr], mode);
+  if( funopen_data.real_stream_ptr == NULL ) {
+    if (FO_DEBUG) {
+      cerr << "FO failed fdopen" << endl;
+    }
+    if( close(funopen_data.fds[0]) ) {
+      cerr << "failed fdopen and close of 0" << endl;
+    }
+    if( close(funopen_data.fds[1]) ) {
+      cerr << "failed fdopen and close of 1" << endl;
+    }
+    return NULL;
+  }
+  funopen_data.fd = funopen_data.fds[rd];
+  thread proxy_thread( funopen_thread_func, funopen_data );
+  proxy_thread.detach();
 
-int ld_fclose( FILE *stream )
-{
-    size_t key = stream_to_key(stream);
-    optional<internal_file_ptr_entry> entry_opt = find_remove_entry_for_key(key);
-    if( !entry_opt )
-    {
-      fail("ld_fclose missing entry");
-    }
-    internal_file_ptr_entry entry = *entry_opt;
-    if( !entry.is_cookie_stream )
-    {
-        return fclose( entry.real_stream_ptr );
-    }
-    else
-    {
-        // Call funopen close function
-      return entry.cookie_funcs.closefn( entry.cookie_funcs.cookie);
-    }
-}
-
-size_t ld_fread( void *ptr, size_t size, size_t nmemb, FILE *stream)
-{
-    size_t key = stream_to_key(stream);
-    optional<internal_file_ptr_entry> entry_opt = find_entry_for_key(key);
-    if( !entry_opt )
-    {
-      fail("ld_fread missing entry");
-    }
-    internal_file_ptr_entry entry = *entry_opt;
-    if( !entry.is_cookie_stream )
-    {
-        return fread( ptr, size, nmemb, entry.real_stream_ptr );
-    }
-    else
-    {
-      return entry.cookie_funcs.readfn( entry.cookie_funcs.cookie,
-					(char*)ptr, (nmemb*size) );
-    }
-}
-
-size_t ld_fwrite( const void *ptr, size_t size, size_t nmemb, FILE *stream)
-{
-    size_t key = stream_to_key(stream);
-    optional<internal_file_ptr_entry> entry_opt = find_entry_for_key(key);
-    if( !entry_opt )
-    {
-      fail("ld_fwrite missing entry");
-    }
-    internal_file_ptr_entry entry = *entry_opt;
-    if( !entry.is_cookie_stream )
-    {
-        return fwrite( ptr, size, nmemb, entry.real_stream_ptr );
-    }
-    else
-    {
-      return entry.cookie_funcs.writefn( entry.cookie_funcs.cookie,
-					 (char*)ptr, (nmemb*size) );
-    }
-}
-
-size_t ld_fseek( FILE *stream, long offset, int whence )
-{
-    size_t key = stream_to_key(stream);
-    optional<internal_file_ptr_entry> entry_opt = find_entry_for_key(key);
-    if( !entry_opt )
-    {
-      fail("ld_fseek missing entry");
-    }
-    internal_file_ptr_entry entry = *entry_opt;
-    if( !entry.is_cookie_stream )
-    {
-        return fseek( entry.real_stream_ptr, offset, whence );
-    }
-    else
-    {
-      return entry.cookie_funcs.seekfn( entry.cookie_funcs.cookie,
-					offset, whence );
-    }
-}
-
-int ld_feof( FILE *stream )
-{
-    size_t key = stream_to_key(stream);
-    optional<internal_file_ptr_entry> entry_opt = find_entry_for_key(key);
-    if( !entry_opt )
-    {
-      fail("ld_feof missing entry");
-    }
-    internal_file_ptr_entry entry = *entry_opt;
-    if( !entry.is_cookie_stream )
-    {
-      return feof( entry.real_stream_ptr );
-    }
-    else
-    {
-      fail("ld_feof missing cookie path");
-    }
-}
-
-char * ld_fgets( char *s, int size, FILE *stream )
-{
-    size_t key = stream_to_key(stream);
-    optional<internal_file_ptr_entry> entry_opt = find_entry_for_key(key);
-    if( !entry_opt )
-    {
-      fail("ld_fgets missing entry");
-    }
-    internal_file_ptr_entry entry = *entry_opt;
-    if( !entry.is_cookie_stream )
-    {
-      return fgets( s, size, entry.real_stream_ptr );
-    }
-    else
-    {
-      // fgets should only read max (size-1), with stops on EOF or newline
-      size_t max = size - 1;
-      char *cur = s;
-      size_t numread = 0;
-      do {
-	size_t loopread = entry.cookie_funcs.readfn( entry.cookie_funcs.cookie,
-						     cur, 1 );
-	if(loopread==0) {
-	  break;
-	}
-	char val = *cur;
-	cur++;
-	numread++;
-	if( val == '\n' ) {
-	  break;
-	}
-      }
-      while( numread < max );
-
-      if( numread == 0 ) {
-	return NULL;
-      }
-      s[numread]='\0';
-      return s;
-    }
-}
-
-int ld_fgetc( FILE *stream )
-{
-    size_t key = stream_to_key(stream);
-    optional<internal_file_ptr_entry> entry_opt = find_entry_for_key(key);
-    if( !entry_opt )
-    {
-      fail("ld_fgetc missing entry");
-    }
-    internal_file_ptr_entry entry = *entry_opt;
-    if( !entry.is_cookie_stream )
-    {
-      return fgetc( entry.real_stream_ptr );
-    }
-    else
-    {
-      char tmpplace[1];
-      size_t numread = entry.cookie_funcs.readfn( entry.cookie_funcs.cookie,
-						  tmpplace, 1 );
-      return numread == 0 ? EOF : (int)(tmpplace[0]);
-    }
-}
-
-int ld_ungetc( int c, FILE *stream )
-{
-    size_t key = stream_to_key(stream);
-    optional<internal_file_ptr_entry> entry_opt = find_entry_for_key(key);
-    if( !entry_opt )
-    {
-      fail("ld_ungetc missing entry");
-    }
-    internal_file_ptr_entry entry = *entry_opt;
-    if( !entry.is_cookie_stream )
-    {
-      return ungetc( c, entry.real_stream_ptr );
-    }
-    else
-    {
-      fail("ld_ungetc missing cookie path");
-    }
+  return funopen_data.real_stream_ptr;
 }
