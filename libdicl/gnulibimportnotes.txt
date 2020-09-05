@@ -2,18 +2,13 @@
 
 #$GNULIB_HOME/gnulib-tool --list
 
-#$GNULIB_HOME/gnulib-tool --no-vc-files --source-base=gl --m4-base=gl/m4 --with-tests --import printf-posix vfprintf-posix vsprintf-posix wait-process
+# You can re-run this file when the GNULIB_HOME var is set to something
+# sensible to re-import the gnulib stubs/implementations.
+# This script _must_ put be used, as there are a few customisations
+# require to make some of this code work on IRIX.
 
-#(order is important above!)
-
-# After the import, must set AM_CFLAGS= -fPIC -DPIC to create relocatable code
-# Plus be _really_ careful about just over-committing - some of the existing
-# gnulib code may well be edited (e.g. printf)
-# 
-# After running this:
-# (1) Put back the -fPIC -DPIC in gl/Makefile.am
-# (2) git checkout gl/printf-parse.c gl/vasnprintf.c tests/test-gettimeofday.c tests/test-sys_time.c
-
+# Check the post import things below, where we restore
+# any tweaks from git
 $GNULIB_HOME/gnulib-tool --import --lib=libgnu --source-base=gl \
     --m4-base=/gl/m4 --doc-base=doc --tests-base=tests --aux-dir=. \
     --with-tests --no-conditional-dependencies --no-libtool \
@@ -54,4 +49,4 @@ $GNULIB_HOME/gnulib-tool --import --lib=libgnu --source-base=gl \
     wait-process
 
 perl -pi -e "s|AM_CFLAGS =|AM_CFLAGS = -fPIC -DPIC|g" gl/Makefile.am
-git checkout gl/printf-parse.c gl/vasnprintf.c tests/test-gettimeofday.c tests/test-sys_time.c
+git checkout gl/printf-parse.c gl/vasnprintf.c gl/spawni.c tests/test-gettimeofday.c tests/test-sys_time.c
