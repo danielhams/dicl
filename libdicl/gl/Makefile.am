@@ -39,6 +39,7 @@
 #  dprintf-posix \
 #  error \
 #  faccessat \
+#  fdopendir \
 #  fnmatch-gnu \
 #  fprintf-posix \
 #  fstatat \
@@ -256,6 +257,15 @@ EXTRA_libgnu_a_SOURCES += close.c
 
 ## end   gnulib module close
 
+## begin gnulib module closedir
+
+
+EXTRA_DIST += closedir.c dirent-private.h
+
+EXTRA_libgnu_a_SOURCES += closedir.c
+
+## end   gnulib module closedir
+
 ## begin gnulib module dirent
 
 BUILT_SOURCES += dirent.h
@@ -336,6 +346,15 @@ EXTRA_DIST += dprintf.c
 EXTRA_libgnu_a_SOURCES += dprintf.c
 
 ## end   gnulib module dprintf
+
+## begin gnulib module dup
+
+
+EXTRA_DIST += dup.c
+
+EXTRA_libgnu_a_SOURCES += dup.c
+
+## end   gnulib module dup
 
 ## begin gnulib module dup2
 
@@ -487,6 +506,15 @@ EXTRA_DIST += fd-hook.h
 libgnu_a_SOURCES += fd-safer-flag.c dup-safer-flag.c
 
 ## end   gnulib module fd-safer-flag
+
+## begin gnulib module fdopendir
+
+
+EXTRA_DIST += fdopendir.c
+
+EXTRA_libgnu_a_SOURCES += fdopendir.c
+
+## end   gnulib module fdopendir
 
 ## begin gnulib module filename
 
@@ -1502,6 +1530,15 @@ libgnu_a_SOURCES += openat-die.c
 EXTRA_DIST += openat.h
 
 ## end   gnulib module openat-h
+
+## begin gnulib module opendir
+
+
+EXTRA_DIST += dirent-private.h opendir.c
+
+EXTRA_libgnu_a_SOURCES += opendir.c
+
+## end   gnulib module opendir
 
 ## begin gnulib module pathmax
 

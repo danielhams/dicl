@@ -44,6 +44,7 @@
 #  dprintf-posix \
 #  error \
 #  faccessat \
+#  fdopendir \
 #  fnmatch-gnu \
 #  fprintf-posix \
 #  fstatat \
@@ -113,6 +114,7 @@ gl_MODULES([
   dprintf-posix
   error
   faccessat
+  fdopendir
   fnmatch-gnu
   fprintf-posix
   fstatat

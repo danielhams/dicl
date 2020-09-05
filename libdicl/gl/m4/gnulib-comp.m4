@@ -80,6 +80,7 @@ AC_DEFUN([gl_EARLY],
   # Code from module cloexec-tests:
   # Code from module close:
   # Code from module close-tests:
+  # Code from module closedir:
   # Code from module connect:
   # Code from module connect-tests:
   # Code from module ctype:
@@ -121,6 +122,8 @@ AC_DEFUN([gl_EARLY],
   # Code from module fd-safer-flag:
   # Code from module fdopen:
   # Code from module fdopen-tests:
+  # Code from module fdopendir:
+  # Code from module fdopendir-tests:
   # Code from module fgetc-tests:
   # Code from module filename:
   # Code from module filenamecat-lgpl:
@@ -276,6 +279,7 @@ AC_DEFUN([gl_EARLY],
   # Code from module openat-die:
   # Code from module openat-h:
   # Code from module openat-tests:
+  # Code from module opendir:
   # Code from module pathmax:
   # Code from module pathmax-tests:
   # Code from module perror:
@@ -589,6 +593,11 @@ AC_DEFUN([gl_INIT],
     AC_LIBOBJ([close])
   fi
   gl_UNISTD_MODULE_INDICATOR([close])
+  gl_FUNC_CLOSEDIR
+  if test $HAVE_CLOSEDIR = 0 || test $REPLACE_CLOSEDIR = 1; then
+    AC_LIBOBJ([closedir])
+  fi
+  gl_DIRENT_MODULE_INDICATOR([closedir])
   gl_DIRENT_H
   gl_FUNC_DIRFD
   if test $ac_cv_func_dirfd = no && test $gl_cv_func_dirfd_macro = no \
@@ -602,6 +611,12 @@ AC_DEFUN([gl_INIT],
   gl_FUNC_DPRINTF
   gl_STDIO_MODULE_INDICATOR([dprintf])
   gl_FUNC_DPRINTF_POSIX
+  gl_FUNC_DUP
+  if test $REPLACE_DUP = 1; then
+    AC_LIBOBJ([dup])
+    gl_PREREQ_DUP
+  fi
+  gl_UNISTD_MODULE_INDICATOR([dup])
   gl_FUNC_DUP2
   if test $HAVE_DUP2 = 0 || test $REPLACE_DUP2 = 1; then
     AC_LIBOBJ([dup2])
@@ -643,6 +658,12 @@ AC_DEFUN([gl_INIT],
   gl_FCNTL_MODULE_INDICATOR([fcntl])
   gl_FCNTL_H
   gl_MODULE_INDICATOR([fd-safer-flag])
+  gl_FUNC_FDOPENDIR
+  if test $HAVE_FDOPENDIR = 0 || test $REPLACE_FDOPENDIR = 1; then
+    AC_LIBOBJ([fdopendir])
+  fi
+  gl_DIRENT_MODULE_INDICATOR([fdopendir])
+  gl_MODULE_INDICATOR([fdopendir])
   gl_FILE_NAME_CONCAT_LGPL
   AC_C_FLEXIBLE_ARRAY_MEMBER
   gl_FLOAT_H
@@ -925,6 +946,11 @@ AC_DEFUN([gl_INIT],
   fi
   gl_MODULE_INDICATOR([openat]) dnl for lib/getcwd.c
   gl_FCNTL_MODULE_INDICATOR([openat])
+  gl_FUNC_OPENDIR
+  if test $HAVE_OPENDIR = 0 || test $REPLACE_OPENDIR = 1; then
+    AC_LIBOBJ([opendir])
+  fi
+  gl_DIRENT_MODULE_INDICATOR([opendir])
   gl_PATHMAX
   gl_POSIX_SPAWN
   if test $HAVE_POSIX_SPAWN = 0 || test $REPLACE_POSIX_SPAWN = 1; then
@@ -1470,12 +1496,6 @@ changequote([, ])dnl
   gl_SYS_SOCKET_MODULE_INDICATOR([connect])
   gl_CTYPE_H
   AC_CHECK_FUNCS_ONCE([getrlimit setrlimit])
-  gl_FUNC_DUP
-  if test $REPLACE_DUP = 1; then
-    AC_LIBOBJ([dup])
-    gl_PREREQ_DUP
-  fi
-  gl_UNISTD_MODULE_INDICATOR([dup])
   gl_FUNC_FDOPEN
   if test $REPLACE_FDOPEN = 1; then
     AC_LIBOBJ([fdopen])
@@ -1857,6 +1877,8 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/cloexec.c
   lib/cloexec.h
   lib/close.c
+  lib/closedir.c
+  lib/dirent-private.h
   lib/dirent.in.h
   lib/dirfd.c
   lib/dirname-lgpl.c
@@ -1865,6 +1887,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/dprintf.c
   lib/dup-safer-flag.c
   lib/dup-safer.c
+  lib/dup.c
   lib/dup2.c
   lib/errno.in.h
   lib/error.c
@@ -1882,6 +1905,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/fd-hook.h
   lib/fd-safer-flag.c
   lib/fd-safer.c
+  lib/fdopendir.c
   lib/filename.h
   lib/filenamecat-lgpl.c
   lib/filenamecat.h
@@ -1986,6 +2010,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/openat-proc.c
   lib/openat.c
   lib/openat.h
+  lib/opendir.c
   lib/pathmax.h
   lib/pipe-safer.c
   lib/printf-args.c
@@ -2176,6 +2201,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/chdir-long.m4
   m4/clock_time.m4
   m4/close.m4
+  m4/closedir.m4
   m4/codeset.m4
   m4/ctype.m4
   m4/dirent_h.m4
@@ -2203,6 +2229,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/fcntl.m4
   m4/fcntl_h.m4
   m4/fdopen.m4
+  m4/fdopendir.m4
   m4/filenamecat.m4
   m4/flexmember.m4
   m4/float_h.m4
@@ -2296,6 +2323,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/open-cloexec.m4
   m4/open.m4
   m4/openat.m4
+  m4/opendir.m4
   m4/pathmax.m4
   m4/perror.m4
   m4/pipe.m4
@@ -2473,6 +2501,7 @@ AC_DEFUN([gl_FILE_LIST], [
   tests/test-fcntl-h.c
   tests/test-fcntl.c
   tests/test-fdopen.c
+  tests/test-fdopendir.c
   tests/test-fgetc.c
   tests/test-float.c
   tests/test-fnmatch-h.c
@@ -2734,7 +2763,6 @@ AC_DEFUN([gl_FILE_LIST], [
   tests=lib/connect.c
   tests=lib/ctype.in.h
   tests=lib/dtotimespec.c
-  tests=lib/dup.c
   tests=lib/fdopen.c
   tests=lib/ftruncate.c
   tests=lib/get-rusage-as.c

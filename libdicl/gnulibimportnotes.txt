@@ -13,7 +13,10 @@ $GNULIB_HOME/gnulib-tool --import --lib=libgnu --source-base=gl \
     --m4-base=/gl/m4 --doc-base=doc --tests-base=tests --aux-dir=. \
     --with-tests --no-conditional-dependencies --no-libtool \
     --macro-prefix=gl --no-vc-files \
-    argp byteswap dprintf-posix error faccessat fnmatch-gnu fprintf-posix \
+    argp byteswap dprintf-posix error faccessat \
+    fdopendir \
+    fnmatch-gnu \
+    fprintf-posix \
     fstatat futimens \
     getline getopt-posix getprogname mkdtemp mktime nanosleep obstack \
     obstack-printf \

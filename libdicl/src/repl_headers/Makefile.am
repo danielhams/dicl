@@ -18,6 +18,7 @@ replincludedir=$(includedir)/libdicl@PACKAGE_SUFFIX@
 replinclude_HEADERS=		\
 	argp.h			\
 	byteswap.h		\
+	dirent.h		\
 	endian.h		\
 	error.h			\
 	fcntl.h			\

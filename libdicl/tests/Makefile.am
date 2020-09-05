@@ -350,15 +350,6 @@ libtests_a_SOURCES += dtotimespec.c
 
 ## end   gnulib module dtotimespec
 
-## begin gnulib module dup
-
-
-EXTRA_DIST += dup.c
-
-EXTRA_libtests_a_SOURCES += dup.c
-
-## end   gnulib module dup
-
 ## begin gnulib module dup-tests
 
 TESTS += test-dup
@@ -443,6 +434,15 @@ check_PROGRAMS += test-fdopen
 EXTRA_DIST += test-fdopen.c signature.h macros.h
 
 ## end   gnulib module fdopen-tests
+
+## begin gnulib module fdopendir-tests
+
+TESTS += test-fdopendir
+check_PROGRAMS += test-fdopendir
+test_fdopendir_LDADD = $(LDADD) @LIBINTL@
+EXTRA_DIST += test-fdopendir.c signature.h macros.h
+
+## end   gnulib module fdopendir-tests
 
 ## begin gnulib module fgetc-tests
 
