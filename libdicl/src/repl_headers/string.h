@@ -22,6 +22,10 @@ extern void *mempcpy(void *, const void* ,size_t);
 extern void *memmem( const void *haystack, size_t haystack_size,
 		     const void *needle, size_t needlelen);
 
+extern void *memrchr( const void *s, int c, size_t n);
+
+extern void *rawmemchr( const void *s, int c);
+
 extern char *stpcpy(char *, const char*);
 extern char *stpncpy(char *, const char*, size_t);
 

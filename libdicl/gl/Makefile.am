@@ -48,6 +48,7 @@
 #  getopt-posix \
 #  getprogname \
 #  memmem \
+#  memrchr \
 #  mkdtemp \
 #  mktime \
 #  nanosleep \

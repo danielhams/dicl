@@ -53,6 +53,7 @@
 #  getopt-posix \
 #  getprogname \
 #  memmem \
+#  memrchr \
 #  mkdtemp \
 #  mktime \
 #  nanosleep \
@@ -123,6 +124,7 @@ gl_MODULES([
   getopt-posix
   getprogname
   memmem
+  memrchr
   mkdtemp
   mktime
   nanosleep
