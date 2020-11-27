@@ -36,17 +36,19 @@ extern unsigned long int ld_strtoul(const char *, char **, int );
 extern unsigned long long int ld_strtoull(const char *, char **, int );
 
 /* Extra things not in Irix libc */
-int setenv(const char *name, const char*value, int overwrite);
-int unsetenv(const char *name);
+extern int setenv(const char *name, const char*value, int overwrite);
+extern int unsetenv(const char *name);
 
-const char *getprogname(void);
-void setprogname(const char *progname);
+extern const char *getprogname(void);
+extern void setprogname(const char *progname);
 
-char *mkdtemp(char *ftemplate);
+extern char *mkdtemp(char *ftemplate);
 
-void qsort_r(void *, size_t, size_t,
-	     int(*)(const void*,const void*, void*),
-	     void *);
+extern void qsort_r(void *, size_t, size_t,
+		    int(*)(const void*,const void*, void*),
+		    void *);
+
+extern int posix_openpt(int flags);
 
 #if defined(__cplusplus)
 }

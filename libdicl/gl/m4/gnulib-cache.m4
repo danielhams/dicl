@@ -60,6 +60,7 @@
 #  nstrftime \
 #  obstack \
 #  obstack-printf \
+#  posix_openpt \
 #  posix_spawn \
 #  posix_spawn_file_actions_addchdir \
 #  posix_spawn_file_actions_addclose \
@@ -131,6 +132,7 @@ gl_MODULES([
   nstrftime
   obstack
   obstack-printf
+  posix_openpt
   posix_spawn
   posix_spawn_file_actions_addchdir
   posix_spawn_file_actions_addclose

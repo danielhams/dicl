@@ -55,6 +55,7 @@
 #  nstrftime \
 #  obstack \
 #  obstack-printf \
+#  posix_openpt \
 #  posix_spawn \
 #  posix_spawn_file_actions_addchdir \
 #  posix_spawn_file_actions_addclose \
@@ -1547,6 +1548,15 @@ EXTRA_libgnu_a_SOURCES += opendir.c
 EXTRA_DIST += pathmax.h
 
 ## end   gnulib module pathmax
+
+## begin gnulib module posix_openpt
+
+
+EXTRA_DIST += posix_openpt.c
+
+EXTRA_libgnu_a_SOURCES += posix_openpt.c
+
+## end   gnulib module posix_openpt
 
 ## begin gnulib module posix_spawn
 

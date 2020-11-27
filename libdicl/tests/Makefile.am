@@ -267,6 +267,54 @@ EXTRA_DIST += test-close.c signature.h macros.h
 
 ## end   gnulib module close-tests
 
+## begin gnulib module configmake
+
+# Listed in the same order as the GNU makefile conventions, and
+# provided by autoconf 2.59c+ or 2.70.
+# The Automake-defined pkg* macros are appended, in the order
+# listed in the Automake 1.10a+ documentation.
+configmake.h: Makefile
+	$(AM_V_GEN)rm -f $@-t && \
+	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
+	  echo '#if HAVE_WINSOCK2_H'; \
+	  echo '# include <winsock2.h> /* avoid mingw pollution on DATADIR */'; \
+	  echo '#endif'; \
+	  echo '#define PREFIX "$(prefix)"'; \
+	  echo '#define EXEC_PREFIX "$(exec_prefix)"'; \
+	  echo '#define BINDIR "$(bindir)"'; \
+	  echo '#define SBINDIR "$(sbindir)"'; \
+	  echo '#define LIBEXECDIR "$(libexecdir)"'; \
+	  echo '#define DATAROOTDIR "$(datarootdir)"'; \
+	  echo '#define DATADIR "$(datadir)"'; \
+	  echo '#define SYSCONFDIR "$(sysconfdir)"'; \
+	  echo '#define SHAREDSTATEDIR "$(sharedstatedir)"'; \
+	  echo '#define LOCALSTATEDIR "$(localstatedir)"'; \
+	  echo '#define RUNSTATEDIR "$(runstatedir)"'; \
+	  echo '#define INCLUDEDIR "$(includedir)"'; \
+	  echo '#define OLDINCLUDEDIR "$(oldincludedir)"'; \
+	  echo '#define DOCDIR "$(docdir)"'; \
+	  echo '#define INFODIR "$(infodir)"'; \
+	  echo '#define HTMLDIR "$(htmldir)"'; \
+	  echo '#define DVIDIR "$(dvidir)"'; \
+	  echo '#define PDFDIR "$(pdfdir)"'; \
+	  echo '#define PSDIR "$(psdir)"'; \
+	  echo '#define LIBDIR "$(libdir)"'; \
+	  echo '#define LISPDIR "$(lispdir)"'; \
+	  echo '#define LOCALEDIR "$(localedir)"'; \
+	  echo '#define MANDIR "$(mandir)"'; \
+	  echo '#define MANEXT "$(manext)"'; \
+	  echo '#define PKGDATADIR "$(pkgdatadir)"'; \
+	  echo '#define PKGINCLUDEDIR "$(pkgincludedir)"'; \
+	  echo '#define PKGLIBDIR "$(pkglibdir)"'; \
+	  echo '#define PKGLIBEXECDIR "$(pkglibexecdir)"'; \
+	} | sed '/""/d' > $@-t && \
+	mv -f $@-t $@
+
+BUILT_SOURCES += configmake.h
+CLEANFILES += configmake.h configmake.h-t
+
+## end   gnulib module configmake
+
 ## begin gnulib module connect
 
 
@@ -683,6 +731,23 @@ EXTRA_DIST += signature.h test-gettimeofday.c
 
 ## end   gnulib module gettimeofday-tests
 
+## begin gnulib module grantpt
+
+
+EXTRA_DIST += grantpt.c pty-private.h
+
+EXTRA_libtests_a_SOURCES += grantpt.c
+
+## end   gnulib module grantpt
+
+## begin gnulib module grantpt-tests
+
+TESTS += test-grantpt
+check_PROGRAMS += test-grantpt
+EXTRA_DIST += test-grantpt.c signature.h macros.h
+
+## end   gnulib module grantpt-tests
+
 ## begin gnulib module hash
 
 libtests_a_SOURCES += hash.c
@@ -839,6 +904,23 @@ check_PROGRAMS += test-ioctl
 EXTRA_DIST += test-ioctl.c signature.h macros.h
 
 ## end   gnulib module ioctl-tests
+
+## begin gnulib module isatty
+
+
+EXTRA_DIST += isatty.c
+
+EXTRA_libtests_a_SOURCES += isatty.c
+
+## end   gnulib module isatty
+
+## begin gnulib module isatty-tests
+
+TESTS += test-isatty
+check_PROGRAMS += test-isatty
+EXTRA_DIST += test-isatty.c signature.h macros.h
+
+## end   gnulib module isatty-tests
 
 ## begin gnulib module isblank
 
@@ -1213,6 +1295,14 @@ EXTRA_DIST += test-pipe.c signature.h macros.h
 
 ## end   gnulib module pipe-posix-tests
 
+## begin gnulib module posix_openpt-tests
+
+TESTS += test-posix_openpt
+check_PROGRAMS += test-posix_openpt
+EXTRA_DIST += test-posix_openpt.c signature.h macros.h
+
+## end   gnulib module posix_openpt-tests
+
 ## begin gnulib module posix_spawn-tests
 
 if POSIX_SPAWN_PORTED
@@ -1336,6 +1426,16 @@ check_PROGRAMS += test-priv-set
 EXTRA_DIST += test-priv-set.c macros.h
 
 ## end   gnulib module priv-set-tests
+
+## begin gnulib module pt_chown
+
+# TODO: Add rules for installing as setuid root (chown root, chmod a=rx,u+s).
+pkglibexec_PROGRAMS = pt_chown
+pt_chown_LDADD = libgnu.a
+
+EXTRA_DIST += pt_chown.c pty-private.h
+
+## end   gnulib module pt_chown
 
 ## begin gnulib module pthread-h
 
@@ -1525,6 +1625,40 @@ test_pthread_sigmask2_LDADD = $(LDADD) @LIB_PTHREAD_SIGMASK@ @LIBMULTITHREAD@
 EXTRA_DIST += test-pthread_sigmask1.c test-pthread_sigmask2.c signature.h macros.h
 
 ## end   gnulib module pthread_sigmask-tests
+
+## begin gnulib module ptsname
+
+
+EXTRA_DIST += ptsname.c
+
+EXTRA_libtests_a_SOURCES += ptsname.c
+
+## end   gnulib module ptsname
+
+## begin gnulib module ptsname-tests
+
+TESTS += test-ptsname
+check_PROGRAMS += test-ptsname
+EXTRA_DIST += test-ptsname.c signature.h macros.h
+
+## end   gnulib module ptsname-tests
+
+## begin gnulib module ptsname_r
+
+
+EXTRA_DIST += ptsname_r.c
+
+EXTRA_libtests_a_SOURCES += ptsname_r.c
+
+## end   gnulib module ptsname_r
+
+## begin gnulib module ptsname_r-tests
+
+TESTS += test-ptsname_r
+check_PROGRAMS += test-ptsname_r
+EXTRA_DIST += test-ptsname_r.c signature.h null-ptr.h macros.h
+
+## end   gnulib module ptsname_r-tests
 
 ## begin gnulib module putenv
 
@@ -2166,6 +2300,23 @@ EXTRA_DIST += test-tls.c
 
 ## end   gnulib module tls-tests
 
+## begin gnulib module ttyname_r
+
+
+EXTRA_DIST += ttyname_r.c
+
+EXTRA_libtests_a_SOURCES += ttyname_r.c
+
+## end   gnulib module ttyname_r
+
+## begin gnulib module ttyname_r-tests
+
+TESTS += test-ttyname_r
+check_PROGRAMS += test-ttyname_r
+EXTRA_DIST += test-ttyname_r.c signature.h macros.h
+
+## end   gnulib module ttyname_r-tests
+
 ## begin gnulib module unistd-safer-tests
 
 TESTS += test-dup-safer
@@ -2224,6 +2375,23 @@ libtests_a_SOURCES += unlinkdir.c
 EXTRA_DIST += unlinkdir.h
 
 ## end   gnulib module unlinkdir
+
+## begin gnulib module unlockpt
+
+
+EXTRA_DIST += unlockpt.c
+
+EXTRA_libtests_a_SOURCES += unlockpt.c
+
+## end   gnulib module unlockpt
+
+## begin gnulib module unlockpt-tests
+
+TESTS += test-unlockpt
+check_PROGRAMS += test-unlockpt
+EXTRA_DIST += test-unlockpt.c signature.h macros.h
+
+## end   gnulib module unlockpt-tests
 
 ## begin gnulib module unsetenv-tests
 

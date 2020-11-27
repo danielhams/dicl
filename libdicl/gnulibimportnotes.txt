@@ -22,6 +22,7 @@ $GNULIB_HOME/gnulib-tool --import --lib=libgnu --source-base=gl \
     obstack-printf \
     memmem \
     memrchr \
+    posix_openpt \
     posix_spawn \
     posix_spawn_file_actions_addchdir \
     posix_spawn_file_actions_addclose \
