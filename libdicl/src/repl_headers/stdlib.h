@@ -51,12 +51,24 @@ void qsort_r(void *, size_t, size_t,
 #if defined(__cplusplus)
 }
 namespace std {
-  double ld_strtod(const char *, char **);
-  long double ld_strtold(const char *, char **);
-  long int ld_strtol(const char *, char **, int );
-  long long int ld_strtoll(const char *, char **, int );
-  unsigned long int ld_strtoul(const char *, char **, int );
-  unsigned long long int ld_strtoull(const char *, char **, int );
+  inline double ld_strtod(const char *nptr, char **endptr) {
+    return ::ld_strtod(nptr, endptr);
+  };
+  inline long double ld_strtold(const char *nptr, char **endptr) {
+    return ::ld_strtold(nptr, endptr);
+  };
+  inline long int ld_strtol(const char *nptr, char **endptr, int base) {
+    return ::ld_strtol(nptr, endptr, base);
+  };
+  inline long long int ld_strtoll(const char *nptr, char **endptr, int base) {
+    return ::ld_strtoll(nptr, endptr, base);
+  };
+  inline unsigned long int ld_strtoul(const char *nptr, char **endptr, int base) {
+    return ::ld_strtoul(nptr, endptr, base);
+  };
+  inline unsigned long long int ld_strtoull(const char *nptr, char **endptr, int base) {
+    return ::ld_strtoull(nptr, endptr, base);
+  };
 }
 #endif
 
