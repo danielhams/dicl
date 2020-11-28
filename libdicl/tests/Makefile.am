@@ -1431,7 +1431,7 @@ EXTRA_DIST += test-priv-set.c macros.h
 
 # TODO: Add rules for installing as setuid root (chown root, chmod a=rx,u+s).
 pkglibexec_PROGRAMS = pt_chown
-pt_chown_LDADD = libgnu.a
+pt_chown_LDADD = ../gl/libgnu.a
 
 EXTRA_DIST += pt_chown.c pty-private.h
 

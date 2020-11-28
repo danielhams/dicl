@@ -53,5 +53,10 @@ $GNULIB_HOME/gnulib-tool --import --lib=libgnu --source-base=gl \
     vasprintf-posix vdprintf-posix vfprintf-posix vsprintf-posix vsnprintf-posix \
     wait-process
 
+# Some rewrites necessary to bug fix what gnulib import does
+# 1) Put back PIC cflags in the gnulib makefile
 perl -pi -e "s|AM_CFLAGS =|AM_CFLAGS = -fPIC -DPIC|g" gl/Makefile.am
+# Put back customisation of gnulib code we've done for IRIX
 git checkout gl/printf-parse.c gl/vasnprintf.c gl/spawni.c tests/test-gettimeofday.c tests/test-sys_time.c
+# Correct a bad library reference in the gnulib test makefile
+perl -pi -e "s|pt_chown_LDADD = libgnu.a|pt_chown_LDADD = ../gl/libgnu.a|g" tests/Makefile.am
