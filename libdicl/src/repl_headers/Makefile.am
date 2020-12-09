@@ -10,9 +10,6 @@ byteswap.h:	$(top_builddir)/gl/byteswap.h
 spawn.h:	$(top_builddir)/gl/spawn.h
 	cp $(top_builddir)/gl/spawn.h ./
 
-fcntl.h:        $(top_builddir)/gl/fcntl.h
-	cp $(top_builddir)/gl/fcntl.h ./
-
 replincludedir=$(includedir)/libdicl@PACKAGE_SUFFIX@
 
 replinclude_HEADERS=		\
@@ -21,7 +18,6 @@ replinclude_HEADERS=		\
 	dirent.h		\
 	endian.h		\
 	error.h			\
-	fcntl.h			\
 	fnmatch.h		\
 	getopt-cdefs.h		\
 	getopt-core.h		\
