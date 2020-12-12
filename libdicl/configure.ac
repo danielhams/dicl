@@ -1,6 +1,6 @@
 AC_PREREQ(2.65)
 AC_INIT([libdicl],
-        [0.1.38],
+        [0.1.39],
         [daniel.hams@gmail.com])
 
 AC_SUBST(ACLOCAL_AMFLAGS, "-I macros")

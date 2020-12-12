@@ -18,6 +18,7 @@ replinclude_HEADERS=		\
 	dirent.h		\
 	endian.h		\
 	error.h			\
+	fcntl.h			\
 	fnmatch.h		\
 	getopt-cdefs.h		\
 	getopt-core.h		\
